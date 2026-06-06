@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI MBA v3.1 — Программа подготовки директоров агентной платформы</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-card: #131829;
+    --bg-card-hover: #1a2038;
+    --border: #1f2740;
+    --text: #e4e8f1;
+    --text-dim: #8590a8;
+    --text-muted: #5a6478;
+    --accent: #6b8aff;
+    --accent-2: #a78bfa;
+    --accent-warm: #f59e0b;
+    --accent-green: #34d399;
+    --accent-red: #f87171;
+    --gradient: linear-gradient(135deg, #6b8aff 0%, #a78bfa 100%);
+    --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+    --gradient-green: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+
+  nav.topnav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10, 14, 26, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+  }
+  nav.topnav .inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  }
+  .logo {
+    font-weight: 700; font-size: 17px;
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text;
+    color: transparent; letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 22px; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none; font-size: 13px;
+    transition: color 0.2s; font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero { padding: 120px 0 80px; }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(107, 138, 255, 0.1);
+    border: 1px solid rgba(107, 138, 255, 0.3);
+    border-radius: 100px;
+    color: var(--accent);
+    font-size: 13px; font-weight: 500;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 62px; line-height: 1.05; letter-spacing: -0.03em;
+    margin-bottom: 24px; font-weight: 700;
+  }
+  h1 .accent {
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-sub {
+    font-size: 22px; color: var(--text-dim); max-width: 720px;
+    margin-bottom: 48px; line-height: 1.5;
+  }
+
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    margin-top: 56px;
+  }
+  .stat .num {
+    font-size: 42px; font-weight: 700; letter-spacing: -0.02em;
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+    line-height: 1;
+  }
+  .stat .label { color: var(--text-dim); font-size: 13px; margin-top: 8px; }
+
+  .section-label {
+    color: var(--accent); font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
+  }
+  h2 {
+    font-size: 42px; line-height: 1.15; letter-spacing: -0.02em;
+    font-weight: 700; margin-bottom: 24px;
+  }
+  .section-intro { font-size: 18px; color: var(--text-dim); max-width: 760px; margin-bottom: 48px; }
+
+  /* Concept block */
+  .concept-block {
+    background: linear-gradient(135deg, rgba(107, 138, 255, 0.08), rgba(167, 139, 250, 0.04));
+    border: 1px solid rgba(107, 138, 255, 0.25);
+    border-radius: 24px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .concept-block::before {
+    content: ""; position: absolute; top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(107, 138, 255, 0.15) 0%, transparent 70%);
+  }
+  .concept-block .formula {
+    font-size: 26px; line-height: 1.4; font-weight: 500;
+    position: relative;
+  }
+  .concept-block .formula strong {
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-weight: 700;
+  }
+
+  /* What's new in v3.1 */
+  .whats-new {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+    margin-top: 32px;
+  }
+  .new-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.2s;
+  }
+  .new-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(107, 138, 255, 0.3);
+    transform: translateY(-2px);
+  }
+  .new-card .tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    padding: 3px 10px;
+    background: rgba(52, 211, 153, 0.1);
+    color: var(--accent-green);
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .new-card h3 { font-size: 20px; margin-bottom: 8px; }
+  .new-card p { color: var(--text-dim); font-size: 14px; line-height: 1.6; }
+
+  /* Modules compact grid */
+  .modules-compact {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-top: 32px;
+  }
+  .module-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.2s;
+  }
+  .module-tile:hover { border-color: rgba(107, 138, 255, 0.4); }
+  .module-tile .num {
+    font-size: 24px; font-weight: 700;
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 4px;
+  }
+  .module-tile .title { font-weight: 600; font-size: 16px; line-height: 1.3; margin-bottom: 8px; }
+  .module-tile .days { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+  .module-tile .question { font-size: 13px; color: var(--text-dim); font-style: italic; line-height: 1.5; }
+
+  /* Agent team stack */
+  .agent-stack {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .agent-layer {
+    display: grid; grid-template-columns: 110px 220px 1fr;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+    transition: background 0.2s;
+    align-items: center;
+  }
+  .agent-layer:last-child { border-bottom: none; }
+  .agent-layer:hover { background: var(--bg-card-hover); }
+  .agent-layer .layer-num {
+    font-weight: 700; color: var(--accent);
+    font-size: 13px;
+  }
+  .agent-layer .layer-name { font-weight: 600; font-size: 15px; }
+  .agent-layer .layer-desc { color: var(--text-dim); font-size: 13px; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    margin-top: 32px;
+  }
+  .stats-row .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .stats-row .stat-card .num {
+    font-size: 32px; font-weight: 700;
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 6px;
+  }
+  .stats-row .stat-card .label {
+    font-size: 13px; color: var(--text-dim);
+  }
+
+  /* Skills grid */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    margin-top: 32px;
+  }
+  .skill-cat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    transition: all 0.2s;
+  }
+  .skill-cat:hover { border-color: rgba(107, 138, 255, 0.3); }
+  .skill-cat .head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .skill-cat .name { font-weight: 600; font-size: 16px; }
+  .skill-cat .count {
+    font-size: 12px; color: var(--accent);
+    padding: 3px 10px;
+    background: rgba(107, 138, 255, 0.1);
+    border-radius: 100px;
+  }
+  .skill-cat .examples {
+    font-size: 13px; color: var(--text-dim);
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    line-height: 1.5;
+  }
+
+  /* Thinking tools — triangle of three sub-tasks */
+  .thinking-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    margin-top: 32px;
+  }
+  .thinking-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .thinking-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--gradient);
+  }
+  .thinking-card .cap-name {
+    font-size: 20px; font-weight: 700; letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .thinking-card .cap-desc {
+    color: var(--text-dim); font-size: 14px; line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .thinking-card .cap-patterns {
+    font-size: 13px; color: var(--accent);
+    padding: 6px 12px;
+    background: rgba(107, 138, 255, 0.08);
+    border-radius: 8px;
+    display: inline-block;
+  }
+  .thinking-card .cap-examples {
+    margin-top: 14px;
+    font-size: 12px; color: var(--text-muted); line-height: 1.5;
+  }
+
+  .module-coverage {
+    margin-top: 36px;
+    padding: 24px 28px;
+    background: rgba(52, 211, 153, 0.04);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    border-radius: 12px;
+  }
+  .module-coverage .coverage-num {
+    font-size: 26px; font-weight: 700;
+    color: var(--accent-green); margin-right: 12px;
+  }
+
+  /* MVPs */
+  .mvp-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    margin-top: 32px;
+  }
+  .mvp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .mvp-card:hover { border-color: rgba(107, 138, 255, 0.4); transform: translateY(-2px); }
+  .mvp-card .status {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .mvp-card .status.ready { background: rgba(52, 211, 153, 0.1); color: var(--accent-green); }
+  .mvp-card .status.spec { background: rgba(245, 158, 11, 0.1); color: var(--accent-warm); }
+  .mvp-card .status.pilot { background: rgba(167, 139, 250, 0.1); color: var(--accent-2); }
+  .mvp-card h3 { font-size: 19px; margin-bottom: 8px; }
+  .mvp-card .descr { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+  .mvp-card .meta {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .mvp-card .budget { color: var(--text-muted); }
+  .mvp-card .ex { color: var(--accent); }
+
+  /* Tracks */
+  .tracks-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+    margin-top: 32px;
+  }
+  .track-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .track-card .head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .track-card .icon { font-size: 28px; }
+  .track-card .name { font-size: 18px; font-weight: 600; }
+  .track-card .descr { color: var(--text-dim); font-size: 14px; line-height: 1.55; }
+
+  /* Through lines */
+  .through-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-top: 32px;
+  }
+  .through-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .through-card .num {
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    letter-spacing: 0.05em; margin-bottom: 10px;
+  }
+  .through-card h4 { font-size: 16px; margin-bottom: 6px; }
+  .through-card p { color: var(--text-dim); font-size: 13px; line-height: 1.55; }
+
+  /* CTA */
+  .cta-block {
+    background: var(--gradient);
+    border-radius: 24px;
+    padding: 56px 48px;
+    text-align: center;
+    margin-top: 48px;
+  }
+  .cta-block h2 { color: white; margin-bottom: 16px; }
+  .cta-block p { color: rgba(255, 255, 255, 0.85); font-size: 18px; max-width: 640px; margin: 0 auto; }
+
+  /* Eating own dog food highlight */
+  .dog-food-block {
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.05), rgba(16, 185, 129, 0.02));
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 20px;
+    padding: 36px;
+    margin-top: 32px;
+  }
+  .dog-food-block h3 {
+    color: var(--accent-green);
+    margin-bottom: 12px;
+  }
+  .dog-food-block p {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    h1 { font-size: 40px; }
+    h2 { font-size: 32px; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .whats-new { grid-template-columns: 1fr; }
+    .modules-compact { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .skills-grid { grid-template-columns: 1fr; }
+    .thinking-grid { grid-template-columns: 1fr; }
+    .mvp-grid { grid-template-columns: 1fr; }
+    .tracks-grid { grid-template-columns: 1fr; }
+    .through-grid { grid-template-columns: 1fr; }
+    .agent-layer { grid-template-columns: 1fr; gap: 8px; padding: 16px; }
+    .nav-links { display: none; }
+    section { padding: 60px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="inner">
+    <div class="logo">AI MBA v3.1</div>
+    <div class="nav-links">
+      <a href="#concept">Концепт</a>
+      <a href="#whats-new">v3.1</a>
+      <a href="#modules">Модули</a>
+      <a href="#agents">Агенты</a>
+      <a href="#skills">Скилы</a>
+      <a href="#methodology">Методология</a>
+      <a href="#mvps">Прототипы</a>
+      <a href="#tracks">Треки</a>
+      <a href="portal/" style="color:var(--accent);font-weight:600;">Портал слушателя &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">Версия 3.1 · Полная сборка · май 2026</span>
+  <h1>Программа подготовки <span class="accent">директоров агентной платформы</span></h1>
+  <p class="hero-sub">
+    Программа выращивает будущих CAIO, способных построить агентную производственную платформу
+    компании. Сама работает на той же платформе, которой учит.
+  </p>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">9</div><div class="label">модулей · 45 дней · 9 месяцев</div></div>
+    <div class="stat"><div class="num">31</div><div class="label">агент в команде программы</div></div>
+    <div class="stat"><div class="num">54</div><div class="label">скила в библиотеке</div></div>
+    <div class="stat"><div class="num">22</div><div class="label">паттерна упражнений</div></div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section id="concept">
+  <div class="section-label">Главная формула</div>
+  <h2>Машина Знаний → агентная платформа → KPT → AgentOps</h2>
+  <p class="section-intro">
+    Программа удерживается одной интеллектуальной формулой, которая соединяет методологию СМД-школы
+    с инженерной реальностью 2026 года.
+  </p>
+
+  <div class="concept-block">
+    <div class="formula">
+      <strong>Машина Знаний</strong> компании в 2026+ реализуется как <strong>агентная производственная платформа</strong>.
+      Её производительность измеряется через <strong>KPT</strong> (Knowledge Processing Time).
+      Её развитие управляется по продуктовой логике. Её операционная модель — <strong>AgentOps</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S NEW IN v3.1 -->
+<section id="whats-new">
+  <div class="section-label">Что нового в v3.1</div>
+  <h2>Программа собрана как продакшен-система</h2>
+  <p class="section-intro">
+    v3.0 определила архитектуру программы. v3.1 — это полная сборка: команда агентов, библиотека скилов,
+    методология упражнений, первые цифровые прототипы.
+  </p>
+
+  <div class="whats-new">
+    <div class="new-card">
+      <span class="tag">🟢 NEW</span>
+      <h3>Команда из 31 агента в 6 слоях</h3>
+      <p>Программа сама работает на агентной платформе. Eating own dog food: то, что учим строить, и то, на чём работаем — одна и та же архитектура. Бюджет ~$11.4К/мес, 55 инструментов в реестре.</p>
+    </div>
+    <div class="new-card">
+      <span class="tag">🟢 NEW</span>
+      <h3>Библиотека из 54 скилов</h3>
+      <p>Переиспользуемые «навыки» в формате Anthropic Skills paradigm. 10 категорий — от контентного производства до AgentOps. Любой агент платформы может инвокировать любой скил. Слушатели используют те же скилы в своих пилотах.</p>
+    </div>
+    <div class="new-card">
+      <span class="tag">🟢 NEW</span>
+      <h3>Методология «средства мышления»</h3>
+      <p>Программа — не передача содержания, а тренажёр производства знания. 22 паттерна упражнений тренируют три подзадачи: различать / иметь средство / быть уверенным. В Модуле 1 уже 19 упражнений + 3 сквозные практики.</p>
+    </div>
+    <div class="new-card">
+      <span class="tag">🟢 NEW</span>
+      <h3>Три цифровых прототипа MVP</h3>
+      <p>AI Maturity Self-Assessment (v0.1 работает в браузере), KPT Calculator (спецификация готова), Forecasting Calibrator (Metaculus для пилота). Каждый — витрина агентной платформы программы.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section id="modules">
+  <div class="section-label">Архитектура программы</div>
+  <h2>9 модулей по 5 дней, разнесены на 9 месяцев</h2>
+  <p class="section-intro">
+    Каждый модуль строит компонент агентной платформы. Каждый имеет команду модуля + агента модуля + одинаковую структуру папок.
+  </p>
+
+  <div class="modules-compact">
+    <div class="module-tile">
+      <div class="num">01</div>
+      <div class="title">Стратегия трансформации в агентную компанию</div>
+      <div class="days">Дни 1–5 · Сколково</div>
+      <div class="question">Зачем компании агентная платформа и как её позиционировать?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">02</div>
+      <div class="title">Архитектура агентной платформы</div>
+      <div class="days">Дни 6–10 · ИТМО + Яндекс</div>
+      <div class="question">Из каких слоёв состоит платформа и как их собрать?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">03</div>
+      <div class="title">Машина Знаний на агентной платформе</div>
+      <div class="days">Дни 11–15 · Авторский модуль</div>
+      <div class="question">Как платформа становится производственной МЗ?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">04</div>
+      <div class="title">Инженерия агентов и мультиагентных систем</div>
+      <div class="days">Дни 16–20 · ИТМО</div>
+      <div class="question">Как строить агентов промышленного уровня?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">05</div>
+      <div class="title">Токеномика и закупочная стратегия платформы</div>
+      <div class="days">Дни 21–25 · МШУ</div>
+      <div class="question">Как обосновать платформу и устроить её токеномику?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">06</div>
+      <div class="title">Орг-дизайн и трансформация под платформу</div>
+      <div class="days">Дни 26–30 · Сколково</div>
+      <div class="question">Как устроить команду и перевести компанию на agent-augmented модель?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">07</div>
+      <div class="title">Регуляторика, AI Security, foresight</div>
+      <div class="days">Дни 31–35 · Внешние эксперты</div>
+      <div class="question">Как держать платформу в правовом поле и видеть горизонт 5–10 лет?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">08</div>
+      <div class="title">AgentOps и операционная модель платформы</div>
+      <div class="days">Дни 36–40 · Яндекс</div>
+      <div class="question">Как эксплуатировать платформу как промышленный продукт?</div>
+    </div>
+    <div class="module-tile">
+      <div class="num">09</div>
+      <div class="title">Защита программы платформы</div>
+      <div class="days">Дни 41–45 · Все партнёры + панель CAIO</div>
+      <div class="question">Готов ли выпускник возглавить трансформацию компании?</div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENT TEAM -->
+<section id="agents">
+  <div class="section-label">Команда агентов программы</div>
+  <h2>Программа сама работает на агентной платформе</h2>
+  <p class="section-intro">
+    Eating own dog food: то, что мы учим строить, и то, на чём работает программа — одна и та же архитектура.
+    31 агент в 6 слоях обслуживает программу.
+  </p>
+
+  <div class="agent-stack">
+    <div class="agent-layer">
+      <div class="layer-num">Слой 0</div>
+      <div class="layer-name">Conductor (1)</div>
+      <div class="layer-desc">Оркестратор — единая точка входа, классификация запросов, маршрутизация</div>
+    </div>
+    <div class="agent-layer">
+      <div class="layer-num">Слой 1</div>
+      <div class="layer-name">Программные (5)</div>
+      <div class="layer-desc">Strategy · Methodology Guardian · Tech Radar · Partnership Coordinator · Cohort Manager</div>
+    </div>
+    <div class="agent-layer">
+      <div class="layer-num">Слой 2</div>
+      <div class="layer-name">Модульные (9)</div>
+      <div class="layer-desc">Один агент на каждый из 9 модулей — глубокая специализация на содержании модуля</div>
+    </div>
+    <div class="agent-layer">
+      <div class="layer-num">Слой 3</div>
+      <div class="layer-name">Трековые (4)</div>
+      <div class="layer-desc">Security · AgentOps · Knowledge Machine · Tech Radar — сквозные дисциплины</div>
+    </div>
+    <div class="agent-layer">
+      <div class="layer-num">Слой 4</div>
+      <div class="layer-name">Тулз-агенты (9)</div>
+      <div class="layer-desc">Content · Cases · Evals · Reviewer · Research · Translator · Viz · Docs · Glossary</div>
+    </div>
+    <div class="agent-layer">
+      <div class="layer-num">Слой 5</div>
+      <div class="layer-name">Слушательские (4)</div>
+      <div class="layer-desc">Personal Tutor · Pilot Companion · Red Team Sparring Partner · Eval Coach</div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num">31</div>
+      <div class="label">агент в команде</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">~$11.4К</div>
+      <div class="label">бюджет в месяц</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">55</div>
+      <div class="label">инструментов в реестре</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">12</div>
+      <div class="label">MCP-серверов программы</div>
+    </div>
+  </div>
+
+  <div class="dog-food-block">
+    <h3>🍲 Eating own dog food</h3>
+    <p>
+      Слушатели в Модуле 2 (Архитектура) изучают платформу программы как референсную реализацию.
+      В Модуле 4 (Инженерия) — смотрят на наши system prompts и eval-наборы.
+      В Модуле 7 (Security) — атакуют Red Team Sparring Partner и видят, как мы защищаемся.
+      В Модуле 8 (AgentOps) — разбирают наши реальные инциденты и FinOps-данные.
+      Это уникальное педагогическое преимущество: программа выпускает специалистов, которые видели, как работает то, чему мы их учим.
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS LIBRARY -->
+<section id="skills">
+  <div class="section-label">Библиотека скилов</div>
+  <h2>54 переиспользуемых навыка в 10 категориях</h2>
+  <p class="section-intro">
+    Совместимы с Anthropic Skills paradigm. Любой агент программы может инвокировать любой скил.
+    Слушатели программы используют те же скилы в своих пилотах.
+  </p>
+
+  <div class="skills-grid">
+    <div class="skill-cat">
+      <div class="head"><div class="name">📝 Контент</div><div class="count">6 скилов</div></div>
+      <div class="examples">create-lecture-slides · write-case-study · create-workshop-guide · adapt-international-case · generate-handout · create-glossary-entry</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">🧠 Методология</div><div class="count">6 скилов</div></div>
+      <div class="examples">check-smd-compliance · calculate-kpt · map-knowledge-machine · delta-model-classify · design-cognitive-mapping · write-reflection-prompt</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">✓ Эвалы</div><div class="count">5 скилов</div></div>
+      <div class="examples">design-eval-set · run-regression-eval · evaluate-artifact · compare-prompt-versions · detect-eval-drift</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">🏗 Архитектура</div><div class="count">5 скилов</div></div>
+      <div class="examples">design-federation · write-mcp-server-spec · design-multi-agent-workflow · classify-blast-radius · design-memory-architecture</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">🔒 Безопасность</div><div class="count">6 скилов</div></div>
+      <div class="examples">threat-model-stride · prompt-injection-test · audit-system-prompt · generate-red-team-attacks · assemble-sad-section · compliance-check</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">💰 Токеномика</div><div class="count">5 скилов</div></div>
+      <div class="examples">token-budget-estimate · model-cost-comparison · sensitivity-analysis-tokenomics · tco-projection-platform · finops-dashboard-spec</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">🔬 Исследование</div><div class="count">5 скилов</div></div>
+      <div class="examples">deep-research-multi-source · summarize-academic-paper · track-model-release · monitor-regulatory · generate-tech-radar-entry</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">📄 Документы</div><div class="count">6 скилов</div></div>
+      <div class="examples">assemble-platform-program · create-defense-deck · generate-certificate · assemble-portfolio · format-stakeholder-update · write-incident-report</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">⚡ Workflow</div><div class="count">5 скилов</div></div>
+      <div class="examples">multi-agent-orchestration · escalation-routing · session-summary · write-decision-record · pre-mortem-facilitation</div>
+    </div>
+    <div class="skill-cat">
+      <div class="head"><div class="name">🎓 Слушатель</div><div class="count">5 скилов</div></div>
+      <div class="examples">explain-concept-adjustable-depth · review-pilot-code · debug-student-agent · coach-eval-build · prepare-defense</div>
+    </div>
+  </div>
+</section>
+
+<!-- THINKING TOOLS METHODOLOGY -->
+<section id="methodology">
+  <div class="section-label">Методология средств мышления</div>
+  <h2>Программа — не передача содержания, а тренажёр производства знания</h2>
+  <p class="section-intro">
+    Производство знания распадается на три неразлучные подзадачи. Каждая тренируется специальными упражнениями.
+    Самые сильные упражнения тренируют все три одновременно.
+  </p>
+
+  <div class="thinking-grid">
+    <div class="thinking-card">
+      <div class="cap-name">РАЗЛИЧАТЬ</div>
+      <div class="cap-desc">Провести границу там, где другой видит континуум. Выделить единицу анализа из потока.</div>
+      <div class="cap-patterns">7 паттернов упражнений</div>
+      <div class="cap-examples">Сортировка-с-обоснованием · Differential diagnosis · Анти-примеры · Карта различений · Калибровка краёв · Распознавание в потоке · Перенос границы в чужой домен</div>
+    </div>
+    <div class="thinking-card">
+      <div class="cap-name">ИМЕТЬ СРЕДСТВО</div>
+      <div class="cap-desc">Обладать инструментом, который работает в твоих руках, а не только лежит в учебнике.</div>
+      <div class="cap-patterns">7 паттернов упражнений</div>
+      <div class="cap-examples">Применение к собственной компании (3 цикла) · Поэтапная сборка под надзором · Tool selection под задачу · Tool customization · Двухтуловое сравнение · Анализ failures · Обучение другого (Feynman)</div>
+    </div>
+    <div class="thinking-card">
+      <div class="cap-name">БЫТЬ УВЕРЕННЫМ</div>
+      <div class="cap-desc">Действовать на основе различения и средства, выдерживая давление и неопределённость.</div>
+      <div class="cap-patterns">8 паттернов упражнений</div>
+      <div class="cap-examples">Public commitment · Pre-mortem · Калибровка прогнозов (9 мес) · Steel-manning · Diff с экспертом · Адверсариальный peer-review · Решение под давлением · Защита под жёстким оппонированием</div>
+    </div>
+  </div>
+
+  <div class="module-coverage">
+    <span class="coverage-num">15/22</span>
+    <span>паттернов уже покрыты в Модуле 1: 19 упражнений + 3 сквозные практики (Worksheet «Моя компания», калибровка прогнозов, дневник различений)</span>
+  </div>
+</section>
+
+<!-- DIGITAL MVPS -->
+<section id="mvps">
+  <div class="section-label">Цифровые оболочки</div>
+  <h2>Три цифровых MVP для первого потока</h2>
+  <p class="section-intro">
+    14 из 22 упражнений Модуля 1 намеренно остаются «живыми» — peer-сессии, защиты, рефлексии.
+    Но три упражнения сильно усиливаются цифровой оболочкой и становятся самостоятельными продуктами.
+  </p>
+
+  <div class="mvp-grid">
+    <div class="mvp-card">
+      <span class="status ready">🟢 v0.1 прототип готов</span>
+      <h3>AI Maturity Self-Assessment</h3>
+      <p class="descr">Wizard 6 измерений · 18 вопросов · radar chart · автоматическая оценка L0-L5 · топ-3 разрыва · рекомендации. Работает offline, без backend, в любом браузере.</p>
+      <div class="meta">
+        <div class="budget">$30-50K production</div>
+        <div class="ex">Упражнение E1.3</div>
+      </div>
+    </div>
+    <div class="mvp-card">
+      <span class="status spec">🟡 спецификация готова</span>
+      <h3>KPT Calculator</h3>
+      <p class="descr">Расчёт baseline и целевого KPT с Sankey decomposition по этапам процесса. Sensitivity-сценарии. Слушатель уносит работающий калькулятор в свою компанию.</p>
+      <div class="meta">
+        <div class="budget">$20-30K production</div>
+        <div class="ex">Упражнение E3.3</div>
+      </div>
+    </div>
+    <div class="mvp-card">
+      <span class="status pilot">🟡 Metaculus для пилота</span>
+      <h3>Forecasting Calibrator</h3>
+      <p class="descr">Сквозная калибровка прогнозов на 9 месяцев программы. Brier score, визуализация калибровки, сравнение с когортой. Главная эпистемологическая дисциплина программы.</p>
+      <div class="meta">
+        <div class="budget">$15-25K production</div>
+        <div class="ex">Упражнение E1.5 / C2</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dog-food-block" style="margin-top: 28px;">
+    <h3>🍲 Прототипы как витрины платформы программы</h3>
+    <p>
+      AI Maturity Assessment — приложение M1 Strategy Module Agent + Methodology Guardian.
+      KPT Calculator — приложение скила <code style="color: var(--accent); font-family: ui-monospace, Menlo, Consolas, monospace;">methodology/calculate-kpt</code>.
+      Forecasting Calibrator — приложение Eval Coach Agent.
+      Это не «отдельные IT-продукты», а user-friendly витрины существующих агентов платформы программы.
+    </p>
+  </div>
+</section>
+
+<!-- THROUGH LINES -->
+<section id="through">
+  <div class="section-label">Сквозные практики</div>
+  <h2>Семь практик, идущих через всю программу</h2>
+  <p class="section-intro">
+    Это постоянный ритм работы слушателя. Они структурируют 9 месяцев и обеспечивают накопление компетенций.
+  </p>
+
+  <div class="through-grid">
+    <div class="through-card">
+      <div class="num">01</div>
+      <h4>Сквозной пилот «Моя платформа»</h4>
+      <p>С Дня 1 до Дня 45 — работающий пилот платформы своей компании. К финалу: 3–5 агентов, эвалы, observability, план масштабирования.</p>
+    </div>
+    <div class="through-card">
+      <div class="num">02</div>
+      <h4>AgentOps по умолчанию</h4>
+      <p>Каждый агент с эвалами, observability, кост-трекингом, kill-switch, audit trail с самого начала. Никакого «прикрутим потом».</p>
+    </div>
+    <div class="through-card">
+      <div class="num">03</div>
+      <h4>Личный стек ИИ-лидера</h4>
+      <p>IDE с агентом · frontier-chat · reasoning-tool · research-tool · personal KB · agent-runner. Апдейтится после каждого модуля.</p>
+    </div>
+    <div class="through-card">
+      <div class="num">04</div>
+      <h4>Agent of the Week</h4>
+      <p>Еженедельные демонстрации агентов слушателей вживую: трейс, метрики, кост. Жёсткие вопросы. Допуск к следующему модулю.</p>
+    </div>
+    <div class="through-card">
+      <div class="num">05</div>
+      <h4>Технологический дневник</h4>
+      <p>Личный технологический радар: что появилось у Anthropic, OpenAI, Yandex, Sber — и что это меняет в архитектуре пилота.</p>
+    </div>
+    <div class="through-card">
+      <div class="num">06</div>
+      <h4>Peer-тройки</h4>
+      <p>Группы по 3 слушателя. Еженедельный 1-часовой синк по понедельникам. Обмен блокерами, адверсариальные peer-review.</p>
+    </div>
+    <div class="through-card">
+      <div class="num">07</div>
+      <h4>Гостевые сессии CAIO</h4>
+      <p>В каждом модуле — 2-часовая Q&A с действующим CAIO/CISO/Head of AI Platform. Живой опыт построения платформы.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CROSS-CUTTING TRACKS -->
+<section id="tracks">
+  <div class="section-label">Сквозные дисциплины</div>
+  <h2>Четыре «тяжёлых» сквозных трека</h2>
+  <p class="section-intro">
+    Параллельно модулям идут самостоятельные дисциплины с своими командами и агентами.
+    Имеют собственные артефакты и кульминации в конкретных модулях.
+  </p>
+
+  <div class="tracks-grid">
+    <div class="track-card">
+      <div class="head">
+        <div class="icon">🔒</div>
+        <div class="name">Безопасность платформы</div>
+      </div>
+      <div class="descr">
+        Кульминация в Модуле 7. Финальный артефакт — Security Architecture Document из 8 разделов (threat model, классификация данных, security controls, runbook, red-team отчёт, compliance, roadmap зрелости).
+      </div>
+    </div>
+    <div class="track-card">
+      <div class="head">
+        <div class="icon">⚙️</div>
+        <div class="name">AgentOps как дисциплина</div>
+      </div>
+      <div class="descr">
+        Кульминация в Модуле 8. Параллель с DevOps/MLOps: жизненный цикл агента, observability, FinOps, governance, incident management. Готовит выпускника к роли AgentOps-стратега компании.
+      </div>
+    </div>
+    <div class="track-card">
+      <div class="head">
+        <div class="icon">🧠</div>
+        <div class="name">Машина Знаний и СМД-ОДИ</div>
+      </div>
+      <div class="descr">
+        Методологический фундамент программы: концепт МЗ, метрика KPT, СМД-методология Шчедровицкого, ОДИ-формат, средства мышления. Owner — Methodology Director.
+      </div>
+    </div>
+    <div class="track-card">
+      <div class="head">
+        <div class="icon">📡</div>
+        <div class="name">Технологический радар</div>
+      </div>
+      <div class="descr">
+        Мониторинг изменений в индустрии — модели, MCP-экосистема, инструменты AgentOps, регуляторика. Обновление контента раз в 6 недель. Защита программы от устаревания.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT -->
+<section>
+  <div class="section-label">Формат</div>
+  <h2>45 очных дней, разнесённых на 9 месяцев</h2>
+  <p class="section-intro">
+    Гибрид: 60% очно (5-дневные модули раз в месяц), 40% онлайн (межмодульная работа над пилотом, peer-тройки, Agent of the Week, гостевые сессии).
+  </p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num">360ч</div>
+      <div class="label">очной работы<br>(45 дней × 8 часов)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">540ч</div>
+      <div class="label">межмодульная работа<br>(15ч/нед × 36 недель)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">~900ч</div>
+      <div class="label">общий объём<br>сопоставимо с full-time MBA</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">20</div>
+      <div class="label">слушателей<br>в первом пилотном потоке</div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="section-label">Партнёрская сеть</div>
+  <h2>Сколково · ИТМО · Яндекс · МШУ + панель CAIO</h2>
+  <p class="section-intro">
+    Уникальная комбинация бизнес-школы, технического вуза, индустрии. Для финальной защиты — внешняя панель действующих CAIO других компаний.
+  </p>
+
+  <div class="modules-compact" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="module-tile">
+      <div class="title">Сколково</div>
+      <div class="days">Модули 1, 6</div>
+      <div class="question">Стратегия + Org-дизайн. Связь с CEO/бордами.</div>
+    </div>
+    <div class="module-tile">
+      <div class="title">ИТМО</div>
+      <div class="days">Модули 2, 4</div>
+      <div class="question">Архитектура + Инженерия агентов. Магистранты.</div>
+    </div>
+    <div class="module-tile">
+      <div class="title">Яндекс</div>
+      <div class="days">Модули 2, 8</div>
+      <div class="question">Архитектура + AgentOps. Лидер AI Platform в России.</div>
+    </div>
+    <div class="module-tile">
+      <div class="title">МШУ</div>
+      <div class="days">Модуль 5</div>
+      <div class="question">Токеномика и экономика платформы.</div>
+    </div>
+    <div class="module-tile">
+      <div class="title">Внешние эксперты</div>
+      <div class="days">Модуль 7</div>
+      <div class="question">Регуляторика + AI Security. Минцифры, юристы, CISO.</div>
+    </div>
+    <div class="module-tile">
+      <div class="title">Внешняя панель CAIO</div>
+      <div class="days">Модуль 9</div>
+      <div class="question">Действующие директора по ИИ внешних компаний. Не методологи — практики.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="border-bottom: none;">
+  <div class="cta-block">
+    <h2>AI MBA v3.1 · Полная сборка</h2>
+    <p>
+      Программа выращивает будущих директоров по ИИ через построение реальной агентной платформы.
+      31 агент в команде. 54 скила в библиотеке. 22 паттерна упражнений. 3 цифровых прототипа.
+      Программа работает на той платформе, которой учит.
+    </p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  AI MBA v3.1 · Программа подготовки директоров агентной платформы<br>
+  <a href="portal/">Портал слушателя</a> ·
+  <a href="tools/maturity/">AI Maturity Self-Assessment</a><br>
+  Сборка v3.1: май 2026
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Maturity Self-Assessment v2026 · AI MBA</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-card: #131829;
+    --bg-card-hover: #1a2038;
+    --border: #1f2740;
+    --text: #e4e8f1;
+    --text-dim: #8590a8;
+    --text-muted: #5a6478;
+    --accent: #6b8aff;
+    --accent-2: #a78bfa;
+    --accent-warm: #f59e0b;
+    --accent-green: #34d399;
+    --accent-red: #f87171;
+    --gradient: linear-gradient(135deg, #6b8aff 0%, #a78bfa 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .container { max-width: 980px; margin: 0 auto; padding: 32px 24px; }
+
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10, 14, 26, 0.85);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-weight: 700; font-size: 16px;
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+  .badge-version {
+    font-size: 12px; color: var(--text-dim);
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600; font-size: 15px;
+    cursor: pointer;
+    border: none; font-family: inherit;
+    transition: all 0.2s;
+    color: inherit;
+  }
+  .btn-primary {
+    background: var(--gradient); color: white;
+    box-shadow: 0 4px 12px rgba(107, 138, 255, 0.3);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(107, 138, 255, 0.4); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-secondary {
+    background: var(--bg-card); color: var(--text); border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--bg-card-hover); border-color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .welcome { text-align: center; padding: 60px 24px; }
+  .welcome .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(107, 138, 255, 0.1);
+    border: 1px solid rgba(107, 138, 255, 0.3);
+    border-radius: 100px;
+    color: var(--accent);
+    font-size: 13px; font-weight: 500; margin-bottom: 24px;
+  }
+  .welcome h1 {
+    font-size: 48px; line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 20px; font-weight: 700;
+  }
+  .welcome h1 .accent {
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .welcome p.sub { font-size: 19px; color: var(--text-dim); max-width: 640px; margin: 0 auto 40px; }
+  .info-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    max-width: 800px; margin: 0 auto 40px;
+  }
+  .info-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; text-align: left;
+  }
+  .info-card .num { font-size: 28px; font-weight: 700;
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 6px;
+  }
+  .info-card .label { font-size: 13px; color: var(--text-dim); }
+
+  .progress-wrapper { margin-bottom: 32px; }
+  .progress-info {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px; font-size: 14px; color: var(--text-dim);
+  }
+  .progress-track {
+    height: 6px; background: var(--bg-card); border-radius: 4px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--gradient); transition: width 0.3s;
+  }
+
+  .dimension-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 8px;
+  }
+  .dimension-icon { font-size: 32px; }
+  .dimension-name { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+  .dimension-counter { color: var(--text-dim); font-size: 14px; margin-bottom: 28px; }
+
+  .question-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    margin-bottom: 16px;
+  }
+  .question-text {
+    font-size: 17px; font-weight: 600; margin-bottom: 18px;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--border); border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .option:hover { background: var(--bg-card-hover); border-color: rgba(107, 138, 255, 0.4); }
+  .option.selected {
+    background: rgba(107, 138, 255, 0.08);
+    border-color: var(--accent);
+  }
+  .option-marker {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .option.selected .option-marker {
+    background: var(--gradient); color: white; border-color: transparent;
+  }
+  .option-text { flex: 1; font-size: 14px; line-height: 1.5; color: var(--text); }
+
+  .nav-buttons {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 32px;
+  }
+
+  .results-header {
+    text-align: center; padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .overall-level {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 12px 24px;
+    background: rgba(107, 138, 255, 0.08);
+    border: 1px solid rgba(107, 138, 255, 0.3);
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .overall-level .label { font-size: 13px; color: var(--text-dim); }
+  .overall-level .level {
+    font-size: 18px; font-weight: 700;
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .results-header h2 {
+    font-size: 36px; line-height: 1.2; margin-bottom: 12px;
+  }
+  .results-header p { color: var(--text-dim); font-size: 16px; max-width: 580px; margin: 0 auto; }
+
+  .results-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    margin-bottom: 32px;
+  }
+  .panel {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+  }
+  .panel h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 4px;
+  }
+  .panel .panel-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+
+  .radar-container {
+    display: flex; justify-content: center; align-items: center;
+    min-height: 320px;
+  }
+  .radar-svg { width: 100%; max-width: 380px; height: auto; }
+
+  .dim-scores { display: flex; flex-direction: column; gap: 12px; }
+  .dim-score-row {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .dim-score-name { flex: 1; font-size: 14px; }
+  .dim-score-bar-wrapper {
+    flex: 2; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden;
+  }
+  .dim-score-bar { height: 100%; background: var(--gradient); transition: width 0.5s; }
+  .dim-score-value {
+    font-size: 13px; font-weight: 600; color: var(--accent); min-width: 32px; text-align: right;
+  }
+
+  .gaps-list { display: flex; flex-direction: column; gap: 16px; }
+  .gap-item {
+    padding: 16px;
+    background: var(--bg); border-radius: 10px;
+    border-left: 3px solid var(--accent-warm);
+  }
+  .gap-name {
+    font-weight: 600; font-size: 15px;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .gap-current {
+    font-size: 12px; color: var(--accent-warm);
+    padding: 2px 8px; background: rgba(245, 158, 11, 0.1);
+    border-radius: 100px;
+  }
+  .gap-rec { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+
+  .recommendations {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    margin-bottom: 32px;
+  }
+  .recommendations h3 { font-size: 20px; margin-bottom: 8px; }
+  .recommendations .sub { color: var(--text-dim); font-size: 14px; margin-bottom: 24px; }
+  .rec-card {
+    padding: 18px;
+    background: var(--bg); border-radius: 10px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--accent);
+  }
+  .rec-title { font-weight: 600; margin-bottom: 6px; font-size: 15px; }
+  .rec-body { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+  .results-actions {
+    display: flex; justify-content: center; gap: 12px;
+    margin-top: 40px;
+  }
+
+  .level-reference {
+    margin-top: 60px; padding: 28px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .level-reference h4 { font-size: 14px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; }
+  .level-list {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .level-row {
+    padding: 12px 14px;
+    background: var(--bg); border-radius: 8px;
+    font-size: 13px;
+  }
+  .level-row .lvl { font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .level-row .lvl-desc { color: var(--text-dim); }
+
+  footer {
+    margin-top: 60px; padding: 24px 0;
+    text-align: center; color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+  footer .meta { margin-bottom: 4px; }
+
+  @media (max-width: 768px) {
+    .welcome h1 { font-size: 32px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .level-list { grid-template-columns: 1fr; }
+    .dimension-name { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo"><a href="../../portal/" style="color:inherit;text-decoration:none;">← Портал</a> &nbsp;·&nbsp; AI MBA · Maturity Assessment</div>
+  <div class="badge-version">v0.1 prototype · май 2026</div>
+</div>
+
+<div id="app"></div>
+
+<script>
+/* ============================================================
+   ДАННЫЕ
+   ============================================================ */
+
+const DIMENSIONS = [
+  {
+    id: 'strategy',
+    name: 'Стратегия',
+    icon: '🎯',
+    description: 'Видение, ответственность, приоритет ИИ',
+    questions: [
+      {
+        id: 's1',
+        text: 'Какова стратегия применения ИИ в вашей компании?',
+        options: [
+          { level: 0, text: 'Нет ИИ-стратегии. ИИ — личная инициатива сотрудников.' },
+          { level: 1, text: 'Есть отдельные ИИ-инициативы в разных функциях, общего видения нет.' },
+          { level: 2, text: 'Есть документированная ИИ-стратегия для одной функции / подразделения.' },
+          { level: 3, text: 'Есть корпоративная ИИ-стратегия, синхронизированная с бизнес-стратегией.' },
+          { level: 4, text: 'Бизнес-стратегия частично основана на ИИ-возможностях.' },
+          { level: 5, text: 'Компания agent-augmented. Бизнес-модель невозможна без агентов.' }
+        ]
+      },
+      {
+        id: 's2',
+        text: 'Кто несёт операционную ответственность за ИИ в компании?',
+        options: [
+          { level: 0, text: 'Никто. Нет владельца направления.' },
+          { level: 1, text: 'Энтузиасты в разных отделах, без формальной ответственности.' },
+          { level: 2, text: 'Руководитель ML-лаборатории или направления (middle-management).' },
+          { level: 3, text: 'CDO / Head of Data / Head of AI на уровне C-минус-1.' },
+          { level: 4, text: 'CAIO (Chief AI Officer) или эквивалент — член правления.' },
+          { level: 5, text: 'Распределённая ответственность: ИИ — общая дисциплина, как security или finance.' }
+        ]
+      },
+      {
+        id: 's3',
+        text: 'Какой бюджет компания тратит на ИИ как доля IT-бюджета?',
+        options: [
+          { level: 0, text: 'Нет выделенного бюджета.' },
+          { level: 1, text: 'Меньше 1% IT-бюджета, ad-hoc финансирование.' },
+          { level: 2, text: '1-5% IT-бюджета, отдельная статья.' },
+          { level: 3, text: '5-15% IT-бюджета, годовое планирование.' },
+          { level: 4, text: '15-30% IT-бюджета, отдельная P&L строка ИИ-инвестиций.' },
+          { level: 5, text: 'Больше 30%, ИИ — основа операций, не «инвестиция в инновации».' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'data',
+    name: 'Данные',
+    icon: '📊',
+    description: 'Качество, governance, доступность',
+    questions: [
+      {
+        id: 'd1',
+        text: 'В каком состоянии корпоративные данные для ИИ-задач?',
+        options: [
+          { level: 0, text: 'Данные разрозненны, в Excel и legacy-системах. Чтобы посчитать что-то простое — собирать неделю.' },
+          { level: 1, text: 'Есть отдельные витрины для отчётности, но не для ИИ.' },
+          { level: 2, text: 'Есть Data Lake / Warehouse, но качество неравномерное.' },
+          { level: 3, text: 'Есть единая платформа данных, основные домены покрыты, качество мониторится.' },
+          { level: 4, text: 'Data Mesh с product-orientation; data quality — часть SLA продуктов данных.' },
+          { level: 5, text: 'Данные — first-class product. Все ключевые данные доступны через self-service для AI/BI/analysts.' }
+        ]
+      },
+      {
+        id: 'd2',
+        text: 'Какое состояние Data Governance?',
+        options: [
+          { level: 0, text: 'Нет governance. Каждый делает по-своему.' },
+          { level: 1, text: 'Есть отдельные политики (152-ФЗ, GDPR), но не на ежедневном уровне.' },
+          { level: 2, text: 'Назначены Data Stewards в нескольких ключевых доменах.' },
+          { level: 3, text: 'Есть Data Governance Office, ведётся каталог данных, lineage частично прозрачен.' },
+          { level: 4, text: 'Governance — встроенная часть data products, lineage и audit покрывают 90%+ данных.' },
+          { level: 5, text: 'Полностью встроенная и автоматизированная governance, включая AI-specific (model lineage, training data provenance).' }
+        ]
+      },
+      {
+        id: 'd3',
+        text: 'Насколько данные доступны для ИИ-инициатив?',
+        options: [
+          { level: 0, text: 'Получение данных для ИИ-проекта — многомесячный процесс согласований.' },
+          { level: 1, text: 'Возможно, но требует кастомных интеграций каждый раз.' },
+          { level: 2, text: 'Есть API/feature store для одного-двух доменов.' },
+          { level: 3, text: 'Self-service доступ через feature store для большинства доменов.' },
+          { level: 4, text: 'Vector embeddings + structured data — оба доступны через единый MCP/API layer.' },
+          { level: 5, text: 'Любой агент платформы может получить нужные данные на ходу через MCP с правильными правами.' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'tech',
+    name: 'Технологии',
+    icon: '⚙️',
+    description: 'Платформа, MLOps, federation',
+    questions: [
+      {
+        id: 't1',
+        text: 'Какая инфраструктура для ИИ существует?',
+        options: [
+          { level: 0, text: 'Никакой. Сотрудники пользуются ChatGPT с личных аккаунтов.' },
+          { level: 1, text: 'Доступ к одному foundation-провайдеру (например, корпоративный ChatGPT Enterprise).' },
+          { level: 2, text: 'Есть ML-платформа в одной функции (например, антифрод).' },
+          { level: 3, text: 'Корпоративная ИИ-платформа с MLOps и model gateway.' },
+          { level: 4, text: 'Полная агентная платформа с MCP, federation моделей, observability.' },
+          { level: 5, text: 'Платформа открыта для самообслуживания, продуктовые команды развёртывают агентов сами.' }
+        ]
+      },
+      {
+        id: 't2',
+        text: 'Какой уровень зрелости MLOps / AgentOps?',
+        options: [
+          { level: 0, text: 'Модели запускаются вручную, мониторинга нет.' },
+          { level: 1, text: 'Простые CI/CD для одной-двух моделей, без regression evals.' },
+          { level: 2, text: 'MLOps в одном направлении: эвалы, version control, observability.' },
+          { level: 3, text: 'Корпоративный MLOps с governance, FinOps, model registry.' },
+          { level: 4, text: 'AgentOps на ранней стадии: agent lifecycle, trace-level observability, eval regressions.' },
+          { level: 5, text: 'Полный AgentOps stack как операционная дисциплина: SLA, runbook-и, incident management.' }
+        ]
+      },
+      {
+        id: 't3',
+        text: 'Какая стратегия по выбору foundation-моделей?',
+        options: [
+          { level: 0, text: 'Никакой. Используют, что попало.' },
+          { level: 1, text: 'Один провайдер для всего (например, только OpenAI).' },
+          { level: 2, text: 'Два провайдера для разных задач, без явной маршрутизации.' },
+          { level: 3, text: 'Multi-vendor с явной маршрутизацией через gateway.' },
+          { level: 4, text: 'Federation моделей: tier-based routing (frontier/mid/small), cost-aware, sensitivity-aware.' },
+          { level: 5, text: 'Гибрид cloud + on-prem (open-source), все категории данных сегментированы по правильным tier-ам.' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'people',
+    name: 'Люди',
+    icon: '👥',
+    description: 'Таланты, грамотность, развитие',
+    questions: [
+      {
+        id: 'p1',
+        text: 'Сколько ML/AI-специалистов в компании?',
+        options: [
+          { level: 0, text: 'Ноль выделенных ML/AI-специалистов.' },
+          { level: 1, text: '1-3 человека, как часть аналитики или IT.' },
+          { level: 2, text: 'Небольшая команда (5-10) в одном направлении.' },
+          { level: 3, text: 'Несколько команд в разных функциях, общая численность 20-50.' },
+          { level: 4, text: 'Большая централизованная функция (50+) + распределённые ИИ-роли в продуктовых командах.' },
+          { level: 5, text: 'ML/AI-роли — часть стандартного штатного расписания каждой продуктовой команды.' }
+        ]
+      },
+      {
+        id: 'p2',
+        text: 'Какой уровень data/AI-грамотности менеджмента?',
+        options: [
+          { level: 0, text: 'Большинство менеджеров видят ИИ как «магию» или модный тренд.' },
+          { level: 1, text: 'Топ-менеджмент знаком на уровне новостей и общих кейсов.' },
+          { level: 2, text: 'CDO/CIO глубоко в теме; остальной топ — поверхностно.' },
+          { level: 3, text: 'Все члены правления имеют базовое понимание; middle-менеджмент в ключевых функциях знаком.' },
+          { level: 4, text: 'Менеджеры всех уровней могут сформулировать ИИ-задачу для своей функции и оценить решение.' },
+          { level: 5, text: 'AI-fluency — обязательное требование для управленческих позиций.' }
+        ]
+      },
+      {
+        id: 'p3',
+        text: 'Есть ли программа развития ИИ-компетенций?',
+        options: [
+          { level: 0, text: 'Нет.' },
+          { level: 1, text: 'Эпизодические тренинги, ad-hoc.' },
+          { level: 2, text: 'Регулярные внешние программы для отдельных сотрудников.' },
+          { level: 3, text: 'Корпоративная программа развития с уровнями (basic / specialist / leader).' },
+          { level: 4, text: 'Программа с реальными pilot-проектами + сертификация + связь с performance review.' },
+          { level: 5, text: 'AI-fluency — часть базового onboarding для всех; продвинутые программы для лидеров.' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'process',
+    name: 'Процессы',
+    icon: '🔄',
+    description: 'Lifecycle, интеграция, compliance',
+    questions: [
+      {
+        id: 'pr1',
+        text: 'Как устроен жизненный цикл ИИ-инициативы (от идеи до production)?',
+        options: [
+          { level: 0, text: 'Никак. Каждая инициатива — уникальный путь.' },
+          { level: 1, text: 'Есть общее понимание этапов, но без формализации.' },
+          { level: 2, text: 'Есть документированный жизненный цикл в одной функции.' },
+          { level: 3, text: 'Стандартный лайфсайкл для всех ИИ-инициатив с gateway-проверками.' },
+          { level: 4, text: 'Лайфсайкл интегрирован с MLOps/AgentOps: автоматизированы evals, security review, FinOps approvals.' },
+          { level: 5, text: 'Self-service deployment с автоматическими гарантиями compliance.' }
+        ]
+      },
+      {
+        id: 'pr2',
+        text: 'Насколько ИИ интегрирован в основные бизнес-процессы?',
+        options: [
+          { level: 0, text: 'Никак. ИИ — отдельные эксперименты.' },
+          { level: 1, text: 'Точечно: 1-2 процесса с ИИ-компонентом.' },
+          { level: 2, text: 'В одной функции (например, в поддержке) ИИ — значимая часть.' },
+          { level: 3, text: 'ИИ встроен в большинство ключевых процессов как ассистент сотрудника.' },
+          { level: 4, text: 'Многие процессы — agent-augmented (агенты выполняют работу, человек проверяет/направляет).' },
+          { level: 5, text: 'Основные процессы выполняются агентами автономно с эпизодическим участием человека.' }
+        ]
+      },
+      {
+        id: 'pr3',
+        text: 'Какие процессы по AI Security и compliance работают?',
+        options: [
+          { level: 0, text: 'Никаких. Если что-то случится — будем разбираться.' },
+          { level: 1, text: 'Базовые требования по data privacy (152-ФЗ), но не AI-specific.' },
+          { level: 2, text: 'Есть отдельные политики по моделям и данным, но не systematic.' },
+          { level: 3, text: 'AI Security Officer, регулярные threat model reviews для значимых проектов.' },
+          { level: 4, text: 'Continuous red-teaming, policy-as-code, automated security в CI/CD.' },
+          { level: 5, text: 'AI Security — встроенная дисциплина, как обычный application security.' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'culture',
+    name: 'Культура',
+    icon: '🌱',
+    description: 'Доверие, эксперименты, замещение',
+    questions: [
+      {
+        id: 'c1',
+        text: 'Как сотрудники относятся к ИИ-решениям?',
+        options: [
+          { level: 0, text: 'Скептически или с страхом. «Они нас заменят».' },
+          { level: 1, text: 'Любопытство у нескольких энтузиастов; остальным безразлично.' },
+          { level: 2, text: 'Принимают как инструмент, но не доверяют решениям ИИ.' },
+          { level: 3, text: 'Активно используют ИИ как ассистента, но контролируют каждое решение.' },
+          { level: 4, text: 'Доверяют ИИ в типовых задачах, контролируют только critical paths.' },
+          { level: 5, text: 'Сотрудничество с агентами — норма; работа без них уже неудобна.' }
+        ]
+      },
+      {
+        id: 'c2',
+        text: 'Готовность экспериментировать и идти на риск?',
+        options: [
+          { level: 0, text: 'Любая инициатива требует длительных согласований, риск минимизируется.' },
+          { level: 1, text: 'Эпизодические эксперименты в R&D, остальная компания — традиционная.' },
+          { level: 2, text: 'Pilot-проекты возможны, но с большими guardrails.' },
+          { level: 3, text: 'Fail-fast культура в нескольких функциях, A/B тесты приняты.' },
+          { level: 4, text: 'Эксперименты — часть operating rhythm; failure tolerated если documented.' },
+          { level: 5, text: 'Experimentation by default; неэкспериментирование требует обоснования.' }
+        ]
+      },
+      {
+        id: 'c3',
+        text: 'Как компания работает с темой замещения ролей ИИ?',
+        options: [
+          { level: 0, text: 'Тема избегается. Сотрудники боятся.' },
+          { level: 1, text: 'Декларации руководства «никого не заменим», без плана.' },
+          { level: 2, text: 'Точечные перераспределения, но непрозрачно.' },
+          { level: 3, text: 'Открытая коммуникация: какие задачи передаются ИИ, какие новые роли создаются.' },
+          { level: 4, text: 'Активная программа reskilling, ясная карта эволюции профессий.' },
+          { level: 5, text: 'Замещение и появление новых ролей — норма; компания регулярно меняет org-структуру под ИИ-возможности.' }
+        ]
+      }
+    ]
+  }
+];
+
+const LEVEL_DESCRIPTIONS = [
+  { num: 0, name: 'L0 · Individual GenAI', desc: 'Личное использование без корпоративной системы' },
+  { num: 1, name: 'L1 · Pilots', desc: 'Отдельные пилоты без единой платформы' },
+  { num: 2, name: 'L2 · Department-scale', desc: 'Платформа в одной функции / отделе' },
+  { num: 3, name: 'L3 · Enterprise-scale', desc: 'Корпоративная платформа во всех функциях' },
+  { num: 4, name: 'L4 · AI-native organization', desc: 'Org-модель построена вокруг ИИ' },
+  { num: 5, name: 'L5 · Agent-augmented enterprise', desc: 'Агенты — полноценные участники процессов' }
+];
+
+const RECOMMENDATIONS = {
+  strategy: {
+    low: { title: 'Стратегия требует фундамента', body: 'Главный приоритет — назначить владельца ИИ-направления (минимум на уровне C-минус-1) и сформулировать платформенную стратегию v0.1 на одну страницу с дельта-классификацией. Без этого все остальные инвестиции в ИИ будут разрозненными.' },
+    mid: { title: 'Стратегия есть, надо углублять', body: 'Стратегия требует регулярного пересмотра (каждые 6 месяцев) и более тесной связки с бизнес-метриками. Усильте экономическое обоснование платформы и проработайте roadmap на 18-36 месяцев.' },
+    high: { title: 'Сильная стратегическая позиция', body: 'Фокус — на исполнении: scaling, governance, развитие экосистемы. Рассмотрите создание AI Steering Committee и публичную позицию компании по AI Maturity.' }
+  },
+  data: {
+    low: { title: 'Данные — главный блокер', body: 'Без качественных данных любая ИИ-инициатива провалится. Инвестируйте в единую платформу данных и Data Governance Office прежде, чем масштабировать ИИ-проекты.' },
+    mid: { title: 'Хорошая база, нужно AI-ориентирование', body: 'Стандартные практики Data Management не достаточны для ИИ. Добавьте feature store, vector DB, model data lineage, и интеграцию с MCP-слоем платформы.' },
+    high: { title: 'Данные не сдерживают рост', body: 'Фокус — на self-service доступе, data products как first-class entities, и автоматизации data quality. Это ваше конкурентное преимущество.' }
+  },
+  tech: {
+    low: { title: 'Технологический фундамент отсутствует', body: 'Начните с базовой ИИ-платформы: model gateway, observability (Langfuse или эквивалент), eval framework. Не запускайте production-агентов без AgentOps-обвязки.' },
+    mid: { title: 'Зрелый MLOps, недостаёт AgentOps', body: 'Расширьте MLOps до AgentOps: agent lifecycle, trace-level observability, blast radius management, FinOps for agents. Подключите MCP-слой для tool federation.' },
+    high: { title: 'Сильный технологический стек', body: 'Фокус — на оптимизации costs (federation routing), security (policy-as-code), и enabling self-service для продуктовых команд.' }
+  },
+  people: {
+    low: { title: 'Кадровый голод', body: 'Без команды никакая стратегия не работает. Начните с найма AI/ML-лидера + 2-3 senior-инженеров. Параллельно — программа развития существующих сотрудников.' },
+    mid: { title: 'Команда есть, нужна экспансия', body: 'Сделайте AI-fluency обязательной для middle-менеджмента. Инвестируйте в continuous learning. Удержание senior ML-инженеров — top priority.' },
+    high: { title: 'Кадровая основа сильна', body: 'Фокус — на культивации lead-инженеров и AI Product Manager-ов. Открытая программа стажировок и партнёрство с университетами для воспроизводства талантов.' }
+  },
+  process: {
+    low: { title: 'Процессы отсутствуют', body: 'Без стандартного жизненного цикла ИИ-инициатив у вас будет постоянный хаос. Внедрите stage-gate модель с обязательными checkpoints на security, eval, FinOps.' },
+    mid: { title: 'Процессы есть, надо автоматизировать', body: 'Перейдите от manual reviews к автоматизированным проверкам в CI/CD. Внедрите policy-as-code и automated security testing.' },
+    high: { title: 'Зрелые процессы', body: 'Фокус — на self-service deployment с automated guarantees. Цель — снизить time-to-production для новых агентов с месяцев до дней.' }
+  },
+  culture: {
+    low: { title: 'Культурный барьер критичен', body: 'Без изменения культуры технологии не приживутся. Начните с открытой коммуникации руководства о ИИ-стратегии, реальных примеров успеха внутри компании, и устранения страхов через ясную карту замещения / создания ролей.' },
+    mid: { title: 'Доверие складывается, нужно укреплять', body: 'Активно показывайте успехи. Внедрите regular AI demos, AI-augmented work как часть performance review. Открыто обсуждайте failures.' },
+    high: { title: 'Культура поддерживает рост', body: 'Фокус — на масштабировании fail-fast практик и поддержании баланса между экспериментами и operational excellence.' }
+  }
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const state = {
+  screen: 'welcome',  // welcome | wizard | results
+  answers: {},        // { questionId: level }
+  currentDim: 0
+};
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]);
+}
+
+function getTotalQuestions() {
+  return DIMENSIONS.reduce((sum, d) => sum + d.questions.length, 0);
+}
+
+function getAnsweredCount() {
+  return Object.keys(state.answers).length;
+}
+
+function getDimensionScores() {
+  return DIMENSIONS.map(dim => {
+    const scores = dim.questions.map(q => state.answers[q.id] !== undefined ? state.answers[q.id] : 0);
+    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    return {
+      id: dim.id,
+      name: dim.name,
+      icon: dim.icon,
+      score: Math.round(avg * 10) / 10,
+      roundedScore: Math.round(avg)
+    };
+  });
+}
+
+function getOverallLevel() {
+  const scores = getDimensionScores();
+  const avg = scores.reduce((s, d) => s + d.score, 0) / scores.length;
+  return Math.round(avg);
+}
+
+function isDimensionComplete(dimIdx) {
+  const dim = DIMENSIONS[dimIdx];
+  return dim.questions.every(q => state.answers[q.id] !== undefined);
+}
+
+/* ============================================================
+   SVG RADAR CHART
+   ============================================================ */
+
+function renderRadarChart(scores) {
+  const size = 380;
+  const cx = size / 2;
+  const cy = size / 2;
+  const R = 130;
+  const angles = scores.map((_, i) => -Math.PI / 2 + (i * 2 * Math.PI) / scores.length);
+
+  // Grid: 5 concentric polygons
+  let gridSvg = '';
+  for (let lvl = 1; lvl <= 5; lvl++) {
+    const r = (lvl / 5) * R;
+    const points = angles.map(a => {
+      const x = cx + r * Math.cos(a);
+      const y = cy + r * Math.sin(a);
+      return `${x},${y}`;
+    }).join(' ');
+    gridSvg += `<polygon points="${points}" fill="none" stroke="#1f2740" stroke-width="1"/>`;
+  }
+
+  // Axes
+  let axesSvg = '';
+  angles.forEach((a, i) => {
+    const x2 = cx + R * Math.cos(a);
+    const y2 = cy + R * Math.sin(a);
+    axesSvg += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#1f2740" stroke-width="1"/>`;
+  });
+
+  // Data polygon
+  const dataPoints = scores.map((s, i) => {
+    const r = (s.score / 5) * R;
+    const x = cx + r * Math.cos(angles[i]);
+    const y = cy + r * Math.sin(angles[i]);
+    return `${x},${y}`;
+  }).join(' ');
+  const dataPolygon = `<polygon points="${dataPoints}" fill="#6b8aff" fill-opacity="0.3" stroke="#6b8aff" stroke-width="2"/>`;
+
+  // Data points
+  let dotsSvg = '';
+  scores.forEach((s, i) => {
+    const r = (s.score / 5) * R;
+    const x = cx + r * Math.cos(angles[i]);
+    const y = cy + r * Math.sin(angles[i]);
+    dotsSvg += `<circle cx="${x}" cy="${y}" r="4" fill="#6b8aff"/>`;
+  });
+
+  // Labels
+  let labelsSvg = '';
+  scores.forEach((s, i) => {
+    const labelR = R + 26;
+    const x = cx + labelR * Math.cos(angles[i]);
+    const y = cy + labelR * Math.sin(angles[i]);
+    let anchor = 'middle';
+    if (Math.cos(angles[i]) > 0.3) anchor = 'start';
+    else if (Math.cos(angles[i]) < -0.3) anchor = 'end';
+    labelsSvg += `<text x="${x}" y="${y}" text-anchor="${anchor}" dominant-baseline="middle" fill="#e4e8f1" font-size="13" font-weight="600">${esc(s.icon)} ${esc(s.name)}</text>`;
+    labelsSvg += `<text x="${x}" y="${y + 14}" text-anchor="${anchor}" dominant-baseline="middle" fill="#8590a8" font-size="11">${s.score.toFixed(1)}</text>`;
+  });
+
+  // Scale labels (only on top axis, for L1-L5)
+  let scaleLabelsSvg = '';
+  for (let lvl = 1; lvl <= 5; lvl++) {
+    const r = (lvl / 5) * R;
+    scaleLabelsSvg += `<text x="${cx + 4}" y="${cy - r}" fill="#5a6478" font-size="9">${lvl}</text>`;
+  }
+
+  return `
+    <svg class="radar-svg" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+      ${gridSvg}
+      ${axesSvg}
+      ${dataPolygon}
+      ${dotsSvg}
+      ${scaleLabelsSvg}
+      ${labelsSvg}
+    </svg>
+  `;
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+
+function renderWelcome() {
+  return `
+    <div class="container welcome">
+      <span class="badge">🟢 MVP-прототип учебного стенда</span>
+      <h1>AI Maturity <span class="accent">Self-Assessment</span> v2026</h1>
+      <p class="sub">
+        Оцените зрелость своей компании по 6 измерениям программы AI MBA.
+        Получите radar chart, уровень L0-L5, топ-3 разрывов и рекомендации.
+      </p>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="num">6</div>
+          <div class="label">измерений зрелости (стратегия · данные · технологии · люди · процессы · культура)</div>
+        </div>
+        <div class="info-card">
+          <div class="num">18</div>
+          <div class="label">вопросов · ~10-15 минут на прохождение</div>
+        </div>
+        <div class="info-card">
+          <div class="num">L0–L5</div>
+          <div class="label">6 уровней от «Individual GenAI» до «Agent-augmented enterprise»</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="startAssessment()">
+        Начать оценку →
+      </button>
+      <div class="level-reference">
+        <h4>📚 6 уровней AI Maturity Index v2026</h4>
+        <div class="level-list">
+          ${LEVEL_DESCRIPTIONS.map(l => `
+            <div class="level-row">
+              <div class="lvl">${esc(l.name)}</div>
+              <div class="lvl-desc">${esc(l.desc)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderWizard() {
+  const dim = DIMENSIONS[state.currentDim];
+  const totalQ = getTotalQuestions();
+  const answered = getAnsweredCount();
+  const progressPercent = Math.round((answered / totalQ) * 100);
+  const isLast = state.currentDim === DIMENSIONS.length - 1;
+  const isFirst = state.currentDim === 0;
+  const dimComplete = isDimensionComplete(state.currentDim);
+
+  return `
+    <div class="container">
+      <div class="progress-wrapper">
+        <div class="progress-info">
+          <span>Измерение ${state.currentDim + 1} из ${DIMENSIONS.length}</span>
+          <span>${answered} из ${totalQ} вопросов · ${progressPercent}%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width: ${progressPercent}%"></div>
+        </div>
+      </div>
+
+      <div class="dimension-header">
+        <div class="dimension-icon">${esc(dim.icon)}</div>
+        <div class="dimension-name">${esc(dim.name)}</div>
+      </div>
+      <div class="dimension-counter">${esc(dim.description)}</div>
+
+      ${dim.questions.map((q, qIdx) => `
+        <div class="question-card">
+          <div class="question-text">${qIdx + 1}. ${esc(q.text)}</div>
+          <div class="options">
+            ${q.options.map(opt => `
+              <div class="option ${state.answers[q.id] === opt.level ? 'selected' : ''}"
+                   onclick="selectOption('${q.id}', ${opt.level})">
+                <div class="option-marker">L${opt.level}</div>
+                <div class="option-text">${esc(opt.text)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goBack()" ${isFirst ? 'disabled' : ''}>
+          ← Назад
+        </button>
+        <button class="btn btn-primary" onclick="goNext()" ${!dimComplete ? 'disabled' : ''}>
+          ${isLast ? 'Получить результаты' : 'Дальше'} →
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderResults() {
+  const scores = getDimensionScores();
+  const overallLevel = getOverallLevel();
+  const overallDesc = LEVEL_DESCRIPTIONS[overallLevel];
+  const topGaps = [...scores].sort((a, b) => a.score - b.score).slice(0, 3);
+
+  function getRecLevel(score) {
+    if (score <= 1) return 'low';
+    if (score <= 3) return 'mid';
+    return 'high';
+  }
+
+  return `
+    <div class="container">
+      <div class="results-header">
+        <div class="overall-level">
+          <span class="label">Общий уровень зрелости:</span>
+          <span class="level">${esc(overallDesc.name)}</span>
+        </div>
+        <h2>Ваша компания на уровне L${overallLevel}</h2>
+        <p>${esc(overallDesc.desc)}. Ниже — детализация по измерениям, разрывы и рекомендации.</p>
+      </div>
+
+      <div class="results-grid">
+        <div class="panel">
+          <h3>Профиль зрелости</h3>
+          <p class="panel-sub">Radar chart по 6 измерениям (шкала 0-5)</p>
+          <div class="radar-container">
+            ${renderRadarChart(scores)}
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Оценки по измерениям</h3>
+          <p class="panel-sub">Средний балл из 3 вопросов на измерение</p>
+          <div class="dim-scores">
+            ${scores.map(d => `
+              <div class="dim-score-row">
+                <div class="dim-score-name">${esc(d.icon)} ${esc(d.name)}</div>
+                <div class="dim-score-bar-wrapper">
+                  <div class="dim-score-bar" style="width: ${(d.score / 5) * 100}%"></div>
+                </div>
+                <div class="dim-score-value">${d.score.toFixed(1)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom: 32px;">
+        <h3>🎯 Топ-3 разрыва</h3>
+        <p class="panel-sub">Измерения с наименьшим уровнем — приоритеты для первой волны изменений</p>
+        <div class="gaps-list">
+          ${topGaps.map((gap, idx) => {
+            const rec = RECOMMENDATIONS[gap.id];
+            const r = rec[getRecLevel(gap.roundedScore)];
+            return `
+              <div class="gap-item">
+                <div class="gap-name">
+                  <span>${idx + 1}. ${esc(gap.icon)} ${esc(gap.name)}</span>
+                  <span class="gap-current">Уровень L${gap.roundedScore}</span>
+                </div>
+                <div class="gap-rec">${esc(r.body)}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="recommendations">
+        <h3>📋 Рекомендации по всем измерениям</h3>
+        <p class="sub">Что делать в первую очередь для каждого измерения, исходя из вашего уровня</p>
+        ${scores.map(d => {
+          const rec = RECOMMENDATIONS[d.id];
+          const r = rec[getRecLevel(d.roundedScore)];
+          return `
+            <div class="rec-card">
+              <div class="rec-title">${esc(d.icon)} ${esc(d.name)} · L${d.roundedScore} → ${esc(r.title)}</div>
+              <div class="rec-body">${esc(r.body)}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+
+      <div class="results-actions">
+        <button class="btn btn-secondary" onclick="restart()">
+          Пройти ещё раз
+        </button>
+        <button class="btn btn-primary" onclick="window.print()">
+          📄 Сохранить как PDF
+        </button>
+      </div>
+
+      <div class="level-reference">
+        <h4>📚 Справка: 6 уровней AI Maturity Index v2026</h4>
+        <div class="level-list">
+          ${LEVEL_DESCRIPTIONS.map(l => `
+            <div class="level-row">
+              <div class="lvl">${esc(l.name)}</div>
+              <div class="lvl-desc">${esc(l.desc)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderFooter() {
+  return `
+    <footer>
+      <div class="meta">AI Maturity Self-Assessment v0.1 prototype · ${new Date().getFullYear()}</div>
+      <div>Прототип учебного стенда AI MBA · Реальная production-версия будет в Q4 2026</div>
+    </footer>
+  `;
+}
+
+/* ============================================================
+   RENDER & ACTIONS
+   ============================================================ */
+
+function render() {
+  let content;
+  if (state.screen === 'welcome') content = renderWelcome();
+  else if (state.screen === 'wizard') content = renderWizard();
+  else content = renderResults();
+
+  document.getElementById('app').innerHTML = content + renderFooter();
+}
+
+function startAssessment() {
+  state.screen = 'wizard';
+  state.answers = {};
+  state.currentDim = 0;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function selectOption(questionId, level) {
+  state.answers[questionId] = level;
+  render();
+}
+
+function goNext() {
+  if (state.currentDim === DIMENSIONS.length - 1) {
+    state.screen = 'results';
+  } else {
+    state.currentDim++;
+  }
+  render();
+  window.scrollTo(0, 0);
+}
+
+function goBack() {
+  if (state.currentDim > 0) {
+    state.currentDim--;
+    render();
+    window.scrollTo(0, 0);
+  }
+}
+
+function restart() {
+  state.screen = 'welcome';
+  state.answers = {};
+  state.currentDim = 0;
+  render();
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+
+render();
+</script>
+
+</body>
+</html>
