@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Maturity Self-Assessment v2026 · AI MBA</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
     --bg: #0a0e1a;
@@ -936,10 +937,16 @@ function renderResults() {
         <button class="btn btn-secondary" onclick="restart()">
           Пройти ещё раз
         </button>
-        <button class="btn btn-primary" onclick="window.print()">
+        <button class="btn btn-secondary" onclick="window.print()">
           📄 Сохранить как PDF
         </button>
+        <a class="btn btn-primary" href="../../portal/?diag=maturity" style="text-decoration:none;">
+          ✓ Вернуться в портал с результатом
+        </a>
       </div>
+      <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:14px;">
+        Результат сохранён в этом браузере и автоматически появится в вашем портале слушателя.
+      </p>
 
       <div class="level-reference">
         <h4>📚 Справка: 6 уровней AI Maturity Index v2026</h4>
@@ -994,11 +1001,32 @@ function selectOption(questionId, level) {
 function goNext() {
   if (state.currentDim === DIMENSIONS.length - 1) {
     state.screen = 'results';
+    saveMaturityResult();
   } else {
     state.currentDim++;
   }
   render();
   window.scrollTo(0, 0);
+}
+
+const MATURITY_KEY = 'aimba_maturity_v1';
+function saveMaturityResult() {
+  try {
+    const scores = getDimensionScores();
+    const overallLevel = getOverallLevel();
+    const data = {
+      completedAt: new Date().toISOString(),
+      overallLevel: overallLevel,
+      levelName: (LEVEL_DESCRIPTIONS[overallLevel] || {}).name || ('L' + overallLevel),
+      scores: scores.map(s => ({ id: s.id, name: s.name, score: s.score, roundedScore: s.roundedScore })),
+      topGaps: [...scores].sort((a, b) => a.score - b.score).slice(0, 3).map(g => ({ id: g.id, name: g.name, roundedScore: g.roundedScore }))
+    };
+    localStorage.setItem(MATURITY_KEY, JSON.stringify(data));
+  } catch (e) {}
+}
+
+function fromPortal() {
+  return new URLSearchParams(location.search).get('from') === 'portal';
 }
 
 function goBack() {

@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI MBA · Портал слушателя</title>
+<meta name="description" content="Портал слушателя AI MBA — режим диагностики: входная оценка зрелости, квиз понятий, движение по модулям.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
     --bg: #0a0e1a;
@@ -1771,7 +1773,7 @@ const TOOLS = [
     statusLabel: "v0.1 прототип готов",
     desc: "Wizard 6 измерений · 18 вопросов · radar chart · автоматическая оценка L0-L5 · топ-3 разрыва · рекомендации. Работает offline в любом браузере.",
     linkText: "Открыть прототип →",
-    linkPath: "../tools/maturity/index.html",
+    linkPath: "../tools/maturity/?from=portal",
     relatedExercise: "E1.3"
   },
   {
@@ -1823,8 +1825,9 @@ function renderSidebar() {
   const html = `
     <div class="sidebar-brand">
       <div class="logo">AI MBA · Портал</div>
-      <div class="role">Поток 001 · Пилотный</div>
+      <div class="role">${STATE.user && STATE.user.name ? esc(STATE.user.name) + (STATE.user.company && STATE.user.company !== '—' ? ' · ' + esc(STATE.user.company) : '') : 'Поток 001 · Пилотный'}</div>
       <a href="../index.html" style="display:inline-block;margin-top:8px;font-size:12px;color:var(--accent);text-decoration:none;">← На главную программы</a>
+      <a onclick="resetProgress()" style="display:inline-block;margin-top:6px;margin-left:12px;font-size:12px;color:var(--text-muted);text-decoration:none;cursor:pointer;">⟳ Сбросить</a>
     </div>
 
     <div class="nav-section">
@@ -1910,15 +1913,17 @@ function renderDashboard() {
       <div class="breadcrumb">Дашборд</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
-    <h1>Добро пожаловать в AI MBA · Поток 001</h1>
+    <h1>Добро пожаловать, ${esc((STATE.user.name || '').split(' ')[0] || 'слушатель')} 👋</h1>
     <p class="lead">
       Программа подготовки будущих директоров по ИИ.
       9 модулей по 5 дней, разнесены на 9 месяцев. Вы сейчас на День ${STATE.currentDay} Модуля ${STATE.currentModule}.
     </p>
+
+    ${renderDiagnosticCard()}
 
     <div class="dash-stats">
       <div class="dash-stat"><div class="num">${STATE.currentModule}/9</div><div class="label">текущий модуль</div></div>
@@ -2090,7 +2095,7 @@ function renderModule(num) {
       <div class="breadcrumb">Модули · М${num}</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -2128,7 +2133,7 @@ function renderCalendar() {
       <div class="breadcrumb">Расписание · Полный календарь</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -2201,7 +2206,7 @@ function renderTools() {
       <div class="breadcrumb">Цифровые прототипы</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -2220,7 +2225,9 @@ function renderTools() {
           </div>
           <h3>${esc(t.name)}</h3>
           <div class="descr">${esc(t.desc)}</div>
-          <a href="${esc(t.linkPath)}" class="open-tool">${esc(t.linkText)}</a>
+          ${t.linkPath === '#'
+            ? `<span class="open-tool" style="opacity:0.45; cursor:not-allowed;">${esc(t.linkText)}</span>`
+            : `<a href="${esc(t.linkPath)}" class="open-tool">${esc(t.linkText)}</a>`}
           <div style="margin-top: 10px; font-size: 11px; color: var(--text-muted);">Упражнение ${esc(t.relatedExercise)}</div>
         </div>
       `).join('')}
@@ -2249,7 +2256,7 @@ function renderLibrary() {
       <div class="breadcrumb">Библиотека</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -2307,7 +2314,7 @@ function renderAgents() {
       <div class="breadcrumb">Агенты программы</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -2414,7 +2421,7 @@ function renderPractices() {
       <div class="breadcrumb">Сквозные практики</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -2496,6 +2503,7 @@ function fireTrigger(triggerId) {
   } else {
     STATE.firedTriggers.add(triggerId);
   }
+  if (typeof saveState === 'function') saveState();
   showTriggerModal(triggerId);
   renderContent();
 }
@@ -2869,7 +2877,7 @@ function renderProfile() {
   return `
     <div class="topline">
       <div class="breadcrumb">Мой профиль · перформанс по аренам</div>
-      <div class="user-info"><span>${esc(STATE.user.company)}</span><div class="user-avatar">${esc(STATE.user.name)}</div></div>
+      <div class="user-info"><span>${esc(STATE.user.company)}</span><div class="user-avatar">${esc(initials(STATE.user.name))}</div></div>
     </div>
 
     <h1>📊 Мой профиль вклада</h1>
@@ -3115,7 +3123,7 @@ function renderMeans() {
   return `
     <div class="topline">
       <div class="breadcrumb">Моя траектория · освоение средств</div>
-      <div class="user-info"><span>${esc(STATE.user.company)}</span><div class="user-avatar">${esc(STATE.user.name)}</div></div>
+      <div class="user-info"><span>${esc(STATE.user.company)}</span><div class="user-avatar">${esc(initials(STATE.user.name))}</div></div>
     </div>
 
     <h1>🧭 Конструктор средств</h1>
@@ -3308,7 +3316,7 @@ function renderTrajectory() {
       <div class="breadcrumb">Моя траектория · 4 оси движения</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -3750,7 +3758,7 @@ function renderPlanMap() {
       <div class="breadcrumb">План-карта программы</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
-        <div class="user-avatar">${esc(STATE.user.name)}</div>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
@@ -3994,11 +4002,291 @@ function render() {
   renderContent();
 }
 
+/* ============================================================
+   ПЕРСИСТЕНТНОСТЬ + ОНБОРДИНГ + ДИАГНОСТИКА (режим диагностики, без бэкенда)
+   ============================================================ */
+
+const STORE_KEY = 'aimba_portal_v1';
+const MATURITY_KEY = 'aimba_maturity_v1';
+
+function initials(name) {
+  const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return '—';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({
+      v: 1,
+      onboarded: !!STATE.onboarded,
+      user: STATE.user,
+      firedTriggers: Array.from(STATE.firedTriggers),
+      currentDay: STATE.currentDay,
+      currentModule: STATE.currentModule,
+      quizM1: STATE.quizM1 || null,
+      maturity: STATE.maturity || null
+    }));
+  } catch (e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return false;
+    const d = JSON.parse(raw);
+    STATE.onboarded = !!d.onboarded;
+    if (d.user) STATE.user = d.user;
+    if (Array.isArray(d.firedTriggers)) STATE.firedTriggers = new Set(d.firedTriggers);
+    if (d.currentDay) STATE.currentDay = d.currentDay;
+    if (d.currentModule) STATE.currentModule = d.currentModule;
+    STATE.quizM1 = d.quizM1 || null;
+    STATE.maturity = d.maturity || null;
+    return true;
+  } catch (e) { return false; }
+}
+
+function resetProgress() {
+  if (!confirm('Сбросить весь прогресс и начать заново? Это действие нельзя отменить.')) return;
+  try { localStorage.removeItem(STORE_KEY); localStorage.removeItem(MATURITY_KEY); } catch (e) {}
+  location.href = location.pathname;
+}
+
+function openModal(html) {
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+/* --- Подхват результата AI Maturity из общего хранилища --- */
+function syncMaturity() {
+  try {
+    const raw = localStorage.getItem(MATURITY_KEY);
+    if (!raw) return false;
+    const m = JSON.parse(raw);
+    if (m && m.completedAt) {
+      const changed = !STATE.maturity || STATE.maturity.completedAt !== m.completedAt;
+      STATE.maturity = m;
+      STATE.firedTriggers.add('diag.in.M1');
+      maybeCompleteDiagnostic();
+      if (changed) saveState();
+      return changed;
+    }
+  } catch (e) {}
+  return false;
+}
+
+/* --- Онбординг: имя + компания --- */
+function showOnboarding() {
+  openModal(`
+    <button class="modal-close" onclick="closeModal()" style="display:none;">×</button>
+    <div style="margin-top:4px;">
+      <div style="font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:8px;">AI MBA · Поток 001 · Пилотный</div>
+      <h2 style="margin:0 0 8px;">Добро пожаловать 👋</h2>
+      <p style="color:var(--text-dim); line-height:1.55; margin-bottom:20px;">
+        Это ваш портал слушателя в режиме диагностики. Представьтесь, чтобы персонализировать траекторию.
+        Данные хранятся только в этом браузере.
+      </p>
+      <label style="display:block; font-size:13px; color:var(--text-dim); margin-bottom:6px;">Имя и фамилия *</label>
+      <input id="ob-name" type="text" placeholder="Например, Иван Петров"
+        style="width:100%; padding:11px 14px; margin-bottom:14px; background:var(--bg-sidebar); border:1px solid var(--border); border-radius:9px; color:var(--text); font-size:14px;"
+        onkeydown="if(event.key==='Enter')submitOnboarding()">
+      <label style="display:block; font-size:13px; color:var(--text-dim); margin-bottom:6px;">Компания</label>
+      <input id="ob-company" type="text" placeholder="Например, СтрахГрупп"
+        style="width:100%; padding:11px 14px; margin-bottom:20px; background:var(--bg-sidebar); border:1px solid var(--border); border-radius:9px; color:var(--text); font-size:14px;"
+        onkeydown="if(event.key==='Enter')submitOnboarding()">
+      <div id="ob-error" style="color:#f87171; font-size:13px; margin-bottom:12px; display:none;">Укажите, пожалуйста, имя.</div>
+      <button onclick="submitOnboarding()" style="width:100%; padding:12px 20px; background:var(--gradient); color:#fff; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer;">
+        Войти в портал →
+      </button>
+    </div>
+  `);
+  setTimeout(() => { const el = document.getElementById('ob-name'); if (el) el.focus(); }, 50);
+}
+
+function submitOnboarding() {
+  const name = (document.getElementById('ob-name').value || '').trim();
+  const company = (document.getElementById('ob-company').value || '').trim();
+  if (!name) { document.getElementById('ob-error').style.display = 'block'; return; }
+  STATE.user = { name: name, company: company || '—' };
+  STATE.onboarded = true;
+  saveState();
+  closeModal();
+  render();
+}
+
+/* --- Входной квиз понятий Модуля 1 --- */
+const QUIZ_M1 = [
+  { q: 'Что главное отличает «агентную компанию» от компании, просто использующей ИИ?',
+    options: ['В ней больше сотрудников знают про ИИ', 'Её бизнес-модель и операции невозможны без автономных агентов', 'Она купила корпоративную лицензию на чат-бота', 'У неё есть отдел аналитики данных'], correct: 1 },
+  { q: 'Главная интеллектуальная формула программы:',
+    options: ['Данные → дашборды → отчёты → решения', 'Машина Знаний → агентная платформа → KPT → AgentOps', 'Облако → API → микросервисы → SaaS', 'Стратегия → бюджет → найм → запуск'], correct: 1 },
+  { q: 'Кого выращивает программа?',
+    options: ['Дата-сайентистов', 'Промпт-инженеров', 'Директоров по ИИ (CAIO), строящих агентную платформу компании', 'Менеджеров проектов'], correct: 2 },
+  { q: 'Что описывает шкала AI Maturity L0–L5?',
+    options: ['Размер ИИ-бюджета в рублях', 'Зрелость — от индивидуального использования GenAI до agent-augmented enterprise', 'Количество моделей в проде', 'Уровень зарплат ИИ-команды'], correct: 1 },
+  { q: 'Принцип «AgentOps по умолчанию» означает, что каждый агент:',
+    options: ['Запускается без тестов, чтобы быстрее', 'Имеет эвалы, observability, кост-трекинг и kill-switch с самого начала', 'Работает только в выходные', 'Управляется вручную оператором'], correct: 1 },
+  { q: 'Структура программы:',
+    options: ['12 модулей по 3 дня за полгода', '9 модулей по 5 дней, разнесённых на 9 месяцев', '6 модулей по неделе за 2 месяца', '1 интенсив на 45 дней подряд'], correct: 1 }
+];
+STATE.quizDraft = {};
+
+function startQuizM1() {
+  STATE.quizDraft = {};
+  renderQuizModal();
+}
+
+function renderQuizModal() {
+  const total = QUIZ_M1.length;
+  const answered = Object.keys(STATE.quizDraft).length;
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div style="margin-top:4px;">
+      <div style="font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#06b6d4; font-weight:700; margin-bottom:6px;">DIAG · Входной квиз Модуля 1</div>
+      <h2 style="margin:0 0 4px;">Понятия Модуля 1</h2>
+      <p style="color:var(--text-dim); font-size:13px; margin-bottom:18px;">${total} вопросов · отвечено ${answered}/${total}. Это baseline — отвечайте как понимаете сейчас.</p>
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        ${QUIZ_M1.map((item, qi) => `
+          <div>
+            <div style="font-weight:600; margin-bottom:10px; line-height:1.45;">${qi + 1}. ${esc(item.q)}</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              ${item.options.map((opt, oi) => {
+                const sel = STATE.quizDraft[qi] === oi;
+                return `<div onclick="pickQuiz(${qi}, ${oi})" style="cursor:pointer; padding:10px 14px; border-radius:9px; border:1px solid ${sel ? 'var(--accent)' : 'var(--border)'}; background:${sel ? 'rgba(107,138,255,0.12)' : 'var(--bg-sidebar)'}; font-size:13px; line-height:1.4;">${esc(opt)}</div>`;
+              }).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:22px; padding-top:18px; border-top:1px solid var(--border);">
+        <button onclick="submitQuizM1()" ${answered < total ? 'disabled' : ''}
+          style="width:100%; padding:12px 20px; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:${answered < total ? 'not-allowed' : 'pointer'}; background:${answered < total ? 'rgba(107,138,255,0.25)' : 'var(--gradient)'}; color:#fff; opacity:${answered < total ? 0.6 : 1};">
+          ${answered < total ? `Ответьте на все вопросы (${answered}/${total})` : 'Завершить квиз →'}
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+function pickQuiz(qi, oi) {
+  STATE.quizDraft[qi] = oi;
+  renderQuizModal();
+}
+
+function submitQuizM1() {
+  if (Object.keys(STATE.quizDraft).length < QUIZ_M1.length) return;
+  let correct = 0;
+  QUIZ_M1.forEach((item, qi) => { if (STATE.quizDraft[qi] === item.correct) correct++; });
+  STATE.quizM1 = { completedAt: new Date().toISOString(), correct: correct, total: QUIZ_M1.length };
+  STATE.firedTriggers.add('m1.glossary');
+  maybeCompleteDiagnostic();
+  saveState();
+  closeModal();
+  render();
+  alert(`Квиз завершён: ${correct} из ${QUIZ_M1.length} верных. Это ваш входной baseline — на выходе из модуля сравним.`);
+}
+
+/* --- Завершение входной диагностики М1 --- */
+function diagnosticDone() {
+  return !!(STATE.maturity && STATE.maturity.completedAt) && !!(STATE.quizM1 && STATE.quizM1.completedAt);
+}
+
+function maybeCompleteDiagnostic() {
+  if (diagnosticDone()) {
+    STATE.firedTriggers.add('diag.in.M1');
+    STATE.firedTriggers.add('con.start');
+  }
+}
+
+/* --- Диагностическая карта на дашборде --- */
+function renderDiagnosticCard() {
+  const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
+  const qDone = !!(STATE.quizM1 && STATE.quizM1.completedAt);
+  const both = mDone && qDone;
+  const stepRow = (done, icon, title, desc, btn) => `
+    <div style="display:flex; align-items:flex-start; gap:14px; padding:14px 0; border-bottom:1px solid var(--border);">
+      <div style="font-size:22px; width:28px; text-align:center;">${done ? '✅' : icon}</div>
+      <div style="flex:1;">
+        <div style="font-weight:600; margin-bottom:3px;">${title}</div>
+        <div style="font-size:13px; color:var(--text-dim); line-height:1.45;">${desc}</div>
+      </div>
+      <div style="flex-shrink:0;">${btn}</div>
+    </div>`;
+  const btnStyle = (primary) => `text-decoration:none; display:inline-block; padding:9px 16px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer; border:1px solid ${primary ? 'transparent' : 'var(--border)'}; background:${primary ? 'var(--gradient)' : 'transparent'}; color:${primary ? '#fff' : 'var(--text)'};`;
+
+  const maturityBtn = mDone
+    ? `<span style="font-size:13px; color:var(--accent-green, #34d399); font-weight:600;">L${STATE.maturity.overallLevel}</span> <a href="../tools/maturity/?from=portal" style="${btnStyle(false)}">Пройти заново</a>`
+    : `<a href="../tools/maturity/?from=portal" style="${btnStyle(true)}">Пройти →</a>`;
+  const quizBtn = qDone
+    ? `<span style="font-size:13px; color:var(--accent-green, #34d399); font-weight:600;">${STATE.quizM1.correct}/${STATE.quizM1.total}</span> <button onclick="startQuizM1()" style="${btnStyle(false)}">Заново</button>`
+    : `<button onclick="startQuizM1()" style="${btnStyle(true)}">Пройти →</button>`;
+
+  return `
+    <div style="background:linear-gradient(135deg, rgba(107,138,255,0.10), rgba(167,139,250,0.06)); border:1px solid rgba(107,138,255,0.3); border-radius:16px; padding:24px 26px; margin:20px 0 28px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+        <span style="font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#06b6d4; font-weight:700;">Входная диагностика · Модуль 1</span>
+        ${both ? '<span style="margin-left:auto; font-size:12px; color:#34d399; font-weight:600;">✓ Завершена</span>' : '<span style="margin-left:auto; font-size:12px; color:#f59e0b; font-weight:600;">Выполните оба шага</span>'}
+      </div>
+      <h2 style="margin:0 0 6px; font-size:20px;">${both ? 'Диагностика пройдена — baseline зафиксирован' : 'Начните с входной диагностики'}</h2>
+      <p style="color:var(--text-dim); font-size:14px; line-height:1.5; margin-bottom:14px;">
+        ${both
+          ? 'Ваш стартовый уровень зафиксирован. На выходе из модуля сравним дельту. Можно выгрузить результат и прислать координатору программы.'
+          : 'Два шага дают измеримый baseline вашей компании и понимания: оценка зрелости и квиз понятий. Без этого нечем измерять рост.'}
+      </p>
+      ${stepRow(mDone, '📊', 'AI Maturity Self-Assessment', '6 измерений · 18 вопросов · уровень L0–L5 и радар-профиль', maturityBtn)}
+      ${stepRow(qDone, '📝', 'Входной квиз понятий', '6 вопросов по ключевым понятиям Модуля 1', quizBtn)}
+      ${both ? `<div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button onclick="exportDiagnostic()" style="${btnStyle(false)}">⬇ Выгрузить результат</button>
+        <button onclick="navigate('module', 1)" style="${btnStyle(true)}">Дальше: открыть Модуль 1 →</button>
+      </div>` : ''}
+    </div>`;
+}
+
+/* --- Экспорт результата диагностики --- */
+function exportDiagnostic() {
+  const payload = {
+    участник: STATE.user.name,
+    компания: STATE.user.company,
+    поток: 'Поток 001 · Пилотный',
+    дата_выгрузки: new Date().toISOString(),
+    входная_диагностика_M1: {
+      ai_maturity: STATE.maturity || null,
+      квиз_понятий: STATE.quizM1 || null
+    }
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safe = (STATE.user.name || 'участник').replace(/[^a-zа-яё0-9]+/gi, '_');
+  a.href = url; a.download = `AI_MBA_диагностика_${safe}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* --- Загрузка приложения --- */
+function boot() {
+  const had = loadState();
+  if (!had) {
+    // Первый вход реального участника — чистый старт
+    STATE.firedTriggers = new Set();
+    STATE.currentDay = 1;
+    STATE.currentModule = 1;
+    STATE.user = { name: '', company: '' };
+    STATE.onboarded = false;
+  }
+  syncMaturity();
+  // очистить служебные query-параметры возврата из инструмента
+  if (location.search) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
+  render();
+  if (!STATE.onboarded) showOnboarding();
+}
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
 
-render();
+boot();
 </script>
 
 </body>
