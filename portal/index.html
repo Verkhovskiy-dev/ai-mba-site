@@ -728,11 +728,11 @@ const TRIGGERS = [
   // По одному комбинированному триггеру на станцию 1 и 4 каждого модуля (по 6 точек на модуль, но в пилоте берём 2 ключевые)
   { id: "ep.1.M1", traj: "ep", title: "Станция 1 М1 · знакомство с методологией", type: ["SELF","AUTO"], desc: "Глоссарий М1 прочитан + установка Дня 1 посещена.", verifier: "Сам + Personal Tutor (по запросам терминов)", module: 1, day: 1 },
   { id: "ep.4.M1", traj: "ep", title: "Станция 4 М1 · применение к своей компании", type: ["ARTIFACT","MOD"], desc: "Worksheet «Моя компания» заполнен на 60%+ для М1 + первый агент работает.", verifier: "Pilot Companion (модератор работы со своей компанией) + Module Owner М1", module: 1, day: 4 },
-  { id: "ep.1.M2", traj: "ep", title: "Станция 1 М2 · знакомство с архитектурой", type: ["SELF","AUTO"], desc: "Глоссарий М2 прочитан, понимание 9 слоёв архитектуры.", verifier: "Сам + Personal Tutor", module: 2, day: 6 },
-  { id: "ep.4.M2", traj: "ep", title: "Станция 4 М2 · применение архитектуры", type: ["ARTIFACT","TEAM"], desc: "Federation-схема для пилота построена + MCP-сервер написан.", verifier: "Module Owner М2", module: 2, day: 9 },
-  { id: "ep.1.M3", traj: "ep", title: "Станция 1 М3 · знакомство с МЗ", type: ["SELF","AUTO"], desc: "Глоссарий М3, концепты Knowledge Graph и KPT в развёрнутом виде.", verifier: "Сам + Methodology Guardian", module: 3, day: 11 },
-  { id: "ep.4.M3", traj: "ep", title: "Станция 4 М3 · МЗ-компонент пилота", type: ["ARTIFACT","TEAM"], desc: "Ingestion-агент + application-агент работают на корпоративных данных.", verifier: "Module Owner М3", module: 3, day: 14 },
-  { id: "ep.4.M4", traj: "ep", title: "Станция 4 М4 · multi-agent пилот", type: ["ARTIFACT","MOD"], desc: "Eval-набор 50+, policy-as-code, multi-agent система работает. Eval Coach валидирует.", verifier: "Eval Coach (модератор практикумов) + Module Owner М4", module: 4, day: 19 },
+  { id: "ep.1.M4", traj: "ep", title: "Станция 1 М4 · знакомство с архитектурой", type: ["SELF","AUTO"], desc: "Глоссарий М4 прочитан, понимание 9 слоёв архитектуры.", verifier: "Сам + Personal Tutor", module: 4, day: 16 },
+  { id: "ep.4.M4", traj: "ep", title: "Станция 4 М4 · применение архитектуры", type: ["ARTIFACT","TEAM"], desc: "Federation-схема для пилота построена + MCP-сервер написан.", verifier: "Module Owner М4", module: 4, day: 19 },
+  { id: "ep.1.M2", traj: "ep", title: "Станция 1 М2 · знакомство с МЗ", type: ["SELF","AUTO"], desc: "Глоссарий М2, концепты Knowledge Graph и KPT в развёрнутом виде.", verifier: "Сам + Methodology Guardian", module: 2, day: 6 },
+  { id: "ep.4.M2", traj: "ep", title: "Станция 4 М2 · МЗ-компонент пилота", type: ["ARTIFACT","TEAM"], desc: "Ingestion-агент + application-агент работают на корпоративных данных.", verifier: "Module Owner М2", module: 2, day: 9 },
+  { id: "ep.4.M3", traj: "ep", title: "Станция 4 М3 · multi-agent пилот", type: ["ARTIFACT","MOD"], desc: "Eval-набор 50+, policy-as-code, multi-agent система работает. Eval Coach валидирует.", verifier: "Eval Coach (модератор практикумов) + Module Owner М3", module: 3, day: 14 },
   { id: "ep.4.M5", traj: "ep", title: "Станция 4 М5 · экономика пилота", type: ["ARTIFACT","TEAM"], desc: "Калькулятор токеномики + TCO/ROI на 36 мес + 3 сценария чувствительности.", verifier: "Module Owner М5", module: 5, day: 24 },
   { id: "ep.4.M6", traj: "ep", title: "Станция 4 М6 · org-дизайн пилота", type: ["ARTIFACT","TEAM"], desc: "Org-схема команды + план найма + дизайн новой операционной модели.", verifier: "Module Owner М6", module: 6, day: 29 },
   { id: "ep.4.M7", traj: "ep", title: "Станция 4 М7 · SAD пилота", type: ["ARTIFACT","TEAM"], desc: "Security Architecture Document собран из 8 разделов + red-team отчёт.", verifier: "Module Owner М7 + Security Track", module: 7, day: 34 },
@@ -743,9 +743,9 @@ const TRIGGERS = [
   // Завершение каждого модуля (9 триггеров) + старт программы
   { id: "con.start", traj: "con", title: "Старт программы · Установка Дня 1", type: ["TEAM"], desc: "Слушатель присутствовал на установке + представился когорте.", verifier: "Module Owner М1", module: 1, day: 1 },
   { id: "con.M1.done", traj: "con", title: "Модуль 1 завершён · защита пройдена", type: ["TEAM","EXPERT"], desc: "Защита Дня 5 М1 пройдена. Платформенная стратегия v0.1 защищена перед экспертами Сколково.", verifier: "Module Owner М1 + экспертная панель Сколково", module: 1, day: 5 },
-  { id: "con.M2.done", traj: "con", title: "Модуль 2 завершён · архитектура защищена", type: ["TEAM","EXPERT"], desc: "Архитектура платформы пилота защищена перед панелью ИТМО + Яндекс.", verifier: "Module Owner М2 + экспертная панель ИТМО + Яндекс", module: 2, day: 10 },
-  { id: "con.M3.done", traj: "con", title: "Модуль 3 завершён · МЗ-компонент защищён", type: ["TEAM"], desc: "МЗ-компонент пилота защищён + KPT декомпозирован.", verifier: "Module Owner М3", module: 3, day: 15 },
-  { id: "con.M4.done", traj: "con", title: "Модуль 4 завершён · Agent of the Month", type: ["TEAM","EXPERT"], desc: "Multi-agent система защищена + награждение Agent of the Month экспертами ИТМО.", verifier: "Module Owner М4 + экспертная панель ИТМО", module: 4, day: 20 },
+  { id: "con.M4.done", traj: "con", title: "Модуль 4 завершён · архитектура защищена", type: ["TEAM","EXPERT"], desc: "Архитектура платформы пилота защищена перед панелью ИТМО + Яндекс.", verifier: "Module Owner М4 + экспертная панель ИТМО + Яндекс", module: 4, day: 20 },
+  { id: "con.M2.done", traj: "con", title: "Модуль 2 завершён · МЗ-компонент защищён", type: ["TEAM"], desc: "МЗ-компонент пилота защищён + KPT декомпозирован.", verifier: "Module Owner М2", module: 2, day: 10 },
+  { id: "con.M3.done", traj: "con", title: "Модуль 3 завершён · Agent of the Month", type: ["TEAM","EXPERT"], desc: "Multi-agent система защищена + награждение Agent of the Month экспертами ИТМО.", verifier: "Module Owner М3 + экспертная панель ИТМО", module: 3, day: 15 },
   { id: "con.M5.done", traj: "con", title: "Модуль 5 завершён · экономика защищена", type: ["TEAM","EXPERT"], desc: "Защита экономики платформы перед панелью МШУ.", verifier: "Module Owner М5 + экспертная панель МШУ", module: 5, day: 25 },
   { id: "con.M6.done", traj: "con", title: "Модуль 6 завершён · оргпрограмма защищена", type: ["TEAM"], desc: "Оргпрограмма + план найма + новая операционная модель.", verifier: "Module Owner М6", module: 6, day: 30 },
   { id: "con.M7.done", traj: "con", title: "Модуль 7 завершён · SAD защищён", type: ["TEAM","EXPERT"], desc: "Security Architecture Document + compliance-карта + foresight playbook защищены перед security-экспертами.", verifier: "Module Owner М7 + security-эксперты индустрии", module: 7, day: 35 },
@@ -754,9 +754,9 @@ const TRIGGERS = [
 
   // ============ КОНСТРУКТИВ (9 триггеров — по разделам финального артефакта) ============
   { id: "c.sec1", traj: "co", title: "Раздел 1 · Стратегический контекст готов", type: ["ARTIFACT","TEAM"], desc: "Платформенная стратегия v0.1 — раздел 1 в финальной Программе.", verifier: "Module Owner М1", module: 1, day: 5 },
-  { id: "c.sec2", traj: "co", title: "Раздел 2 · Карта процессов с KPT", type: ["ARTIFACT","TEAM"], desc: "3 процесса с baseline/целевой KPT + классификация когнитивных операций.", verifier: "Module Owner М3", module: 3, day: 15 },
-  { id: "c.sec3", traj: "co", title: "Раздел 3 · Архитектура платформы", type: ["ARTIFACT","TEAM"], desc: "Диаграмма 9 слоёв + federation + MCP-каталог.", verifier: "Module Owner М2", module: 2, day: 10 },
-  { id: "c.sec4", traj: "co", title: "Раздел 4 · МЗ-компонент", type: ["ARTIFACT","TEAM"], desc: "Knowledge Graph + ingestion/application агенты + KPT-метрики.", verifier: "Module Owner М3", module: 3, day: 15 },
+  { id: "c.sec2", traj: "co", title: "Раздел 2 · Карта процессов с KPT", type: ["ARTIFACT","TEAM"], desc: "3 процесса с baseline/целевой KPT + классификация когнитивных операций.", verifier: "Module Owner М2", module: 2, day: 10 },
+  { id: "c.sec3", traj: "co", title: "Раздел 3 · Архитектура платформы", type: ["ARTIFACT","TEAM"], desc: "Диаграмма 9 слоёв + federation + MCP-каталог.", verifier: "Module Owner М4", module: 4, day: 20 },
+  { id: "c.sec4", traj: "co", title: "Раздел 4 · МЗ-компонент", type: ["ARTIFACT","TEAM"], desc: "Knowledge Graph + ingestion/application агенты + KPT-метрики.", verifier: "Module Owner М2", module: 2, day: 10 },
   { id: "c.sec5", traj: "co", title: "Раздел 5 · Команда платформы", type: ["ARTIFACT","TEAM"], desc: "Org-схема + план найма + RACI + change management.", verifier: "Module Owner М6", module: 6, day: 30 },
   { id: "c.sec6", traj: "co", title: "Раздел 6 · Унит-экономика и токеномика", type: ["ARTIFACT","TEAM"], desc: "Калькулятор пилота + TCO/ROI 36 мес + sensitivity-анализ.", verifier: "Module Owner М5", module: 5, day: 25 },
   { id: "c.sec7", traj: "co", title: "Раздел 7 · Регуляторика, Security, Governance", type: ["ARTIFACT","TEAM"], desc: "Compliance-карта + SAD из 8 разделов + red-team отчёт.", verifier: "Module Owner М7", module: 7, day: 35 },
@@ -777,17 +777,17 @@ const TRIGGERS = [
   { id: "diag.in.M1", traj: "ep", title: "Входная М1 · стратегия трансформации", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по понятиям «агентная компания», «КП», «KPT», стратегические рамки + AI Maturity Self-Assessment baseline (6 измерений). Без этого нечем измерять рост.", verifier: "Assessment Agent + Module Owner М1", module: 1, day: 1 },
   { id: "diag.out.M1", traj: "ep", title: "Выходная М1 · дельта по стратегии", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по стратегии трансформации + проверка применимости понятий к своей компании. Измеримая дельта vs входной М1.", verifier: "Assessment Agent + Module Owner М1", module: 1, day: 5 },
 
-  // М2 — Архитектура агентной платформы
-  { id: "diag.in.M2", traj: "ep", title: "Входная М2 · архитектура платформы", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по 9 слоям архитектуры, federation моделей, MCP. Baseline инженерного понимания.", verifier: "Assessment Agent + Module Owner М2", module: 2, day: 6 },
-  { id: "diag.out.M2", traj: "ep", title: "Выходная М2 · дельта по архитектуре", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по архитектуре + проектирование диаграммы 9 слоёв своего пилота. Дельта vs входной М2.", verifier: "Assessment Agent + Module Owner М2", module: 2, day: 10 },
+  // М4 — Архитектура агентной платформы
+  { id: "diag.in.M4", traj: "ep", title: "Входная М4 · архитектура платформы", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по 9 слоям архитектуры, federation моделей, MCP. Baseline инженерного понимания.", verifier: "Assessment Agent + Module Owner М4", module: 4, day: 16 },
+  { id: "diag.out.M4", traj: "ep", title: "Выходная М4 · дельта по архитектуре", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по архитектуре + проектирование диаграммы 9 слоёв своего пилота. Дельта vs входной М4.", verifier: "Assessment Agent + Module Owner М4", module: 4, day: 20 },
 
-  // М3 — Машина Знаний и СМД-методология
-  { id: "diag.in.M3", traj: "ep", title: "Входная М3 · Машина Знаний и СМД", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по Knowledge Graph, KPT, понятиям СМД-методологии. Baseline методологического аппарата.", verifier: "Assessment Agent + Methodology Guardian", module: 3, day: 11 },
-  { id: "diag.out.M3", traj: "ep", title: "Выходная М3 · дельта по МЗ", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по МЗ + декомпозиция KPT для 3 процессов + рабочий МЗ-компонент пилота.", verifier: "Assessment Agent + Module Owner М3", module: 3, day: 15 },
+  // М2 — Машина Знаний и СМД-методология
+  { id: "diag.in.M2", traj: "ep", title: "Входная М2 · Машина Знаний и СМД", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по Knowledge Graph, KPT, понятиям СМД-методологии. Baseline методологического аппарата.", verifier: "Assessment Agent + Methodology Guardian", module: 2, day: 6 },
+  { id: "diag.out.M2", traj: "ep", title: "Выходная М2 · дельта по МЗ", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по МЗ + декомпозиция KPT для 3 процессов + рабочий МЗ-компонент пилота.", verifier: "Assessment Agent + Module Owner М2", module: 2, day: 10 },
 
-  // М4 — Multi-agent + evals + safety
-  { id: "diag.in.M4", traj: "ep", title: "Входная М4 · multi-agent инженерия и evals", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по evals, blast radius, policy-as-code, multi-agent паттернам.", verifier: "Assessment Agent + Eval Coach", module: 4, day: 16 },
-  { id: "diag.out.M4", traj: "ep", title: "Выходная М4 · дельта по multi-agent", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по безопасной агентной инженерии + работающая multi-agent система с eval-набором.", verifier: "Assessment Agent + Module Owner М4", module: 4, day: 20 },
+  // М3 — Multi-agent + evals + safety
+  { id: "diag.in.M3", traj: "ep", title: "Входная М3 · multi-agent инженерия и evals", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по evals, blast radius, policy-as-code, multi-agent паттернам.", verifier: "Assessment Agent + Eval Coach", module: 3, day: 11 },
+  { id: "diag.out.M3", traj: "ep", title: "Выходная М3 · дельта по multi-agent", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по безопасной агентной инженерии + работающая multi-agent система с eval-набором.", verifier: "Assessment Agent + Module Owner М3", module: 3, day: 15 },
 
   // М5 — Unit-экономика и токеномика
   { id: "diag.in.M5", traj: "ep", title: "Входная М5 · экономика и токеномика", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по TCO, ROI, токеномике (input/output/reasoning/cached), sensitivity-анализу.", verifier: "Assessment Agent + Module Owner М5", module: 5, day: 21 },
@@ -810,11 +810,11 @@ const TRIGGERS = [
   { id: "diag.out.M9", traj: "ep", title: "Выходная М9 · итоговый замер, дельта vs М1 baseline", type: ["DIAG","AUTO","EXPERT"], desc: "Д5 модуля: финальный комплексный замер КП по всем 9 модулям + AI Maturity повторно + сравнение с baseline М1. Защитимо перед панелью CAIO.", verifier: "Assessment Agent + панель CAIO + Module Owner М9", module: 9, day: 45 },
 
   // ============ ДРУГИЕ ДИАГНОСТИЧЕСКИЕ ИНСТРУМЕНТЫ ============
-  { id: "diag.eval.M4", traj: "co", title: "Свой eval-набор студента проходит порог", type: ["DIAG","ARTIFACT"], desc: "Eval-набор слушателя (50+ кейсов) для его агента показывает ≥80% pass rate. Объективный признак готовности агента к production.", verifier: "CI/eval runner (автоматически) + Eval Coach", module: 4, day: 19 },
+  { id: "diag.eval.M3", traj: "co", title: "Свой eval-набор студента проходит порог", type: ["DIAG","ARTIFACT"], desc: "Eval-набор слушателя (50+ кейсов) для его агента показывает ≥80% pass rate. Объективный признак готовности агента к production.", verifier: "CI/eval runner (автоматически) + Eval Coach", module: 3, day: 14 },
 
   // ============ МОДЕРАЦИЯ (3 триггера) ============
   // Участие в фасилитированных групповых форматах с подтверждением модератора
-  { id: "mod.M3.odi", traj: "ep", title: "ОДИ-сессия М3 · Knowledge Graph с модератором", type: ["MOD"], desc: "Слушатель занял позицию (онтолог / методист / прагматик) на ОДИ-сессии М3 по Knowledge Graph. Methodology Guardian подтверждает активное участие.", verifier: "Methodology Guardian (модератор СМД-формата)", module: 3, day: 13 },
+  { id: "mod.M2.odi", traj: "ep", title: "ОДИ-сессия М2 · Knowledge Graph с модератором", type: ["MOD"], desc: "Слушатель занял позицию (онтолог / методист / прагматик) на ОДИ-сессии М2 по Knowledge Graph. Methodology Guardian подтверждает активное участие.", verifier: "Methodology Guardian (модератор СМД-формата)", module: 2, day: 8 },
   { id: "mod.peer_sync", traj: "soc", title: "Peer-тройка отмодерирована · 3+ синков с фасилитатором", type: ["MOD","PEER"], desc: "Cohort Manager как модератор подтверждает: тройка провела 3+ синков с правильной структурой (check-in / блокер / отчёт). Это переход от формальной группы к рабочей.", verifier: "Cohort Manager (модератор peer-троек) + 2 из 3 в тройке", module: 2, day: 12 },
   { id: "mod.M6.role_play", traj: "soc", title: "Role-play «найм CAIO» · модератор подтвердил позицию", type: ["MOD"], desc: "Слушатель сыграл одну из ролей (CEO / кандидат CAIO / член правления) в симуляции М6. Модератор role-play зафиксировал содержательную игру.", verifier: "Module Owner М6 (как модератор role-play)", module: 6, day: 28 },
 
@@ -833,12 +833,12 @@ const TRIGGERS = [
 // стрелка прорисовывается на схеме только когда этот триггер закрыт/сработал.
 const TRAJ_DEPS = [
   { fromTrigger: "s.1.troika", from: { track: "soc", day: 1, label: "Peer-тройка" }, to: { track: "ep", day: 5, label: "Peer-review" }, type: "enables" },
-  { fromTrigger: "ep.1.M1", from: { track: "ep", day: 1, label: "Методология" }, to: { track: "ep", day: 16, label: "Применение паттернов" }, type: "enables" },
+  { fromTrigger: "ep.1.M1", from: { track: "ep", day: 1, label: "Методология" }, to: { track: "ep", day: 11, label: "Применение паттернов" }, type: "enables" },
   { fromTrigger: "ep.4.M1", from: { track: "ep", day: 3, label: "KPT-упражнения" }, to: { track: "con", day: 5, label: "Раздел 1" }, type: "feeds" },
   { fromTrigger: "con.M1.done", from: { track: "con", day: 5, label: "М1 готов" }, to: { track: "con", day: 10, label: "М2 строит на этом" }, type: "requires" },
   { fromTrigger: "s.2.trust", from: { track: "soc", day: 7, label: "Гостевая CAIO" }, to: { track: "ep", day: 25, label: "Diff с экспертом" }, type: "enables" },
-  { fromTrigger: "s.2.trust", from: { track: "soc", day: 16, label: "Когорта окрепла" }, to: { track: "ep", day: 17, label: "Multi-agent peer-work" }, type: "enables" },
-  { fromTrigger: "ep.4.M4", from: { track: "ep", day: 19, label: "Blast radius" }, to: { track: "con", day: 34, label: "SAD · М7 Security" }, type: "feeds" },
+  { fromTrigger: "s.2.trust", from: { track: "soc", day: 12, label: "Когорта окрепла" }, to: { track: "ep", day: 14, label: "Multi-agent peer-work" }, type: "enables" },
+  { fromTrigger: "ep.4.M3", from: { track: "ep", day: 14, label: "Blast radius" }, to: { track: "con", day: 34, label: "SAD · М7 Security" }, type: "feeds" },
   { fromTrigger: "con.M9.done", from: { track: "soc", day: 43, label: "Внешняя панель CAIO" }, to: { track: "soc", day: 45, label: "Alumni" }, type: "leads" }
 ];
 
@@ -1055,22 +1055,9 @@ const MODULES = [
     ],
     fullSchedule: true
   },
-  { num: 2, name: "Архитектура агентной платформы", short: "Архитектура", icon: "🏗",
-    days: "6-10", partner: "ИТМО + Яндекс", status: "upcoming",
-    keyQuestion: "Из каких слоёв состоит агентная платформа и как их собрать?",
-    dayThemes: [
-      "Модельная федерация: Foundation + Model gateway",
-      "Tools layer: MCP-сервер",
-      "Memory + Retrieval",
-      "Orchestration + Multi-agent",
-      "Архитектурная сборка + Security как Layer 8"
-    ],
-    artifacts: ["Архитектура платформы пилота (9 слоёв)", "Federation-схема (4 tier-а)", "MCP-сервер для корпоративного источника", "Multi-agent система пилота"],
-    fullSchedule: true
-  },
-  { num: 3, name: "Машина Знаний на агентной платформе", short: "Машина Знаний", icon: "🧠",
-    days: "11-15", partner: "Авторский модуль", status: "upcoming",
-    keyQuestion: "Как агентная платформа становится производственной Машиной Знаний компании?",
+  { num: 2, name: "Машина Знаний на агентной платформе", short: "Машина Знаний", icon: "🧠",
+    days: "6-10", partner: "Авторский модуль", status: "upcoming",
+    keyQuestion: "Что за предмет трансформации и как агентная платформа становится производственной Машиной Знаний компании?",
     dayThemes: [
       "От концепции МЗ к её агентной реализации",
       "Knowledge ingestion: агенты-добытчики",
@@ -1081,9 +1068,9 @@ const MODULES = [
     artifacts: ["Карта МЗ компании", "Knowledge Graph пилота", "Ingestion-агент", "Application-агент", "Детальный расчёт KPT"],
     fullSchedule: true
   },
-  { num: 4, name: "Инженерия агентов и мультиагентных систем", short: "Инженерия агентов", icon: "🤖",
-    days: "16-20", partner: "ИТМО", status: "upcoming",
-    keyQuestion: "Как проектировать, строить и тестировать агентов промышленного уровня?",
+  { num: 3, name: "Инженерия агентов и мультиагентных систем", short: "Инженерия агентов", icon: "🤖",
+    days: "11-15", partner: "ИТМО", status: "upcoming",
+    keyQuestion: "Какой агент создаётся и как проектировать, строить и тестировать агентов промышленного уровня?",
     dayThemes: [
       "Паттерны инженерии + reasoning-модели",
       "Multi-agent: когда нужно",
@@ -1092,6 +1079,19 @@ const MODULES = [
       "Agent of the Month + security кульминация"
     ],
     artifacts: ["Multi-agent система пилота", "Eval-набор 50+ примеров", "Policy-as-code документ", "Sandbox-настройка"],
+    fullSchedule: true
+  },
+  { num: 4, name: "Архитектура агентной платформы", short: "Архитектура", icon: "🏗",
+    days: "16-20", partner: "ИТМО + Яндекс", status: "upcoming",
+    keyQuestion: "Из каких слоёв собрать базу под уже понятных агентов и Машину Знаний?",
+    dayThemes: [
+      "Модельная федерация: Foundation + Model gateway",
+      "Tools layer: MCP-сервер",
+      "Memory + Retrieval",
+      "Orchestration + Multi-agent",
+      "Архитектурная сборка + Security как Layer 8"
+    ],
+    artifacts: ["Архитектура платформы пилота (9 слоёв)", "Federation-схема (4 tier-а)", "MCP-сервер для корпоративного источника", "Multi-agent система пилота"],
     fullSchedule: true
   },
   { num: 5, name: "Токеномика, unit-экономика и закупочная стратегия", short: "Токеномика", icon: "💰",
@@ -1232,76 +1232,76 @@ const MODULE_1_SCHEDULE = [
 ];
 
 // Полные расписания Модулей 2-9
-const MODULE_2_SCHEDULE = [
-  { day: 6, theme: "Модельная федерация: Foundation + Model gateway", sessions: [
-    { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 2: цели, связь с М1, введение в 9 слоёв архитектуры" },
+const MODULE_4_SCHEDULE = [
+  { day: 16, theme: "Модельная федерация: Foundation + Model gateway", sessions: [
+    { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 4: цели, связь с М1, введение в 9 слоёв архитектуры" },
     { time: "09:30-11:00", type: "lecture", typeLabel: "Лекция", title: "Модельная федерация — центральный паттерн 2026. 4 tier-а: Frontier / Mid / Small-Local / Domain" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Гибрид cloud + open-source. Матрица «данные × tier × развёртывание»" },
     { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "Model gateway: routing strategies (cost/latency/sensitivity-aware), кэширование, failover" },
     { time: "16:15-17:30", type: "handson", typeLabel: "Hands-on", title: "Настройка простого model gateway с multi-tier маршрутизацией для своего пилота" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какие 4 модели я выбираю в свою федерацию и почему?" }
   ]},
-  { day: 7, theme: "Tools layer и MCP-сервер", sessions: [
+  { day: 17, theme: "Tools layer и MCP-сервер", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Tools layer: MCP как стандарт 2025-2026. Identity propagation, versioning тулзов" },
     { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Написание собственного MCP-сервера — часть 1: схемы тулзов, скелет" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Написание MCP-сервера — часть 2: подключение к агенту пилота, тестирование" },
     { time: "16:15-17:30", type: "defense", typeLabel: "Демо", title: "Demo MCP-серверов от слушателей. Обсуждение паттернов и анти-паттернов" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какие тулзы должны попасть в MCP-каталог моей платформы?" }
   ]},
-  { day: 8, theme: "Memory + Retrieval", sessions: [
+  { day: 18, theme: "Memory + Retrieval", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Архитектуры памяти агентов: working / episodic / semantic / procedural" },
     { time: "11:15-13:00", type: "lecture", typeLabel: "Лекция", title: "Современный retrieval: agentic RAG, GraphRAG, self-RAG, reranking, query decomposition" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Подключение памяти и retrieval к агенту пилота" },
     { time: "16:15-17:30", type: "agent-week", typeLabel: "Agent of the Week", title: "Еженедельная демонстрация агентов слушателей" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какой тип памяти подходит моему пилоту?" }
   ]},
-  { day: 9, theme: "Orchestration и multi-agent системы", sessions: [
+  { day: 19, theme: "Orchestration и multi-agent системы", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Паттерны оркестрации: planner-executor, hierarchical, swarm, supervisor-worker" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Multi-agent: когда нужно vs когда single-agent лучше. Решение для пилота" },
     { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Проектирование оркестрации пилота. Схема взаимодействия 2-3 агентов" },
     { time: "16:15-17:30", type: "handson", typeLabel: "Hands-on", title: "Подключение второго и третьего агента через оркестратор" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где границы автономии моих агентов?" }
   ]},
-  { day: 10, theme: "Архитектурная сборка + Security как Layer 8", sessions: [
+  { day: 20, theme: "Архитектурная сборка + Security как Layer 8", sessions: [
     { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Архитектурная сборка платформы пилота. Все 9 слоёв в единую диаграмму" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Аудит архитектуры + pre-mortem перед защитой" },
     { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Защиты архитектуры перед панелью ИТМО + Яндекс" },
     { time: "16:15-17:30", type: "defense", typeLabel: "Security check", title: "Security как Layer 8: sensitivity-aware federation, network segmentation, secrets management" },
-    { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты модуля. Контракт на 3 недели до М3" }
+    { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты модуля. Контракт на 3 недели до М5" }
   ]}
 ];
 
-const MODULE_3_SCHEDULE = [
-  { day: 11, theme: "От концепции МЗ к её агентной реализации", sessions: [
-    { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 3: концепт МЗ как агентной платформы. KPT как метрика" },
+const MODULE_2_SCHEDULE = [
+  { day: 6, theme: "От концепции МЗ к её агентной реализации", sessions: [
+    { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 2: концепт МЗ как агентной платформы. KPT как метрика" },
     { time: "09:30-11:00", type: "lecture", typeLabel: "Лекция", title: "От концепции МЗ к её агентной реализации. Knowledge Graph как backbone" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Картирование МЗ моей компании. Источники, узкие места" },
     { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "Knowledge Graph и онтологии для агентов. Graph + Vector в agentic retrieval" },
     { time: "16:15-17:30", type: "workshop", typeLabel: "Практикум", title: "Проектирование Knowledge Graph пилота: entity, отношения, связи с данными" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Что в моей МЗ — самое узкое место?" }
   ]},
-  { day: 12, theme: "Knowledge ingestion: агенты-добытчики", sessions: [
+  { day: 7, theme: "Knowledge ingestion: агенты-добытчики", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Knowledge ingestion: агенты, превращающие неструктурированные данные в структурированные знания" },
     { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Построение ingestion-агента для одного источника знаний компании — часть 1" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Ingestion-агент часть 2: подключение к Knowledge Graph, валидация качества" },
     { time: "16:15-17:30", type: "guest", typeLabel: "Гостевая", title: "Q&A с практиком, построившим агентную МЗ в крупной компании" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какие источники знаний войдут в МЗ моей платформы?" }
   ]},
-  { day: 13, theme: "Knowledge application: агенты-исполнители", sessions: [
+  { day: 8, theme: "Knowledge application: агенты-исполнители", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Knowledge application: связка retrieval + reasoning + action. Минимизация галлюцинаций через grounding" },
     { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Построение application-агента — часть 1: агент использует МЗ для решения задачи" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Application-агент часть 2: подключение к ingestion-агенту через МЗ, end-to-end тест" },
     { time: "16:15-17:30", type: "agent-week", typeLabel: "Agent of the Week", title: "Демонстрация агентов слушателей" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где галлюцинации критичны и как их предотвратить?" }
   ]},
-  { day: 14, theme: "KPT как продуктовая метрика", sessions: [
+  { day: 9, theme: "KPT как продуктовая метрика", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "KPT детально: декомпозиция по этапам (wait/active/handover/rework). Целевые KPT для классов задач" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Расчёт детального KPT пилота — цикл 2 (углубление от М1)" },
     { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "KPT × бизнес-метрики: связка с cycle time, throughput, conversion. Подготовка к М5" },
     { time: "16:15-17:30", type: "workshop", typeLabel: "Воркшоп", title: "Защита KPT-моделей в малых группах. Реалистичность оценок" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Реалистична ли моя целевая KPT?" }
   ]},
-  { day: 15, theme: "Сборка МЗ-компонента + классификация знаний", sessions: [
+  { day: 10, theme: "Сборка МЗ-компонента + классификация знаний", sessions: [
     { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Сборка МЗ-компонента: ingestion + application + KPT в единую архитектуру" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Pre-mortem МЗ-компонента. Подготовка к защите" },
     { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Защиты МЗ-компонентов перед экспертами" },
@@ -1310,37 +1310,37 @@ const MODULE_3_SCHEDULE = [
   ]}
 ];
 
-const MODULE_4_SCHEDULE = [
-  { day: 16, theme: "Паттерны инженерии агентов + reasoning-модели", sessions: [
-    { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 4: от «работает» к «работает промышленно»" },
+const MODULE_3_SCHEDULE = [
+  { day: 11, theme: "Паттерны инженерии агентов + reasoning-модели", sessions: [
+    { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 3: от «работает» к «работает промышленно»" },
     { time: "09:30-11:00", type: "lecture", typeLabel: "Лекция", title: "Паттерны инженерии: ReAct, Plan-and-Execute, Reflexion, ToT, Chain of Verification" },
     { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Применение 2-3 паттернов к своему агенту пилота. Сравнение качества" },
     { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "Reasoning-модели vs instruction-following. o-family, extended thinking" },
     { time: "16:15-17:30", type: "workshop", typeLabel: "Практикум", title: "Когда использовать reasoning в своём пилоте: где оправдан, где overkill" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какие паттерны сработали в моём агенте лучше всего?" }
   ]},
-  { day: 17, theme: "Multi-agent: когда нужно, когда нет", sessions: [
+  { day: 12, theme: "Multi-agent: когда нужно, когда нет", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Multi-agent: хороший single-agent почти всегда лучше посредственного multi-agent" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Решение для пилота: single vs multi-agent с обоснованием" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Проектирование multi-agent системы пилота (или углубление single)" },
     { time: "16:15-17:30", type: "handson", typeLabel: "Hands-on", title: "Реализация multi-agent: оркестрация, координация, передача контекста" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где конфликты между агентами возникают и как разрешать?" }
   ]},
-  { day: 18, theme: "Evals-driven development", sessions: [
+  { day: 13, theme: "Evals-driven development", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Evals-driven dev: новая парадигма. Eval-наборы как спецификация. Online/offline эвалы" },
     { time: "11:15-13:00", type: "lecture", typeLabel: "Лекция", title: "Инструменты эвалов: Braintrust, Patronus, Promptfoo. Регрессионные сьюты" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Построение eval-набора для агента: минимум 50 примеров с покрытием critical paths" },
     { time: "16:15-17:30", type: "agent-week", typeLabel: "Agent of the Week", title: "Демонстрация агентов слушателей" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Что показал мой eval-сет о моём агенте?" }
   ]},
-  { day: 19, theme: "Blast radius и policy-as-code", sessions: [
+  { day: 14, theme: "Blast radius и policy-as-code", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Blast radius: главное отличие агентов от LLM. Классификация действий, audit trail" },
     { time: "11:15-13:00", type: "lecture", typeLabel: "Лекция", title: "Policy-as-code и HITL-классы. Sandboxing и dry-run. Расследование инцидентов" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Policy-as-code для своего пилота: классификация действий, реализация HITL-gates" },
     { time: "16:15-17:30", type: "handson", typeLabel: "Hands-on", title: "Sandboxing и тестирование blast radius. Dry-run перед production" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Что в blast radius моего агента самое опасное?" }
   ]},
-  { day: 20, theme: "Agent of the Month + защита инженерных решений", sessions: [
+  { day: 15, theme: "Agent of the Month + защита инженерных решений", sessions: [
     { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Сборка инженерных артефактов: eval-набор + policy-as-code + multi-agent схема" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Подготовка к Agent of the Month: показательная демонстрация" },
     { time: "14:00-16:00", type: "defense", typeLabel: "Демо", title: "Agent of the Month: финальные демонстрации перед панелью ИТМО + магистрантов" },
@@ -2273,8 +2273,8 @@ function renderLibrary() {
     <div class="library-section">
       <h3>Учебные пакеты по модулям</h3>
       <div class="library-row"><span class="name">📖 Глоссарий Модуля 1 · 65 терминов</span><span class="meta">М1 · 822 строки</span></div>
-      <div class="library-row"><span class="name">📖 Глоссарий Модуля 2 · 68 терминов</span><span class="meta">М2 · 901 строка</span></div>
-      <div class="library-row" style="opacity: 0.5;"><span class="name">📖 Глоссарии М3–М9 · в разработке</span><span class="meta">7 модулей</span></div>
+      <div class="library-row"><span class="name">📖 Глоссарий Модуля 4 · 68 терминов</span><span class="meta">М4 · 901 строка</span></div>
+      <div class="library-row" style="opacity: 0.5;"><span class="name">📖 Глоссарии М2, М3, М5–М9 · в разработке</span><span class="meta">7 модулей</span></div>
     </div>
 
     <div class="library-section">
@@ -2361,7 +2361,7 @@ function renderAgents() {
             <h3 style="margin-bottom: 4px;">Red Team Sparring Partner</h3>
             <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 8px;">5.3 · Слушательский · sandbox-only</div>
             <div style="font-size: 13px; line-height: 1.55; color: var(--text-dim);">
-              Атакует ваших агентов prompt injection, jailbreak, data exfiltration. Учит защите. Активно используется в М4 и М7.
+              Атакует ваших агентов prompt injection, jailbreak, data exfiltration. Учит защите. Активно используется в М3 и М7.
             </div>
           </div>
         </div>
@@ -3255,7 +3255,7 @@ function renderTrajectory() {
   const socStages = [
     { name: "Знакомство", dayStart: 1, dayEnd: 1, desc: "Установка Дня 1 М1, формирование peer-троек" },
     { name: "Peer-тройка", dayStart: 2, dayEnd: 12, desc: "Доверие в малой группе через 2-3 недели синков" },
-    { name: "Когорта", dayStart: 12, dayEnd: 20, desc: "Идентичность Потока 001 через М2-М3" },
+    { name: "Когорта", dayStart: 12, dayEnd: 20, desc: "Идентичность Потока 001 через М3-М4" },
     { name: "Индустрия", dayStart: 6, dayEnd: 40, desc: "Гостевые CAIO, защиты — связи с действующими директорами" },
     { name: "Партнёры", dayStart: 40, dayEnd: 45, desc: "Финальная защита перед панелью CAIO внешних компаний" },
     { name: "Alumni", dayStart: 45, dayEnd: 45, desc: "Alumni-сеть на годы вперёд (пожизненно)" }
@@ -3683,8 +3683,8 @@ function renderTrajectory() {
           9 модулей в логике концептуального движения:
         </p>
         <div style="font-size: 12px; color: var(--text-dim); line-height: 1.55;">
-          <b>М1-М3:</b> Концептуальное основание<br>
-          <b>М4-М5:</b> Инженерно-экономическая практика<br>
+          <b>М1-М3:</b> Стратегия → Машина Знаний → агенты<br>
+          <b>М4-М5:</b> Платформа и экономика<br>
           <b>М6-М7:</b> Организационно-регуляторное окружение<br>
           <b>М8-М9:</b> Операционализация и защита
         </div>
@@ -3859,9 +3859,9 @@ function renderPlanMap() {
     <div class="grid-3">
       ${[
         { num: 1, name: "Стратегический контекст и видение", src: "М1" },
-        { num: 2, name: "Карта процессов и кандидаты на агентизацию", src: "М1+М3" },
-        { num: 3, name: "Архитектура платформы по слоям", src: "М2" },
-        { num: 4, name: "МЗ-компонент платформы", src: "М3" },
+        { num: 2, name: "Карта процессов и кандидаты на агентизацию", src: "М1+М2" },
+        { num: 3, name: "Архитектура платформы по слоям", src: "М4" },
+        { num: 4, name: "МЗ-компонент платформы", src: "М2" },
         { num: 5, name: "Команда и кадровая стратегия", src: "М6" },
         { num: 6, name: "Unit-экономика и закупочная стратегия", src: "М5" },
         { num: 7, name: "Регуляторика, AI Security, Governance", src: "М7" },
