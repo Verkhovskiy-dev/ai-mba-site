@@ -993,6 +993,75 @@
   Сборка v3.1: май 2026
 </footer>
 
+<style>
+  #modules .modules-compact .module-tile {
+    position: relative; cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  #modules .modules-compact .module-tile:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+  }
+  #modules .modules-compact .module-tile .more {
+    display: block; margin-top: 14px;
+    font-size: 12px; font-weight: 600; color: var(--accent); opacity: .9;
+  }
+
+  .mod-overlay {
+    position: fixed; inset: 0; z-index: 200; display: none;
+    align-items: flex-start; justify-content: center; padding: 6vh 20px;
+    background: rgba(5, 8, 16, .8); backdrop-filter: blur(6px); overflow-y: auto;
+  }
+  .mod-overlay.open { display: flex; }
+  .mod-card {
+    width: 100%; max-width: 720px; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: 18px;
+    padding: 30px 34px 36px; box-shadow: 0 24px 60px rgba(0, 0, 0, .55);
+  }
+  .mod-card .mclose {
+    float: right; background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim); width: 34px; height: 34px; border-radius: 8px;
+    cursor: pointer; font-size: 18px; line-height: 1;
+  }
+  .mod-card .mclose:hover { color: var(--text); border-color: var(--accent); }
+  .mod-num { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; }
+  .mod-title { font-size: 24px; font-weight: 700; margin: 6px 0 4px; letter-spacing: -.02em; }
+  .mod-days { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+  .mod-metaphor {
+    font-size: 15px; font-style: italic; color: var(--text);
+    background: rgba(107, 138, 255, .08); border-left: 3px solid var(--accent);
+    padding: 12px 16px; border-radius: 8px; margin-bottom: 18px;
+  }
+  .mod-card p { color: var(--text-dim); font-size: 15px; margin-bottom: 14px; }
+  .mod-h {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--text-dim); margin: 22px 0 12px;
+  }
+  .mod-shift { display: flex; gap: 10px; flex-wrap: wrap; }
+  .mod-shift .from, .mod-shift .to {
+    flex: 1; min-width: 200px; border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px; font-size: 13.5px; line-height: 1.5;
+  }
+  .mod-shift .from { color: var(--text-muted); }
+  .mod-shift .to { color: var(--text); border-color: var(--accent); background: rgba(107, 138, 255, .06); }
+  .mod-shift .lbl { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; color: var(--text-muted); }
+  .mod-art { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .mod-art li { position: relative; padding-left: 24px; font-size: 14px; color: var(--text); }
+  .mod-art li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-green); font-weight: 700; }
+  .mod-cta { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .mod-cta a {
+    text-decoration: none; font-size: 13px; font-weight: 600;
+    padding: 10px 18px; border-radius: 9px;
+  }
+  .mod-cta .primary { background: var(--gradient); color: #fff; }
+  .mod-cta .ghost { border: 1px solid var(--border); color: var(--text); }
+</style>
+
+<div class="mod-overlay" id="modOverlay">
+  <div class="mod-card" id="modCard"></div>
+</div>
+
 <script>
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -1001,6 +1070,155 @@
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    });
+  });
+
+  /* ── Описания модулей: клик по плитке открывает модалку ── */
+  const MODULES = {
+    1: {
+      num: '01', title: 'Стратегия трансформации в агентную компанию', days: 'Дни 1–5 · Сколково',
+      metaphor: 'Агентный ИИ — двигатель, но двигатель ещё не машина.',
+      body: [
+        'Большинство компаний внедряют ИИ как «двигатель» — мощный, но прикрученный к старой конструкции. Двигатель ещё не машина: без шасси, трансмиссии и руля он никуда не везёт.',
+        'Модуль о том, зачем компании агентная платформа и как позиционировать её на уровне стратегии, а не разрозненных пилотов. Вы различаете, где ИИ создаёт реальную ценность, а где — театр эффективности, и выбираете объект трансформации.',
+        'ROI считается не от интереса к теме, а от защитимого экономического эффекта перед CEO/CFO. Если эффект нельзя посчитать — объект выбран плохо.'
+      ],
+      shift: { from: '«Мы внедряем ИИ в процессы»', to: '«Мы перестраиваем компанию вокруг агентной платформы»' },
+      artifact: ['Стратегическая карта трансформации', 'Выбранный объект пилота', 'Baseline AI-зрелости (L0–L5)', 'Расчёт потенциального ROI', 'Черновик worksheet «Моя компания»']
+    },
+    2: {
+      num: '02', title: 'Архитектура агентной платформы', days: 'Дни 6–10 · ИТМО + Яндекс',
+      metaphor: 'Нельзя строить платформу как самострой из API.',
+      body: [
+        'Соединить пару API скриптами — это не платформа, а самострой. Он рушится при первой же нагрузке, смене модели или требовании безопасности.',
+        'Модуль о том, из каких слоёв состоит агентная производственная платформа и как собрать их в управляемую систему: оркестрация, агенты, инструменты, память, данные, наблюдаемость, безопасность.',
+        'Вы проектируете архитектурный контур своей платформы и учитесь осознанно проходить развилки: build/buy, выбор моделей, границы слоёв.'
+      ],
+      shift: { from: '«У нас есть интеграции с ИИ»', to: '«У нас есть архитектура платформы со слоями и контрактами»' },
+      artifact: ['Диаграмма слоёв платформы', 'Карта компонентов', 'Решения по ключевым развилкам', 'Реестр интерфейсов', 'Черновик security-границ']
+    },
+    3: {
+      num: '03', title: 'Машина Знаний на агентной платформе', days: 'Дни 11–15 · Авторский модуль',
+      metaphor: 'Компания без Машины Знаний — организм без нервной системы.',
+      body: [
+        'Органы есть, но сигналы не проходят, а реакции случайны. Без Машины Знаний компания не производит решения как поток — только разовые ответы.',
+        'Модуль о том, как платформа превращается в производственную Машину Знаний. Вводится новая единица анализа — KPT (пропускная способность производства знания).',
+        'Вы раскладываете ключевой процесс на этапы и считаете, сколько знания он производит за единицу времени и стоимости — и где узкие места.'
+      ],
+      shift: { from: '«ИИ помогает отдельным сотрудникам»', to: '«Машина Знаний производит решения как поток»' },
+      artifact: ['Карта процесса производства знания', 'Baseline и целевой KPT', 'Декомпозиция по этапам', 'Карта узких мест', 'Гипотезы автоматизации']
+    },
+    4: {
+      num: '04', title: 'Инженерия агентов и мультиагентных систем', days: 'Дни 16–20 · ИТМО',
+      metaphor: 'Агент без eval и контроля — не сотрудник, а риск.',
+      body: [
+        'Промпт, который «вроде работает», в проде превращается в неуправляемый риск. Цифровой сотрудник без проверок — это не сотрудник.',
+        'Модуль о том, как строить агентов промышленного уровня: инструменты, память, многошаговые сценарии, мультиагентные системы — и как доказывать их качество.',
+        'Центральная дисциплина — evals: измеримые наборы проверок, без которых агента нельзя выпускать. Вы собираете агента руками и закрываете его eval-набором.'
+      ],
+      shift: { from: '«Мы написали промпт, который работает»', to: '«У нас есть агент с eval, контролем и границами»' },
+      artifact: ['Рабочий прототип агента', 'Eval-набор', 'Описание инструментов и памяти', 'Карта режимов отказа', 'План улучшения качества']
+    },
+    5: {
+      num: '05', title: 'Токеномика и закупочная стратегия платформы', days: 'Дни 21–25 · МШУ',
+      metaphor: 'Экономика ИИ начинается не с ROI, а с цены мышления.',
+      body: [
+        'Прежде чем считать ROI-презентацию, нужно понять цену мышления — стоимость каждого вызова, токена и шага рассуждения. Иначе экономика платформы — иллюзия.',
+        'Модуль о токеномике и закупочной стратегии: как устроена себестоимость агентных процессов и как ею управлять. Это FinOps для агентов.',
+        'Вы строите экономическую модель своей платформы: считаете стоимость единицы знания, подбираете модели под задачи, обосновываете закупки.'
+      ],
+      shift: { from: '«ИИ — это статья расходов на лицензии»', to: '«У платформы есть токеномика и управляемая себестоимость»' },
+      artifact: ['Экономическая модель платформы', 'Стоимость единицы знания', 'Стратегия выбора моделей', 'План закупок', 'Сценарии масштабирования затрат']
+    },
+    6: {
+      num: '06', title: 'Орг-дизайн и трансформация под платформу', days: 'Дни 26–30 · Сколково',
+      metaphor: 'Нельзя внедрить агентов в старую организационную коробку.',
+      body: [
+        'Старая структура отторгает агентов как чужеродное тело: непонятно, кто владеет, кто отвечает, кто принимает решения. Технология ломается об организацию.',
+        'Модуль о том, как устроить команду и перевести компанию на agent-augmented модель: роли, ответственность, процессы принятия решений, взаимодействие людей и агентов.',
+        'Вы проектируете организационную машину под платформу и план перехода — с честной оценкой сопротивления.'
+      ],
+      shift: { from: '«Добавим ИИ-инструменты сотрудникам»', to: '«Перестроим организацию под человеко-агентную работу»' },
+      artifact: ['Целевой орг-дизайн', 'Карта ролей и ответственности', 'Модель взаимодействия человек-агент', 'План перехода', 'Карта рисков сопротивления']
+    },
+    7: {
+      num: '07', title: 'Регуляторика, AI Security, foresight', days: 'Дни 31–35 · Внешние эксперты',
+      metaphor: 'Агентная платформа без безопасности — поверхность атаки.',
+      body: [
+        'Без безопасности платформа — это не актив, а большая поверхность атаки: prompt injection, утечки данных, неконтролируемые действия агентов.',
+        'Модуль о том, как держать платформу в правовом поле и защищённой: threat modeling, классификация данных, контроль доступа, red teaming, комплаенс.',
+        'Параллельно — foresight: как видеть горизонт 5–10 лет и не строить под уже устаревшую реальность. Здесь кульминация сквозного трека Security.'
+      ],
+      shift: { from: '«Безопасность добавим потом»', to: '«Security и регуляторика заложены в архитектуру с первого дня»' },
+      artifact: ['Threat model', 'Классификация данных', 'Security controls', 'Runbook инцидентов', 'Red-team отчёт', 'Roadmap зрелости']
+    },
+    8: {
+      num: '08', title: 'AgentOps и операционная модель платформы', days: 'Дни 36–40 · Яндекс',
+      metaphor: 'Агент в проде — это не проект, а операционная обязанность.',
+      body: [
+        'Запустить агента в прод — не финал проекта, а начало операционной обязанности: его нужно наблюдать, чинить, оплачивать и отвечать за него.',
+        'Модуль об операционной модели платформы: жизненный цикл агента, observability, FinOps, governance, управление инцидентами. Прямая параллель с DevOps/MLOps.',
+        'Вы разбираете реальные инциденты и FinOps-данные программы и строите операционную модель своей платформы. Здесь кульминация сквозного трека AgentOps.'
+      ],
+      shift: { from: '«Мы сделали и запустили агента»', to: '«Мы эксплуатируем платформу как промышленный продукт»' },
+      artifact: ['Операционная модель платформы', 'Дашборд observability', 'FinOps-контур', 'Governance-политики', 'Incident runbook']
+    },
+    9: {
+      num: '09', title: 'Защита программы платформы', days: 'Дни 41–45 · Все партнёры + панель CAIO',
+      metaphor: 'Защищается не стратегия, а готовность возглавить трансформацию.',
+      body: [
+        'На финале защищается не красивая стратегия, а ваша готовность лично возглавить трансформацию компании в агентную.',
+        'Модуль-кульминация: вы собираете всё в защитимую Программу платформы и защищаете её перед панелью CAIO и партнёров.',
+        'Любое утверждение — с расчётом, гипотезой, данными или демонстрацией. Это переход в позицию директора платформы.'
+      ],
+      shift: { from: '«Я понимаю, как работает ИИ»', to: '«Я готов возглавить построение агентной платформы компании»' },
+      artifact: ['Программа платформы (сводный артефакт)', 'Защищённый ROI', 'Связка: архитектура + экономика + security + AgentOps', 'Дорожная карта', 'Питч для совета директоров']
+    }
+  };
+
+  function openModule(n) {
+    const m = MODULES[n];
+    if (!m) return;
+    document.getElementById('modCard').innerHTML =
+      '<button class="mclose" onclick="closeModule()" aria-label="Закрыть">×</button>' +
+      '<div class="mod-num">МОДУЛЬ ' + m.num + '</div>' +
+      '<div class="mod-title">' + m.title + '</div>' +
+      '<div class="mod-days">' + m.days + '</div>' +
+      '<div class="mod-metaphor">' + m.metaphor + '</div>' +
+      m.body.map(p => '<p>' + p + '</p>').join('') +
+      '<div class="mod-h">Главный поворот</div>' +
+      '<div class="mod-shift">' +
+        '<div class="from"><span class="lbl">Было</span>' + m.shift.from + '</div>' +
+        '<div class="to"><span class="lbl">Должно стать</span>' + m.shift.to + '</div>' +
+      '</div>' +
+      '<div class="mod-h">Что соберёте за модуль</div>' +
+      '<ul class="mod-art">' + m.artifact.map(a => '<li>' + a + '</li>').join('') + '</ul>' +
+      '<div class="mod-cta">' +
+        '<a class="primary" href="portal/">Открыть портал слушателя</a>' +
+        '<a class="ghost" href="tools/maturity/">Оценить зрелость компании</a>' +
+      '</div>';
+    document.getElementById('modOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModule() {
+    document.getElementById('modOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('modOverlay').addEventListener('click', (e) => {
+    if (e.target.id === 'modOverlay') closeModule();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModule(); });
+
+  document.querySelectorAll('#modules .modules-compact .module-tile').forEach((tile, i) => {
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
+    const hint = document.createElement('div');
+    hint.className = 'more';
+    hint.textContent = 'Подробнее →';
+    tile.appendChild(hint);
+    tile.addEventListener('click', () => openModule(i + 1));
+    tile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModule(i + 1); }
     });
   });
 </script>
