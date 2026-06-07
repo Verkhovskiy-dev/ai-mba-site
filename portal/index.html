@@ -679,6 +679,11 @@
   <div class="modal" id="modal-content" onclick="event.stopPropagation()"></div>
 </div>
 
+<button id="tutor-fab" onclick="openTutor()" title="Спросить ИИ-тьютора"
+  style="position:fixed; right:24px; bottom:24px; z-index:50; display:flex; align-items:center; gap:10px; padding:13px 18px; border:none; border-radius:999px; background:linear-gradient(135deg,#6b8aff,#a78bfa); color:#fff; font-weight:600; font-size:14px; cursor:pointer; box-shadow:0 8px 24px rgba(107,138,255,0.4);">
+  <span style="font-size:18px;">🤖</span> Спросить тьютора
+</button>
+
 <script>
 /* ============================================================
    ДАННЫЕ
@@ -4262,6 +4267,122 @@ function exportDiagnostic() {
   a.href = url; a.download = `AI_MBA_диагностика_${safe}.json`;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+/* ============================================================
+   ИИ-ТЬЮТОР (контекстный помощник пилота, без бэкенда)
+   ============================================================ */
+STATE.tutorLog = [];
+
+function tutorNextStep() {
+  const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
+  const qDone = !!(STATE.quizM1 && STATE.quizM1.completedAt);
+  if (!mDone && !qDone) {
+    return 'Сейчас ваш шаг — <strong>входная диагностика Модуля 1</strong>. Пройдите два шага на дашборде: 1) <em>AI Maturity Self-Assessment</em> (6 измерений) и 2) <em>входной квиз понятий</em>. Это задаёт baseline, без которого нельзя измерить ваш рост.';
+  }
+  if (mDone && !qDone) {
+    return 'Хорошо, оценку зрелости вы прошли. Остался <strong>входной квиз понятий</strong> — это 5 минут. Нажмите «Пройти» в карточке диагностики на дашборде.';
+  }
+  if (!mDone && qDone) {
+    return 'Квиз пройден. Остался <strong>AI Maturity Self-Assessment</strong> — оцените зрелость компании по 6 измерениям. Кнопка «Пройти» в карточке диагностики.';
+  }
+  // оба готовы
+  const lvl = STATE.maturity.overallLevel;
+  const gaps = (STATE.maturity.topGaps || []).map(g => g.name).join(', ');
+  return `Входная диагностика завершена — ваш уровень <strong>L${lvl}</strong>. Главные разрывы: <strong>${esc(gaps || '—')}</strong>.<br><br>Дальше: <br>1) Откройте <strong>Модуль 1</strong> и изучите расписание текущего дня и упражнения.<br>2) Начните заполнять сквозной артефакт <strong>worksheet «Моя компания»</strong> по разделам стратегии.<br>3) Сфокусируйтесь на разрывах выше — именно туда направьте первую волну изменений.<br>4) Не забудьте выгрузить результат диагностики и прислать координатору.`;
+}
+
+function tutorAnswer(text) {
+  const t = (text || '').toLowerCase();
+  const has = (...arr) => arr.some(w => t.includes(w));
+
+  if (has('что делать', 'что дальше', 'дальше', 'с чего начать', 'начать', 'next', 'делать'))
+    return tutorNextStep();
+  if (has('kpt', 'кпт'))
+    return 'KPT — ключевая метрика программы: пропускная способность производства знания процессом (сколько решений/единиц знания процесс производит за единицу времени и стоимости). В программе вы считаете <strong>baseline и целевой KPT</strong> и декомпозируете его по этапам процесса. Это связывает Машину Знаний с экономикой платформы.';
+  if (has('l0', 'l5', 'уровн', 'maturity', 'зрелост'))
+    return 'AI Maturity Index — шкала зрелости из 6 уровней: <strong>L0</strong> (ИИ как личная инициатива) → <strong>L1–L2</strong> (отдельные инициативы и стратегия для одной функции) → <strong>L3</strong> (корпоративная ИИ-стратегия) → <strong>L4</strong> (бизнес частично основан на ИИ) → <strong>L5</strong> (agent-augmented enterprise: бизнес-модель невозможна без агентов). Диагностика оценивает вас по 6 измерениям: стратегия, данные, технологии, люди, процессы, культура.';
+  if (has('агентн', 'компани'))
+    return 'Агентная компания — это не та, что «использует ИИ», а та, чьи <strong>бизнес-модель и операции невозможны без автономных агентов</strong>. Программа учит строить такую агентную производственную платформу и готовит директоров (CAIO), которые ею управляют.';
+  if (has('квиз', 'тест'))
+    return 'Входной квиз — 6 вопросов по понятиям Модуля 1 (агентная компания, формула программы, уровни зрелости, AgentOps). Это <em>baseline</em>, отвечайте как понимаете сейчас — на выходе из модуля сравним дельту. Открыть: карточка диагностики на дашборде.';
+  if (has('worksheet', 'моя компания', 'артефакт'))
+    return 'Worksheet «Моя компания» — сквозной артефакт программы. Вы наполняете его от модуля к модулю: стратегический контекст, карта процессов с KPT, архитектура платформы и т.д. К финалу из него собирается защитимая «Программа платформы». Загляните в раздел «Библиотека».';
+  if (has('калибров', 'прогноз', 'brier'))
+    return 'Калибровка прогнозов — сквозная практика на все 9 месяцев. Вы делаете датируемые прогнозы и считаете Brier score, тренируя честную оценку уверенности. Это главная эпистемологическая дисциплина программы.';
+  if (has('peer', 'тройк', 'группа'))
+    return 'Peer-тройка — ваша группа из 3 слушателей с еженедельным синком по понедельникам (check-in / блокер / отчёт). Это переход от формальной группы к рабочей: туда выносят реальные блокеры компании.';
+  if (has('тьютор', 'agent', 'агент', 'помощ'))
+    return 'Я — Personal Tutor в пилотном режиме: подсказываю следующий шаг по вашему прогрессу и объясняю понятия программы. Полноценный разговорный ИИ-тьютор подключится с платформой (Этап 2). А пока спросите «что мне делать дальше?».';
+
+  // фолбэк
+  return `Пока я отвечаю на типовые вопросы пилота и подсказываю следующий шаг. По вашему прогрессу:<br><br>${tutorNextStep()}<br><br><span style="color:var(--text-muted); font-size:12px;">Полноценный разговорный ИИ-тьютор появится с платформой программы (Этап 2).</span>`;
+}
+
+function openTutor() {
+  if (!STATE.tutorLog.length) {
+    const name = (STATE.user.name || '').split(' ')[0] || 'коллега';
+    STATE.tutorLog.push({ role: 'tutor', html: `Здравствуйте, ${esc(name)}! Я ваш Personal Tutor. Спросите меня «что мне делать дальше?» или о понятиях программы.<br><br>${tutorNextStep()}` });
+  }
+  renderTutor();
+}
+
+function renderTutor() {
+  const chips = ['Что мне делать дальше?', 'Что такое KPT?', 'Объясни уровни L0–L5', 'Что такое агентная компания?', 'Что такое worksheet «Моя компания»?'];
+  const msgs = STATE.tutorLog.map(m => {
+    if (m.role === 'user') {
+      return `<div style="align-self:flex-end; max-width:85%; background:var(--accent); color:#fff; padding:10px 14px; border-radius:14px 14px 4px 14px; font-size:14px; line-height:1.5;">${esc(m.html)}</div>`;
+    }
+    return `<div style="align-self:flex-start; max-width:90%; background:var(--bg-sidebar); border:1px solid var(--border); color:var(--text); padding:11px 15px; border-radius:14px 14px 14px 4px; font-size:14px; line-height:1.55;"><span style="font-size:13px;">🤖</span> ${m.html}</div>`;
+  }).join('');
+
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div style="margin-top:2px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+        <span style="font-size:22px;">🤖</span>
+        <div>
+          <div style="font-weight:700; font-size:17px;">Personal Tutor</div>
+          <div style="font-size:11px; color:var(--text-muted);">Пилотный помощник · подсказывает по вашему прогрессу</div>
+        </div>
+      </div>
+      <div id="tutor-msgs" style="display:flex; flex-direction:column; gap:10px; margin:16px 0; max-height:46vh; overflow-y:auto; padding-right:4px;">
+        ${msgs}
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:7px; margin-bottom:12px;">
+        ${chips.map(c => `<button onclick="tutorAsk('${c.replace(/'/g, "\\'")}')" style="padding:7px 11px; border-radius:999px; border:1px solid var(--border); background:transparent; color:var(--text-dim); font-size:12px; cursor:pointer;">${esc(c)}</button>`).join('')}
+      </div>
+      <div style="display:flex; gap:8px;">
+        <input id="tutor-input" type="text" placeholder="Спросите тьютора…" onkeydown="if(event.key==='Enter')tutorSend()"
+          style="flex:1; padding:11px 14px; background:var(--bg-sidebar); border:1px solid var(--border); border-radius:10px; color:var(--text); font-size:14px;">
+        <button onclick="tutorSend()" style="padding:11px 18px; border:none; border-radius:10px; background:var(--gradient); color:#fff; font-weight:600; cursor:pointer;">→</button>
+      </div>
+    </div>
+  `);
+  setTimeout(() => {
+    const box = document.getElementById('tutor-msgs');
+    if (box) box.scrollTop = box.scrollHeight;
+    const inp = document.getElementById('tutor-input');
+    if (inp) inp.focus();
+  }, 40);
+}
+
+function tutorAsk(text) {
+  const q = (text || '').trim();
+  if (!q) return;
+  STATE.tutorLog.push({ role: 'user', html: q });
+  STATE.tutorLog.push({ role: 'tutor', html: tutorAnswer(q) });
+  STATE.firedTriggers.add('m1.tutor');
+  saveState();
+  renderTutor();
+}
+
+function tutorSend() {
+  const inp = document.getElementById('tutor-input');
+  if (!inp) return;
+  const v = inp.value;
+  inp.value = '';
+  tutorAsk(v);
 }
 
 /* --- Загрузка приложения --- */
