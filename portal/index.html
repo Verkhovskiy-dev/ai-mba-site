@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI MBA · Портал слушателя</title>
-<meta name="description" content="Портал слушателя AI MBA — режим диагностики: входная оценка зрелости, квиз понятий, движение по модулям.">
+<title>AI MBA · Мой старт</title>
+<meta name="description" content="Операционная точка входа слушателя AI MBA: карта программы, проектный трек, тьютор онбординга, сообщество.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
@@ -267,6 +267,80 @@
   .quick-link .icon { font-size: 22px; margin-bottom: 8px; }
   .quick-link .name { font-weight: 600; margin-bottom: 4px; font-size: 14px; }
   .quick-link .desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+  /* HUB — операционная точка входа */
+  .hub-hero { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; }
+  .hub-hero-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hub-pill { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; min-width: 88px; }
+  .hub-pill .n { font-size: 20px; font-weight: 800; font-family: ui-monospace, Menlo, monospace; }
+  .hub-pill .l { font-size: 11px; color: var(--text-muted); }
+  .hub-section { margin-top: 36px; }
+  .hub-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .hub-section-head h2 { margin: 0; font-size: 22px; }
+  .hub-section-head p { margin: 0; font-size: 13px; color: var(--text-dim); max-width: 520px; }
+
+  .program-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 1100px) { .program-map { grid-template-columns: repeat(2, 1fr); } }
+  .module-tile {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px; cursor: pointer; transition: all 0.15s; position: relative; overflow: hidden;
+  }
+  .module-tile:hover { background: var(--bg-card-hover); border-color: rgba(107,138,255,0.35); transform: translateY(-1px); }
+  .module-tile.current { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(107,138,255,0.2); }
+  .module-tile.expanded { border-color: var(--accent); background: rgba(107,138,255,0.06); }
+  .module-tile .mt-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .module-tile .mt-icon { font-size: 22px; }
+  .module-tile .mt-num { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+  .module-tile .mt-name { font-size: 13px; font-weight: 600; line-height: 1.35; flex: 1; }
+  .module-tile .mt-days { font-size: 11px; color: var(--text-muted); }
+  .module-tile .mt-bar { height: 5px; background: var(--bg); border-radius: 99px; overflow: hidden; margin-top: 8px; }
+  .module-tile .mt-bar-fill { height: 100%; border-radius: 99px; transition: width 0.3s; }
+  .module-tile .mt-pct { font-size: 11px; color: var(--text-muted); margin-top: 5px; display: flex; justify-content: space-between; }
+  .module-detail-panel {
+    margin-top: 14px; background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; animation: fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  .project-assembly { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; overflow-x: auto; }
+  .project-flow { display: flex; align-items: stretch; gap: 0; min-width: max-content; padding-bottom: 4px; }
+  .project-stage { flex: 0 0 150px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); margin-right: 8px; }
+  .project-stage.done { border-color: rgba(52,211,153,0.45); background: rgba(52,211,153,0.06); }
+  .project-stage.active { border-color: rgba(107,138,255,0.5); background: rgba(107,138,255,0.08); }
+  .project-stage .ps-sec { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .project-stage .ps-title { font-size: 12px; font-weight: 600; line-height: 1.35; margin-bottom: 6px; }
+  .project-stage .ps-mod { font-size: 10px; color: var(--text-muted); }
+  .project-arrow { color: var(--text-muted); font-size: 18px; align-self: center; margin-right: 8px; }
+  .project-final {
+    flex: 0 0 180px; padding: 14px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(107,138,255,0.15), rgba(167,139,250,0.08));
+    border: 1px solid rgba(107,138,255,0.35); align-self: stretch;
+  }
+  .project-layers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+  .project-layer { padding: 12px; border-radius: 10px; border: 1px dashed var(--border); font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+  .project-layer strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 13px; }
+
+  .hub-split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; margin-top: 36px; }
+  @media (max-width: 1100px) { .hub-split { grid-template-columns: 1fr; } }
+  .tutor-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; min-height: 420px; }
+  .tutor-msgs { flex: 1; display: flex; flex-direction: column; gap: 10px; max-height: 280px; overflow-y: auto; margin: 14px 0; padding-right: 4px; }
+  .tutor-msg-user { align-self: flex-end; max-width: 88%; background: var(--accent); color: #fff; padding: 9px 13px; border-radius: 14px 14px 4px 14px; font-size: 13px; line-height: 1.5; }
+  .tutor-msg-bot { align-self: flex-start; max-width: 92%; background: var(--bg-sidebar); border: 1px solid var(--border); padding: 10px 14px; border-radius: 14px 14px 14px 4px; font-size: 13px; line-height: 1.55; }
+  .tutor-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
+  .tutor-chip { padding: 6px 11px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-dim); font-size: 11px; cursor: pointer; }
+  .tutor-chip:hover { border-color: var(--accent); color: var(--text); }
+  .tutor-input-row { display: flex; gap: 8px; margin-top: auto; }
+  .tutor-input-row input { flex: 1; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 13px; }
+  .tutor-input-row button { padding: 10px 16px; border: none; border-radius: 10px; background: var(--gradient); color: #fff; font-weight: 600; cursor: pointer; }
+
+  .community-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 700px) { .community-grid { grid-template-columns: 1fr; } }
+  .peer-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; }
+  .peer-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: #fff; flex-shrink: 0; }
+  .peer-card.you { border-color: rgba(107,138,255,0.4); background: rgba(107,138,255,0.06); }
+  .alumni-stat { text-align: center; padding: 14px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; }
+  .alumni-stat .n { font-size: 22px; font-weight: 800; color: var(--accent); }
+  .alumni-stat .l { font-size: 11px; color: var(--text-muted); line-height: 1.35; margin-top: 4px; }
 
   /* MODULE PAGE */
   .module-header {
@@ -706,7 +780,8 @@ const STATE = {
   focusKey: null,              // активность, подсвеченная на карте (обратная связь «что на что влияет»)
   meansOnlyTodo: false,        // фильтр: показывать только то, что нужно закрыть (незакрытое до текущего дня)
   arenaColoring: false,        // на карте раскрашивать активности по арене (контент/проект/социальное)
-  _shownDeps: null             // какие связи уже отрисованы (для анимации «прорисовки» новых)
+  _shownDeps: null,            // какие связи уже отрисованы (для анимации «прорисовки» новых)
+  hubExpandedModule: null      // раскрытый модуль на главной (карта программы)
 };
 
 function defaultSim() {
@@ -1159,6 +1234,48 @@ const MODULES = [
     artifacts: ["Программа построения агентной платформы (9 разделов)", "Работающий пилот: 3-5 агентов", "Демо вживую перед панелью CAIO", "Личный 12-месячный контракт", "Alumni-контракт"],
     fullSchedule: false
   }
+];
+
+const MODULE_COLORS = {
+  1: "#6b8aff", 2: "#a78bfa", 3: "#34d399", 4: "#f59e0b",
+  5: "#f87171", 6: "#60a5fa", 7: "#fb7185", 8: "#fbbf24", 9: "#10b981"
+};
+
+const PROJECT_SECTIONS = [
+  { sec: 1, trigger: "c.sec1", module: 1, title: "Стратегический контекст", input: "Платформенная стратегия v0.1", feeds: "М1 · стратегия и процессы" },
+  { sec: 2, trigger: "c.sec2", module: 2, title: "Карта процессов с KPT", input: "3 процесса + baseline/целевой KPT", feeds: "М1–М2 · МЗ и метрики" },
+  { sec: 3, trigger: "c.sec3", module: 4, title: "Архитектура платформы", input: "9 слоёв + federation + MCP", feeds: "М3–М4 · инженерия и архитектура" },
+  { sec: 4, trigger: "c.sec4", module: 2, title: "МЗ-компонент", input: "KG + ingestion/application агенты", feeds: "М2–М3 · Машина Знаний" },
+  { sec: 5, trigger: "c.sec5", module: 6, title: "Команда платформы", input: "Org-схема + найм + RACI", feeds: "М6 · орг-дизайн" },
+  { sec: 6, trigger: "c.sec6", module: 5, title: "Унит-экономика", input: "TCO/ROI 36 мес + sensitivity", feeds: "М5 · токеномика" },
+  { sec: 7, trigger: "c.sec7", module: 7, title: "Security & Compliance", input: "SAD 8 разделов + red-team", feeds: "М7 · регуляторика" },
+  { sec: 8, trigger: "c.sec8", module: 8, title: "AgentOps", input: "Observability + FinOps + раскатка", feeds: "М8 · эксплуатация" },
+  { sec: 9, trigger: "c.sec9", module: 9, title: "Дорожная карта + защита", input: "План 18–36 мес + демо пилота", feeds: "М9 · финал" }
+];
+
+const COHORT = {
+  stream: "Поток 001",
+  size: 24,
+  troika: [
+    { name: "Анна Козлова", role: "CDO", company: "ФинТех Плюс", initials: "АК" },
+    { name: "Иван Петров", role: "CDO", company: "СтрахГрупп", initials: "ИП" },
+    { name: "Михаил Соколов", role: "Head of AI", company: "РитейлХолд", initials: "МС" }
+  ],
+  alumni: {
+    total: "12 000+",
+    digital: "2 400+",
+    mba: "9 500+",
+    emba: "1 800+",
+    aiTrack: "340+"
+  }
+};
+
+const PRESTART_ITEMS = [
+  { id: "diag", label: "Входная диагностика", done: () => diagnosticDone(), action: "AI Maturity + квиз понятий — блок справа от тьютора", nav: null },
+  { id: "premodule", label: "Премодульные материалы М1", done: () => STATE.firedTriggers.has("m1.premodule"), action: "Глоссарий + видео «Что такое агентная платформа»", nav: "library" },
+  { id: "stack", label: "Личный стек ИИ-лидера v1.0", done: () => STATE.currentDay > 1 || STATE.firedTriggers.has("m1.ex_learn"), action: "6 компонентов рабочего контура CAIO — собрать на Д1", nav: null },
+  { id: "worksheet", label: "Worksheet «Моя компания»", done: () => STATE.firedTriggers.has("m1.ex_check"), action: "Открыть шаблон и заполнить §1 стратегии", nav: "library" },
+  { id: "troika", label: "Peer-тройка", done: () => STATE.firedTriggers.has("s.1.troika"), action: "Познакомиться с сокурсниками — блок «Сообщество» ниже", nav: null }
 ];
 
 // Полное расписание Модуля 1
@@ -1839,7 +1956,7 @@ function renderSidebar() {
       <div class="nav-section-label">Главное</div>
       <div class="nav-item ${STATE.view === 'dashboard' ? 'active' : ''}" onclick="navigate('dashboard')">
         <span class="nav-item-icon">🏠</span>
-        <span class="label">Дашборд</span>
+        <span class="label">Мой старт</span>
       </div>
       <div class="nav-item ${STATE.view === 'trajectory' ? 'active' : ''}" onclick="navigate('trajectory')">
         <span class="nav-item-icon">🧭</span>
@@ -1906,83 +2023,325 @@ function renderSidebar() {
 }
 
 /* ============================================================
-   DASHBOARD
+   HUB — операционная точка входа
    ============================================================ */
+
+function moduleTileStatus(m) {
+  if (m.num < STATE.currentModule) return "completed";
+  if (m.num === STATE.currentModule) return "current";
+  return "upcoming";
+}
+
+function moduleReadiness(m) {
+  const triggers = TRIGGERS.filter(t => t.module === m);
+  if (!triggers.length) return 0;
+  const done = triggers.filter(t => STATE.firedTriggers.has(t.id)).length;
+  return Math.round(done / triggers.length * 100);
+}
+
+function moduleReadinessAxes(m) {
+  const axes = [
+    { key: "ep", label: "Понимаю", color: TRAJECTORY_LABELS.ep.color },
+    { key: "con", label: "Уверен", color: TRAJECTORY_LABELS.con.color },
+    { key: "co", label: "Строю", color: TRAJECTORY_LABELS.co.color }
+  ];
+  return axes.map(ax => {
+    const list = TRIGGERS.filter(t => t.module === m && t.traj === ax.key);
+    const pct = list.length ? Math.round(list.filter(t => STATE.firedTriggers.has(t.id)).length / list.length * 100) : 0;
+    return { ...ax, pct };
+  });
+}
+
+function toggleHubModule(num) {
+  STATE.hubExpandedModule = STATE.hubExpandedModule === num ? null : num;
+  renderContent();
+}
+
+function projectSectionsDone() {
+  return PROJECT_SECTIONS.filter(s => STATE.firedTriggers.has(s.trigger)).length;
+}
+
+function renderModuleDetailPanel(m) {
+  const axes = moduleReadinessAxes(m.num);
+  const readiness = moduleReadiness(m.num);
+  const color = MODULE_COLORS[m.num];
+  const status = moduleTileStatus(m);
+  const dayInMod = status === "current" ? STATE.currentDay : (status === "completed" ? 5 : 0);
+  return `
+    <div class="module-detail-panel">
+      <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:flex-start;">
+        <div style="flex:1; min-width:240px;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:0.05em; color:${color}; margin-bottom:6px;">МОДУЛЬ ${m.num} · ${status === "current" ? "ТЕКУЩИЙ" : (status === "completed" ? "ПРОЙДЕН" : "ВПЕРЕДИ")}</div>
+          <h3 style="margin:0 0 8px; font-size:18px;">${esc(m.icon)} ${esc(m.name)}</h3>
+          <p style="font-size:13px; color:var(--text-dim); line-height:1.5; margin-bottom:12px; border-left:2px solid ${color}; padding-left:12px;">${esc(m.keyQuestion)}</p>
+          <div style="font-size:12px; color:var(--text-muted);">Дни ${esc(m.days)} · ${esc(m.partner)}${status === "current" ? ` · сейчас День ${dayInMod}` : ""}</div>
+        </div>
+        <div style="flex:0 0 200px;">
+          <div style="font-size:28px; font-weight:800; font-family:ui-monospace,Menlo,monospace; color:${color};">${readiness}%</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">готовность по модулю</div>
+          ${axes.map(ax => `
+            <div style="margin-bottom:6px;">
+              <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:3px;"><span style="color:${ax.color};">${ax.label}</span><span>${ax.pct}%</span></div>
+              <div style="height:4px; background:var(--bg); border-radius:99px; overflow:hidden;"><div style="height:100%; width:${ax.pct}%; background:${ax.color};"></div></div>
+            </div>`).join("")}
+        </div>
+      </div>
+      <div style="margin-top:14px; font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.04em;">Артефакты модуля</div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 16px;">
+        ${m.artifacts.map(a => `<span style="font-size:11px; padding:4px 10px; background:rgba(52,211,153,0.08); color:var(--accent-green); border-radius:100px;">${esc(a)}</span>`).join("")}
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button onclick="navigate('module', ${m.num})" style="background:var(--gradient); color:#fff; border:none; padding:9px 16px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer;">Открыть модуль →</button>
+        ${status === "current" ? `<button onclick="navigate('module', ${m.num})" style="background:transparent; border:1px solid var(--border); color:var(--text); padding:9px 16px; border-radius:8px; font-size:13px; cursor:pointer;">Расписание Дня ${STATE.currentDay}</button>` : ""}
+        <button onclick="toggleHubModule(${m.num})" style="background:transparent; border:1px solid var(--border); color:var(--text-muted); padding:9px 16px; border-radius:8px; font-size:13px; cursor:pointer;">Свернуть</button>
+      </div>
+    </div>`;
+}
+
+function renderProgramMap() {
+  const tiles = MODULES.map(m => {
+    const color = MODULE_COLORS[m.num];
+    const status = moduleTileStatus(m);
+    const pct = moduleReadiness(m.num);
+    const expanded = STATE.hubExpandedModule === m.num;
+    return `
+      <div class="module-tile ${status}${expanded ? " expanded" : ""}" onclick="toggleHubModule(${m.num})">
+        <div class="mt-top">
+          <span class="mt-icon">${esc(m.icon)}</span>
+          <div style="flex:1;">
+            <div class="mt-num" style="color:${color};">М${m.num}</div>
+            <div class="mt-name">${esc(m.short)}</div>
+          </div>
+          ${status === "current" ? '<span style="font-size:10px; padding:3px 8px; border-radius:99px; background:rgba(107,138,255,0.15); color:var(--accent); font-weight:700;">СЕЙЧАС</span>' : ""}
+        </div>
+        <div class="mt-days">Дни ${esc(m.days)}</div>
+        <div class="mt-bar"><div class="mt-bar-fill" style="width:${pct}%; background:${color};"></div></div>
+        <div class="mt-pct"><span>Готовность</span><span style="color:${color}; font-weight:700;">${pct}%</span></div>
+      </div>`;
+  }).join("");
+  const detail = STATE.hubExpandedModule ? renderModuleDetailPanel(MODULES.find(m => m.num === STATE.hubExpandedModule)) : "";
+  return `<div class="program-map">${tiles}</div>${detail}`;
+}
+
+function renderProjectTrack() {
+  const doneN = projectSectionsDone();
+  const stages = PROJECT_SECTIONS.map(s => {
+    const done = STATE.firedTriggers.has(s.trigger);
+    const active = s.module === STATE.currentModule || (s.module <= STATE.currentModule && !done);
+    return `
+      <div class="project-stage ${done ? "done" : (active ? "active" : "")}" onclick="navigate('module', ${s.module})" style="cursor:pointer;" title="Раздел ${s.sec} · М${s.module}">
+        <div class="ps-sec" style="color:${done ? "var(--accent-green)" : "var(--text-muted)"};">§${s.sec} ${done ? "✓" : ""}</div>
+        <div class="ps-title">${esc(s.title)}</div>
+        <div class="ps-mod">${esc(s.feeds)}</div>
+      </div>
+      <div class="project-arrow">→</div>`;
+  }).join("");
+  const finalDone = STATE.firedTriggers.has("c.sec9") && STATE.firedTriggers.has("ep.4.M9");
+  return `
+    <div class="project-assembly">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div>
+          <div style="font-size:13px; font-weight:700;">Сквозной пилот «Моя платформа»</div>
+          <div style="font-size:12px; color:var(--text-dim); margin-top:4px;">Каждый модуль добавляет раздел в финальный документ · ${doneN}/9 собрано</div>
+        </div>
+        <div style="font-size:24px; font-weight:800; font-family:ui-monospace,Menlo,monospace; color:var(--accent-warm);">${doneN}<span style="font-size:14px; color:var(--text-muted);">/9</span></div>
+      </div>
+      <div class="project-flow">${stages}
+        <div class="project-final ${finalDone ? "done" : ""}">
+          <div style="font-size:11px; font-weight:700; color:var(--accent); margin-bottom:6px;">ФИНАЛ · М9</div>
+          <div style="font-size:13px; font-weight:700; line-height:1.4;">Программа построения агентной производственной платформы</div>
+          <div style="font-size:11px; color:var(--text-dim); margin-top:8px;">+ пилот 3–5 агентов · защита перед панелью CAIO</div>
+        </div>
+      </div>
+      <div class="project-layers">
+        <div class="project-layer"><strong>Слой 1 · Worksheet</strong>«Моя компания» наполняется от модуля к модулю — живой черновик платформы.</div>
+        <div class="project-layer"><strong>Слой 2 · Пилот</strong>Работающие агенты, MCP, eval-наборы, observability — то, что можно показать вживую.</div>
+        <div class="project-layer"><strong>Слой 3 · Программа</strong>9 разделов сводятся в защитимый документ для инвест-комитета и совета директоров.</div>
+      </div>
+    </div>`;
+}
+
+function ensureTutorBoot() {
+  if (!STATE.tutorLog) STATE.tutorLog = [];
+  if (!STATE.tutorLog.length) {
+    const name = (STATE.user.name || "").split(" ")[0] || "коллега";
+    STATE.tutorLog.push({ role: "tutor", html: `Здравствуйте, ${esc(name)}! Я ваш <strong>тьютор онбординга</strong>. Помогу разобраться с программой, оценить готовность и подсказать, что изучить перед стартом.<br><br>${tutorNextStep()}` });
+  }
+}
+
+function renderTutorInline() {
+  ensureTutorBoot();
+  const chips = ["Что мне делать дальше?", "Оцени мою готовность", "Что изучить перед стартом?", "Как устроена программа?", "Что такое проектный трек?"];
+  const msgs = STATE.tutorLog.map(m => m.role === "user"
+    ? `<div class="tutor-msg-user">${esc(m.html)}</div>`
+    : `<div class="tutor-msg-bot"><span style="opacity:0.7;">🤖</span> ${m.html}</div>`
+  ).join("");
+  return `
+    <div class="tutor-panel">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:24px;">🤖</span>
+        <div>
+          <div style="font-weight:700; font-size:16px;">Тьютор онбординга</div>
+          <div style="font-size:11px; color:var(--text-muted);">Программа · готовность · рекомендации перед стартом</div>
+        </div>
+      </div>
+      <div class="tutor-msgs" id="tutor-msgs-inline">${msgs}</div>
+      <div class="tutor-chips">
+        ${chips.map(c => `<button class="tutor-chip" onclick="tutorAsk('${c.replace(/'/g, "\\'")}')">${esc(c)}</button>`).join("")}
+      </div>
+      <div class="tutor-input-row">
+        <input id="tutor-input-inline" type="text" placeholder="Спросите тьютора…" onkeydown="if(event.key==='Enter')tutorSendInline()">
+        <button onclick="tutorSendInline()">→</button>
+      </div>
+    </div>`;
+}
+
+function renderPrestartChecklist() {
+  const doneN = PRESTART_ITEMS.filter(i => i.done()).length;
+  return `
+    <div class="card" style="padding:16px; margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div style="font-weight:700; font-size:14px;">Готовность к старту</div>
+        <span style="font-size:13px; font-weight:700; color:${doneN === PRESTART_ITEMS.length ? "var(--accent-green)" : "var(--accent-warm)"};">${doneN}/${PRESTART_ITEMS.length}</span>
+      </div>
+      ${PRESTART_ITEMS.map(item => {
+        const done = item.done();
+        return `<div style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px;">
+          <span>${done ? "✅" : "○"}</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; color:${done ? "var(--text)" : "var(--text-dim)"};">${esc(item.label)}</div>
+            <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${esc(item.action)}</div>
+          </div>
+          ${item.nav && !done ? `<button onclick="navigate('${item.nav}')" style="font-size:11px; padding:5px 10px; border:1px solid var(--border); border-radius:6px; background:transparent; color:var(--accent); cursor:pointer;">→</button>` : ""}
+        </div>`;
+      }).join("")}
+    </div>
+    ${renderDiagnosticCardCompact()}`;
+}
+
+function renderDiagnosticCardCompact() {
+  const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
+  const qDone = !!(STATE.quizM1 && STATE.quizM1.completedAt);
+  const both = mDone && qDone;
+  const btnStyle = (primary) => `text-decoration:none; display:inline-block; padding:7px 12px; border-radius:7px; font-weight:600; font-size:12px; cursor:pointer; border:1px solid ${primary ? "transparent" : "var(--border)"}; background:${primary ? "var(--gradient)" : "transparent"}; color:${primary ? "#fff" : "var(--text)"};`;
+  return `
+    <div style="background:linear-gradient(135deg, rgba(107,138,255,0.08), rgba(167,139,250,0.04)); border:1px solid rgba(107,138,255,0.25); border-radius:12px; padding:16px;">
+      <div style="font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#06b6d4; font-weight:700; margin-bottom:6px;">Входная диагностика · М1</div>
+      <div style="font-weight:600; font-size:14px; margin-bottom:10px;">${both ? "Baseline зафиксирован ✓" : "Пройдите до старта М1"}</div>
+      <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span>${mDone ? "✅" : "○"} AI Maturity</span>
+          ${mDone ? `<span style="color:var(--accent-green); font-weight:700;">L${STATE.maturity.overallLevel}</span>` : `<a href="../tools/maturity/?from=portal" style="${btnStyle(true)}">Пройти</a>`}
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span>${qDone ? "✅" : "○"} Квиз понятий</span>
+          ${qDone ? `<span style="color:var(--accent-green); font-weight:700;">${STATE.quizM1.correct}/${STATE.quizM1.total}</span>` : `<button onclick="startQuizM1()" style="${btnStyle(true)}">Пройти</button>`}
+        </div>
+      </div>
+      ${both ? `<button onclick="exportDiagnostic()" style="${btnStyle(false)}; margin-top:12px; width:100%; text-align:center;">⬇ Выгрузить результат</button>` : ""}
+    </div>`;
+}
+
+function renderCommunityBlock() {
+  const userInitials = initials(STATE.user.name) || "—";
+  const peers = COHORT.troika.map(p => {
+    const isYou = (STATE.user.name && p.name === STATE.user.name) || p.initials === userInitials;
+    const displayName = isYou && STATE.user.name ? STATE.user.name : p.name;
+    const displayCo = isYou && STATE.user.company && STATE.user.company !== "—" ? STATE.user.company : p.company;
+    const av = isYou ? userInitials : p.initials;
+    return `<div class="peer-card${isYou ? " you" : ""}">
+      <div class="peer-avatar">${esc(av)}</div>
+      <div>
+        <div style="font-weight:600; font-size:13px;">${esc(displayName)}${isYou ? " · вы" : ""}</div>
+        <div style="font-size:12px; color:var(--text-dim);">${esc(p.role)} · ${esc(displayCo)}</div>
+      </div>
+    </div>`;
+  }).join("");
+  return `
+    <div class="card" style="padding:18px;">
+      <h3 style="margin:0 0 4px; font-size:16px;">🤝 Сообщество</h3>
+      <p style="font-size:12px; color:var(--text-dim); margin-bottom:16px;">${COHORT.stream} · ${COHORT.size} слушателей · peer-тройки по 3 человека</p>
+      <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">Ваша peer-тройка</div>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">${peers}</div>
+      <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">Экосистема Сколково</div>
+      <div class="community-grid">
+        <div class="alumni-stat"><div class="n">${COHORT.alumni.total}</div><div class="l">выпускников программ</div></div>
+        <div class="alumni-stat"><div class="n">${COHORT.alumni.digital}</div><div class="l">цифровых программ</div></div>
+        <div class="alumni-stat"><div class="n">${COHORT.alumni.mba}</div><div class="l">MBA Сколково</div></div>
+        <div class="alumni-stat"><div class="n">${COHORT.alumni.emba}</div><div class="l">EMBA Сколково</div></div>
+      </div>
+      <p style="font-size:12px; color:var(--text-dim); margin-top:14px; line-height:1.5;">
+        После выпуска — доступ к alumni-сообществу: ${COHORT.alumni.aiTrack} выпускников ИИ-треков, менторство, вакансии CAIO, демо-дни Agent of the Week.
+      </p>
+      <button onclick="alert('Каталог alumni и чат когорты подключатся на Этапе 2 платформы.')" style="margin-top:10px; width:100%; padding:9px; border:1px solid var(--border); border-radius:8px; background:transparent; color:var(--accent); font-size:12px; font-weight:600; cursor:pointer;">Открыть alumni-каталог →</button>
+    </div>`;
+}
 
 function renderDashboard() {
   const currMod = MODULES.find(m => m.num === STATE.currentModule);
-  const progress = Math.round((STATE.currentDay / 5) * 100);
+  const globalDay = (STATE.currentModule - 1) * 5 + STATE.currentDay;
+  const prestartDone = PRESTART_ITEMS.filter(i => i.done()).length;
 
   return `
     <div class="topline">
-      <div class="breadcrumb">Дашборд</div>
+      <div class="breadcrumb">Мой старт · операционная точка входа</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
         <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
-    <h1>Добро пожаловать, ${esc((STATE.user.name || '').split(' ')[0] || 'слушатель')} 👋</h1>
-    <p class="lead">
-      Программа подготовки будущих директоров по ИИ.
-      9 модулей по 5 дней, разнесены на 9 месяцев. Вы сейчас на День ${STATE.currentDay} Модуля ${STATE.currentModule}.
-    </p>
-
-    ${renderDiagnosticCard()}
-
-    <div class="dash-stats">
-      <div class="dash-stat"><div class="num">${STATE.currentModule}/9</div><div class="label">текущий модуль</div></div>
-      <div class="dash-stat"><div class="num">${STATE.currentDay}/5</div><div class="label">день в модуле</div></div>
-      <div class="dash-stat"><div class="num">${(STATE.currentModule - 1) * 5 + STATE.currentDay}/45</div><div class="label">общий день программы</div></div>
-      <div class="dash-stat"><div class="num">~30 нед</div><div class="label">осталось до выпуска</div></div>
-    </div>
-
-    <div class="current-module-card">
-      <div class="tag">текущий модуль</div>
-      <h2>${esc(currMod.icon)} Модуль ${currMod.num}: ${esc(currMod.name)}</h2>
-      <div class="meta">Дни ${esc(currMod.days)} · Партнёр: ${esc(currMod.partner)}</div>
-      <div class="progress-bar">
-        <div class="progress-fill" style="width: ${progress}%"></div>
+    <div class="hub-hero">
+      <div>
+        <h1 style="margin-bottom:8px;">${esc((STATE.user.name || "").split(" ")[0] || "Слушатель")}, ваш путь к CAIO</h1>
+        <p class="lead" style="margin-bottom:0;">
+          9 модулей · 45 дней · сквозной пилот платформы. Сейчас: <strong>День ${globalDay}</strong> (М${STATE.currentModule} · Д${STATE.currentDay} — ${esc(currMod.short)}).
+        </p>
       </div>
-      <div class="progress-label">Прогресс: ${STATE.currentDay} из 5 дней · ${progress}%</div>
-      <div style="margin-top: 16px;">
-        <button onclick="navigate('module', ${currMod.num})" style="background: var(--gradient); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px;">
-          Открыть модуль →
-        </button>
+      <div class="hub-hero-stats">
+        <div class="hub-pill"><div class="n">${STATE.currentModule}/9</div><div class="l">модуль</div></div>
+        <div class="hub-pill"><div class="n">${globalDay}/45</div><div class="l">день программы</div></div>
+        <div class="hub-pill"><div class="n">${projectSectionsDone()}/9</div><div class="l">разделов пилота</div></div>
+        <div class="hub-pill"><div class="n">${prestartDone}/${PRESTART_ITEMS.length}</div><div class="l">готовность</div></div>
       </div>
     </div>
 
-    <h2>Быстрый доступ</h2>
-    <div class="quick-access">
-      <div class="quick-link" onclick="navigate('module', 1)">
-        <div class="icon">📋</div>
-        <div class="name">Расписание сегодня</div>
-        <div class="desc">День ${STATE.currentDay} М1 — ${esc(MODULE_1_SCHEDULE[STATE.currentDay - 1]?.theme || '')}</div>
+    <div class="hub-section">
+      <div class="hub-section-head">
+        <h2>🗺 Карта программы</h2>
+        <p>9 модулей целиком · кликните модуль — увидите готовность и артефакты · откройте расписание</p>
       </div>
-      <div class="quick-link" onclick="navigate('tools')">
-        <div class="icon">📊</div>
-        <div class="name">AI Maturity Assessment</div>
-        <div class="desc">Рабочий прототип для упражнения E1.3</div>
+      ${renderProgramMap()}
+    </div>
+
+    <div class="hub-section">
+      <div class="hub-section-head">
+        <h2>🏗 Проектный трек</h2>
+        <p>Как артефакты модулей собираются в Программу построения агентной платформы</p>
       </div>
-      <div class="quick-link" onclick="navigate('library')">
-        <div class="icon">📚</div>
-        <div class="name">Worksheet «Моя компания»</div>
-        <div class="desc">Сквозной артефакт программы</div>
+      ${renderProjectTrack()}
+    </div>
+
+    <div class="hub-split">
+      ${renderTutorInline()}
+      <div>
+        ${renderPrestartChecklist()}
       </div>
-      <div class="quick-link" onclick="showExercise('E1.5')">
-        <div class="icon">🎯</div>
-        <div class="name">Калибровка прогнозов</div>
-        <div class="desc">Сквозная практика на 9 месяцев</div>
-      </div>
-      <div class="quick-link" onclick="navigate('agents')">
-        <div class="icon">🤖</div>
-        <div class="name">Personal Tutor Agent</div>
-        <div class="desc">24/7 для вопросов по программе</div>
-      </div>
-      <div class="quick-link" onclick="navigate('agents')">
-        <div class="icon">🛠</div>
-        <div class="name">Pilot Companion Agent</div>
-        <div class="desc">Помощь с пилотом платформы</div>
+    </div>
+
+    <div class="hub-section">
+      ${renderCommunityBlock()}
+    </div>
+
+    <div class="hub-section">
+      <div class="hub-section-head"><h2>Быстрые ссылки</h2></div>
+      <div class="quick-access" style="margin-top:0;">
+        <div class="quick-link" onclick="navigate('module', ${STATE.currentModule})"><div class="icon">📋</div><div class="name">Расписание сегодня</div><div class="desc">М${STATE.currentModule} Д${STATE.currentDay}</div></div>
+        <div class="quick-link" onclick="navigate('library')"><div class="icon">📚</div><div class="name">Worksheet</div><div class="desc">Сквозной артефакт пилота</div></div>
+        <div class="quick-link" onclick="navigate('tools')"><div class="icon">📊</div><div class="name">AI Maturity</div><div class="desc">Диагностика зрелости</div></div>
+        <div class="quick-link" onclick="navigate('plan-map')"><div class="icon">🗺</div><div class="name">План-карта</div><div class="desc">Полная структура программы</div></div>
+        <div class="quick-link" onclick="navigate('trajectory')"><div class="icon">🧭</div><div class="name">Траектория</div><div class="desc">Средства и триггеры</div></div>
+        <div class="quick-link" onclick="navigate('agents')"><div class="icon">🤖</div><div class="name">Агенты</div><div class="desc">Tutor · Companion · Eval Coach</div></div>
       </div>
     </div>
   `;
@@ -4000,6 +4359,7 @@ function renderContent() {
   else content = renderDashboard();
 
   document.getElementById('content').innerHTML = content;
+  if (STATE.view === 'dashboard') scrollTutorInline();
 }
 
 function render() {
@@ -4031,7 +4391,9 @@ function saveState() {
       currentDay: STATE.currentDay,
       currentModule: STATE.currentModule,
       quizM1: STATE.quizM1 || null,
-      maturity: STATE.maturity || null
+      maturity: STATE.maturity || null,
+      tutorLog: STATE.tutorLog || [],
+      hubExpandedModule: STATE.hubExpandedModule || null
     }));
   } catch (e) {}
 }
@@ -4048,6 +4410,8 @@ function loadState() {
     if (d.currentModule) STATE.currentModule = d.currentModule;
     STATE.quizM1 = d.quizM1 || null;
     STATE.maturity = d.maturity || null;
+    if (Array.isArray(d.tutorLog)) STATE.tutorLog = d.tutorLog;
+    if (d.hubExpandedModule) STATE.hubExpandedModule = d.hubExpandedModule;
     return true;
   } catch (e) { return false; }
 }
@@ -4089,7 +4453,7 @@ function showOnboarding() {
       <div style="font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:8px;">AI MBA · Поток 001 · Пилотный</div>
       <h2 style="margin:0 0 8px;">Добро пожаловать 👋</h2>
       <p style="color:var(--text-dim); line-height:1.55; margin-bottom:20px;">
-        Это ваш портал слушателя в режиме диагностики. Представьтесь, чтобы персонализировать траекторию.
+        Это ваша операционная точка входа в программу. Представьтесь — и на «Мой старт» увидите карту программы, проектный трек и тьютора онбординга.
         Данные хранятся только в этом браузере.
       </p>
       <label style="display:block; font-size:13px; color:var(--text-dim); margin-bottom:6px;">Имя и фамилия *</label>
@@ -4274,22 +4638,76 @@ function exportDiagnostic() {
    ============================================================ */
 STATE.tutorLog = [];
 
+function tutorReadinessReport() {
+  const prestart = PRESTART_ITEMS.filter(i => i.done()).length;
+  const modReady = moduleReadiness(STATE.currentModule);
+  const project = projectSectionsDone();
+  let verdict = "Старт возможен — закройте оставшиеся пункты чеклиста.";
+  if (prestart < 2) verdict = "Рано в М1 — сначала входная диагностика (baseline обязателен).";
+  else if (prestart >= 4) verdict = "Хорошая готовность — можно углубляться в модуль и пилот.";
+  const items = PRESTART_ITEMS.map(i => `${i.done() ? "✅" : "○"} ${i.label}`).join("<br>");
+  const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
+  const lvl = mDone ? `L${STATE.maturity.overallLevel}` : "не оценён";
+  return `<strong>Оценка готовности</strong><br><br>
+    • Чеклист старта: <strong>${prestart}/${PRESTART_ITEMS.length}</strong><br>
+    • Зрелость компании: <strong>${lvl}</strong><br>
+    • Готовность текущего модуля (М${STATE.currentModule}): <strong>${modReady}%</strong><br>
+    • Проектный трек: <strong>${project}/9</strong> разделов<br><br>
+    ${items}<br><br>
+    <em>${verdict}</em>`;
+}
+
+function tutorPreStudy() {
+  const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
+  const list = [
+    "<strong>Обязательно до Д1:</strong> входная диагностика (AI Maturity + квиз понятий)",
+    "<strong>Желательно:</strong> премодульный глоссарий М1 — термины агентной платформы, KPT, AgentOps",
+    "<strong>На Д1:</strong> личный стек ИИ-лидера (6 компонентов) + public commitment",
+    "<strong>Сквозное:</strong> начать worksheet «Моя компания» §1 — стратегический контекст вашей компании",
+    "<strong>Социальное:</strong> познакомиться с peer-тройкой — блок «Сообщество»"
+  ];
+  if (mDone && STATE.maturity.topGaps && STATE.maturity.topGaps.length) {
+    const g = STATE.maturity.topGaps.slice(0, 2).map(x => x.name).join(", ");
+    list.push(`<strong>По вашим разрывам (${g}):</strong> сфокусируйте первые упражнения М1 на этих измерениях`);
+  }
+  return "Что изучить перед стартом:<br><br>" + list.map((l, i) => `${i + 1}. ${l}`).join("<br>");
+}
+
+function tutorProgramOverview() {
+  return `Программа — <strong>9 модулей × 5 дней</strong>, разнесённых на 9 месяцев.<br><br>
+    <strong>Формула:</strong> Машина Знаний → агентная платформа → KPT → AgentOps.<br><br>
+    <strong>Карта программы</strong> (выше) — все модули с готовностью. Кликните модуль — увидите артефакты и % по осям «понимаю / уверен / строю».<br><br>
+    <strong>Проектный трек</strong> — сквозной пилот: каждый модуль добавляет раздел в финальную «Программу построения агентной платформы». К М9 — документ + работающий пилот 3–5 агентов.<br><br>
+    Сейчас вы на <strong>Дне ${(STATE.currentModule - 1) * 5 + STATE.currentDay}</strong> программы.`;
+}
+
+function tutorProjectTrackExplain() {
+  return `Проектный трек — это не отдельный курс, а <strong>сборка одного артефакта</strong> из 9 разделов:<br><br>
+    1) Worksheet «Моя компания» — живой черновик<br>
+    2) Пилот — работающие агенты, MCP, eval-наборы<br>
+    3) Программа платформы — защитимый документ для совета директоров<br><br>
+    Схема выше показывает, какой модуль кормит какой раздел (§1–§9). Зелёные — уже закрытые триггеры в портале. Кликните раздел — перейдёте в соответствующий модуль.`;
+}
+
 function tutorNextStep() {
   const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
   const qDone = !!(STATE.quizM1 && STATE.quizM1.completedAt);
   if (!mDone && !qDone) {
-    return 'Сейчас ваш шаг — <strong>входная диагностика Модуля 1</strong>. Пройдите два шага на дашборде: 1) <em>AI Maturity Self-Assessment</em> (6 измерений) и 2) <em>входной квиз понятий</em>. Это задаёт baseline, без которого нельзя измерить ваш рост.';
+    return 'Сейчас ваш шаг — <strong>входная диагностика Модуля 1</strong>. Справа от меня: 1) <em>AI Maturity</em> и 2) <em>квиз понятий</em>. Без baseline нельзя измерить рост.';
   }
   if (mDone && !qDone) {
-    return 'Хорошо, оценку зрелости вы прошли. Остался <strong>входной квиз понятий</strong> — это 5 минут. Нажмите «Пройти» в карточке диагностики на дашборде.';
+    return 'Оценку зрелости вы прошли. Остался <strong>входной квиз понятий</strong> — 5 минут, кнопка «Пройти» справа.';
   }
   if (!mDone && qDone) {
-    return 'Квиз пройден. Остался <strong>AI Maturity Self-Assessment</strong> — оцените зрелость компании по 6 измерениям. Кнопка «Пройти» в карточке диагностики.';
+    return 'Квиз пройден. Остался <strong>AI Maturity Self-Assessment</strong> — кнопка «Пройти» справа.';
   }
-  // оба готовы
   const lvl = STATE.maturity.overallLevel;
   const gaps = (STATE.maturity.topGaps || []).map(g => g.name).join(', ');
-  return `Входная диагностика завершена — ваш уровень <strong>L${lvl}</strong>. Главные разрывы: <strong>${esc(gaps || '—')}</strong>.<br><br>Дальше: <br>1) Откройте <strong>Модуль 1</strong> и изучите расписание текущего дня и упражнения.<br>2) Начните заполнять сквозной артефакт <strong>worksheet «Моя компания»</strong> по разделам стратегии.<br>3) Сфокусируйтесь на разрывах выше — именно туда направьте первую волну изменений.<br>4) Не забудьте выгрузить результат диагностики и прислать координатору.`;
+  return `Диагностика завершена — уровень <strong>L${lvl}</strong>, разрывы: <strong>${esc(gaps || '—')}</strong>.<br><br>
+    1) Кликните <strong>М${STATE.currentModule}</strong> на карте программы — проверьте готовность<br>
+    2) Откройте расписание текущего дня<br>
+    3) Заполните worksheet §1 и смотрите проектный трек — какой раздел пилота следующий<br>
+    4) Познакомьтесь с peer-тройкой в блоке «Сообщество»`;
 }
 
 function tutorAnswer(text) {
@@ -4298,6 +4716,16 @@ function tutorAnswer(text) {
 
   if (has('что делать', 'что дальше', 'дальше', 'с чего начать', 'начать', 'next', 'делать'))
     return tutorNextStep();
+  if (has('готовност', 'оцени', 'готов'))
+    return tutorReadinessReport();
+  if (has('изучить', 'подготов', 'перед старт', 'премодул', 'до старт'))
+    return tutorPreStudy();
+  if (has('устроен', 'структур', 'как программ', '9 модул', 'карта программ'))
+    return tutorProgramOverview();
+  if (has('проектн', 'трек', 'пилот', 'раздел', 'программа платформ', 'worksheet'))
+    return tutorProjectTrackExplain();
+  if (has('сообществ', 'сокурсник', 'alumni', 'выпускник', 'сколково', 'mba', 'emba'))
+    return `В блоке <strong>«Сообщество»</strong> ниже — ваша peer-тройка (${COHORT.size} слушателей в потоке) и экосистема Сколково: <strong>${COHORT.alumni.total}</strong> выпускников (MBA ${COHORT.alumni.mba}, EMBA ${COHORT.alumni.emba}, цифровые программы ${COHORT.alumni.digital}). После выпуска — alumni-каталог и менторство.`;
   if (has('kpt', 'кпт'))
     return 'KPT — ключевая метрика программы: пропускная способность производства знания процессом (сколько решений/единиц знания процесс производит за единицу времени и стоимости). В программе вы считаете <strong>baseline и целевой KPT</strong> и декомпозируете его по этапам процесса. Это связывает Машину Знаний с экономикой платформы.';
   if (has('l0', 'l5', 'уровн', 'maturity', 'зрелост'))
@@ -4305,7 +4733,7 @@ function tutorAnswer(text) {
   if (has('агентн', 'компани'))
     return 'Агентная компания — это не та, что «использует ИИ», а та, чьи <strong>бизнес-модель и операции невозможны без автономных агентов</strong>. Программа учит строить такую агентную производственную платформу и готовит директоров (CAIO), которые ею управляют.';
   if (has('квиз', 'тест'))
-    return 'Входной квиз — 6 вопросов по понятиям Модуля 1 (агентная компания, формула программы, уровни зрелости, AgentOps). Это <em>baseline</em>, отвечайте как понимаете сейчас — на выходе из модуля сравним дельту. Открыть: карточка диагностики на дашборде.';
+    return 'Входной квиз — 6 вопросов по понятиям Модуля 1 (агентная компания, формула программы, уровни зрелости, AgentOps). Это <em>baseline</em>. Кнопка «Пройти» — справа в блоке диагностики.';
   if (has('worksheet', 'моя компания', 'артефакт'))
     return 'Worksheet «Моя компания» — сквозной артефакт программы. Вы наполняете его от модуля к модулю: стратегический контекст, карта процессов с KPT, архитектура платформы и т.д. К финалу из него собирается защитимая «Программа платформы». Загляните в раздел «Библиотека».';
   if (has('калибров', 'прогноз', 'brier'))
@@ -4313,7 +4741,7 @@ function tutorAnswer(text) {
   if (has('peer', 'тройк', 'группа'))
     return 'Peer-тройка — ваша группа из 3 слушателей с еженедельным синком по понедельникам (check-in / блокер / отчёт). Это переход от формальной группы к рабочей: туда выносят реальные блокеры компании.';
   if (has('тьютор', 'agent', 'агент', 'помощ'))
-    return 'Я — Personal Tutor в пилотном режиме: подсказываю следующий шаг по вашему прогрессу и объясняю понятия программы. Полноценный разговорный ИИ-тьютор подключится с платформой (Этап 2). А пока спросите «что мне делать дальше?».';
+    return 'Я — <strong>тьютор онбординга</strong>: оцениваю готовность, объясняю карту программы и проектный трек. Спросите «оцени мою готовность» или «что изучить перед стартом». Полноценный разговорный ИИ подключится на Этапе 2.';
 
   // фолбэк
   return `Пока я отвечаю на типовые вопросы пилота и подсказываю следующий шаг. По вашему прогрессу:<br><br>${tutorNextStep()}<br><br><span style="color:var(--text-muted); font-size:12px;">Полноценный разговорный ИИ-тьютор появится с платформой программы (Этап 2).</span>`;
@@ -4367,14 +4795,31 @@ function renderTutor() {
   }, 40);
 }
 
+function scrollTutorInline() {
+  setTimeout(() => {
+    const box = document.getElementById('tutor-msgs-inline');
+    if (box) box.scrollTop = box.scrollHeight;
+  }, 30);
+}
+
 function tutorAsk(text) {
   const q = (text || '').trim();
   if (!q) return;
+  if (!STATE.tutorLog) STATE.tutorLog = [];
   STATE.tutorLog.push({ role: 'user', html: q });
   STATE.tutorLog.push({ role: 'tutor', html: tutorAnswer(q) });
   STATE.firedTriggers.add('m1.tutor');
   saveState();
-  renderTutor();
+  if (STATE.view === 'dashboard') renderContent();
+  else renderTutor();
+}
+
+function tutorSendInline() {
+  const inp = document.getElementById('tutor-input-inline');
+  if (!inp) return;
+  const v = inp.value;
+  inp.value = '';
+  tutorAsk(v);
 }
 
 function tutorSend() {
