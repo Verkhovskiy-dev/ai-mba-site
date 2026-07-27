@@ -1378,12 +1378,12 @@ const MODULES = [
     keyQuestion: "Какой агент создаётся и как проектировать, строить и тестировать агентов промышленного уровня?",
     dayThemes: [
       "Паттерны инженерии + reasoning-модели",
-      "Multi-agent: когда нужно",
-      "Evals-driven development",
+      "Multi-agent и каскадирование ошибок",
+      "Evals + failure injection и восстановление",
       "Blast radius и policy-as-code",
       "Agent of the Month + security кульминация"
     ],
-    artifacts: ["Multi-agent система пилота", "Eval-набор 50+ примеров", "Policy-as-code документ", "Sandbox-настройка"],
+    artifacts: ["Multi-agent система пилота", "Eval-набор 50+ примеров", "Failure-injection тест", "Отчёт о каскадировании ошибки", "Policy-as-code документ"],
     fullSchedule: true
   },
   { num: 4, name: "Архитектура агентной платформы", short: "Архитектура", icon: "🏗",
@@ -1394,22 +1394,22 @@ const MODULES = [
       "Tools layer: MCP-сервер",
       "Memory + Retrieval",
       "Orchestration + Multi-agent",
-      "Архитектурная сборка + Security как Layer 8"
+      "C-level защита 4 вариантов + ADR"
     ],
-    artifacts: ["Архитектура платформы пилота (9 слоёв)", "Federation-схема (4 tier-а)", "MCP-сервер для корпоративного источника", "Multi-agent система пилота"],
+    artifacts: ["Архитектурный канвас", "Сравнение 4 вариантов развёртывания", "Architecture Decision Record", "Federation-схема", "MCP-сервер"],
     fullSchedule: true
   },
   { num: 5, name: "Токеномика, unit-экономика и закупочная стратегия", short: "Токеномика", icon: "💰",
     days: "21-25", partner: "МШУ", status: "upcoming",
     keyQuestion: "Как обосновать платформу как продукт и устроить её токеномику?",
     dayThemes: [
-      "Токен как единица экономики",
+      "Фреймворк токеномики цифрового труда",
       "Закупочная стратегия и ценовые контракты",
       "TCO/ROI + токеновая чувствительность",
-      "Переговоры с провайдерами",
+      "Новые бизнес-модели и переговоры",
       "Защита экономики платформы"
     ],
-    artifacts: ["Токеномическая модель пилота", "Закупочная карта стека", "TCO/ROI на 36 месяцев", "Презентация для инвест-комитета"],
+    artifacts: ["Фреймворк экономики цифрового труда", "Карта новых бизнес-моделей", "Закупочная карта стека", "TCO/ROI на 36 месяцев"],
     fullSchedule: true
   },
   { num: 6, name: "Орг-дизайн и трансформация под платформу", short: "Орг-дизайн", icon: "👥",
@@ -1442,13 +1442,13 @@ const MODULES = [
     days: "36-40", partner: "Яндекс", status: "upcoming",
     keyQuestion: "Как эксплуатировать агентную платформу как промышленный продукт?",
     dayThemes: [
-      "Жизненный цикл агента",
+      "Жизненный цикл + радар устаревания",
       "Observability и инциденты",
       "FinOps for Agents",
       "Governance в продакшене",
       "Раскатка платформы"
     ],
-    artifacts: ["Lifecycle-документ для агентов", "Observability-стек", "FinOps-план", "Runbook-и для инцидентов", "Реестр агентов и каталог тулз", "План раскатки 18-36 мес"],
+    artifacts: ["Lifecycle-документ", "Радар устаревания компонентов", "Observability-стек", "FinOps-план", "Runbook-и", "План раскатки"],
     fullSchedule: true
   },
   { num: 9, name: "Защита программы платформы", short: "Защита", icon: "🎓",
@@ -1604,13 +1604,13 @@ const MODULE_4_SCHEDULE = [
   ]},
   { day: 19, theme: "Orchestration и multi-agent системы", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Паттерны оркестрации: planner-executor, hierarchical, swarm, supervisor-worker" },
-    { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Multi-agent: когда нужно vs когда single-agent лучше. Решение для пилота" },
+    { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Multi-agent: продуктивность, каскадирование ошибок и решение для пилота" },
     { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Проектирование оркестрации пилота. Схема взаимодействия 2-3 агентов" },
     { time: "16:15-17:30", type: "handson", typeLabel: "Hands-on", title: "Подключение второго и третьего агента через оркестратор" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где границы автономии моих агентов?" }
   ]},
-  { day: 20, theme: "Архитектурная сборка + Security как Layer 8", sessions: [
-    { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Архитектурная сборка платформы пилота. Все 9 слоёв в единую диаграмму" },
+  { day: 20, theme: "C-level защита 4 архитектурных вариантов + ADR", sessions: [
+    { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "C-level архитектурный канвас: in-house, российское облако, внешний API и гибрид" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Аудит архитектуры + pre-mortem перед защитой" },
     { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Защиты архитектуры перед панелью ИТМО + Яндекс" },
     { time: "16:15-17:30", type: "defense", typeLabel: "Security check", title: "Security как Layer 8: sensitivity-aware federation, network segmentation, secrets management" },
@@ -1666,14 +1666,14 @@ const MODULE_3_SCHEDULE = [
     { time: "16:15-17:30", type: "workshop", typeLabel: "Практикум", title: "Когда использовать reasoning в своём пилоте: где оправдан, где overkill" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какие паттерны сработали в моём агенте лучше всего?" }
   ]},
-  { day: 12, theme: "Multi-agent: когда нужно, когда нет", sessions: [
+  { day: 12, theme: "Multi-agent и каскадирование ошибок", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Multi-agent: хороший single-agent почти всегда лучше посредственного multi-agent" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Решение для пилота: single vs multi-agent с обоснованием" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Проектирование multi-agent системы пилота (или углубление single)" },
     { time: "16:15-17:30", type: "handson", typeLabel: "Hands-on", title: "Реализация multi-agent: оркестрация, координация, передача контекста" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где конфликты между агентами возникают и как разрешать?" }
   ]},
-  { day: 13, theme: "Evals-driven development", sessions: [
+  { day: 13, theme: "Evals, failure injection и восстановление", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Evals-driven dev: новая парадигма. Eval-наборы как спецификация. Online/offline эвалы" },
     { time: "11:15-13:00", type: "lecture", typeLabel: "Лекция", title: "Инструменты эвалов: Braintrust, Patronus, Promptfoo. Регрессионные сьюты" },
     { time: "14:00-16:00", type: "handson", typeLabel: "Hands-on", title: "Построение eval-набора для агента: минимум 50 примеров с покрытием critical paths" },
@@ -1697,7 +1697,7 @@ const MODULE_3_SCHEDULE = [
 ];
 
 const MODULE_5_SCHEDULE = [
-  { day: 21, theme: "Токеномика и unit-экономика платформы", sessions: [
+  { day: 21, theme: "Авторский фреймворк токеномики цифрового труда", sessions: [
     { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 5: токеномика ≠ классическая unit-экономика. 6 уникальных особенностей" },
     { time: "09:30-11:00", type: "lecture", typeLabel: "Лекция", title: "Токен как базовая единица: input/output/reasoning/cached. Не fungible между моделями" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Token-per-task для классов агентов. Измерение реального расхода в пилоте" },
@@ -1719,7 +1719,7 @@ const MODULE_5_SCHEDULE = [
     { time: "16:15-17:30", type: "agent-week", typeLabel: "Agent of the Week", title: "Демонстрация агентов слушателей" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какие 3 сценария чувствительности самые опасные?" }
   ]},
-  { day: 24, theme: "Переговоры с провайдерами и партнёрами", sessions: [
+  { day: 24, theme: "Новые бизнес-модели и переговоры с провайдерами", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Переговоры с foundation-провайдерами: объёмные дисконты, latency SLA, caching credits" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Кейс-переговоры: ролевая игра. Слушатель в роли CAIO ведёт переговоры" },
     { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "Due diligence ИИ-стартапов и M&A. Оценка ИИ-IP" },
@@ -1814,9 +1814,9 @@ const MODULE_7_SCHEDULE = [
 ];
 
 const MODULE_8_SCHEDULE = [
-  { day: 36, theme: "Жизненный цикл агента", sessions: [
+  { day: 36, theme: "Жизненный цикл агента и радар устаревания", sessions: [
     { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие Модуля 8: AgentOps как новая операционная дисциплина. Параллель с DevOps/MLOps" },
-    { time: "09:30-11:00", type: "lecture", typeLabel: "Лекция", title: "Жизненный цикл агента: бэклог → дизайн → eval → пилот → продакшен → мониторинг → ретайр" },
+    { time: "09:30-11:00", type: "lecture", typeLabel: "Лекция", title: "Жизненный цикл агента и радар устаревания: бэклог → дизайн → eval → пилот → продакшен → мониторинг → ретайр" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Жизненный цикл для агентов пилота. Где сейчас каждый, гейты для перехода" },
     { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "MLOps/LLMOps как фундамент AgentOps. Что новое в AgentOps" },
     { time: "16:15-17:30", type: "workshop", typeLabel: "Практикум", title: "Зрелость AgentOps моего пилота по шкале L0-L5" },
@@ -3052,6 +3052,7 @@ function renderCalendar() {
     <h1>📅 Расписание программы · 9 месяцев</h1>
     <p class="lead">
       9 модулей по 4 дня, один модуль в месяц + межмодульная работа.
+      За 4–6 недель до модуля кейсы и hands-on адаптируются по диагностике группы, отрасли, технологическому радару и регулированию.
       Текущий день программы: ${(STATE.currentModule - 1) * 4 + STATE.currentDay} из 36.
     </p>
 
