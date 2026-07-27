@@ -772,10 +772,48 @@
   <span style="font-size:18px;">🤖</span> Спросить тьютора
 </button>
 
+<script src="../shared/path-data.js?v=03"></script>
+<script src="../shared/path-store.js?v=03"></script>
 <script>
 /* ============================================================
    ДАННЫЕ
    ============================================================ */
+
+const PROTOTYPE_BASE = '../Прототипы/Путь_слушателя_v0.1/';
+
+function getPersonalPathState() {
+  if (typeof PathStore === 'undefined') return null;
+  try { PathStore.syncToPortal(); } catch (e) {}
+  return PathStore.load();
+}
+
+function pathJourneyPoints() {
+  const st = getPersonalPathState();
+  if (st && typeof PathStore.journeyPoints === 'function') return PathStore.journeyPoints(st);
+  return JOURNEY_POINTS;
+}
+
+function pathRouteUI() {
+  const st = getPersonalPathState();
+  if (st && typeof PathStore.routeForUI === 'function') return PathStore.routeForUI(st);
+  return PATH_ROUTE.map(m => ({ mn: m.mn, tt: m.tt, ww: m.ww, emph: m.emph, el: m.el, num: parseInt(m.mn.replace('М', ''), 10) }));
+}
+
+function pathNextStep() {
+  if (typeof PathStore !== 'undefined') {
+    const n = PathStore.getNextStep();
+    if (n.portal) return Object.assign({}, n, { inPortal: true });
+    const rel = n.url || 'journey_map.html';
+    return Object.assign({}, n, { url: rel.indexOf('/') >= 0 ? rel : PROTOTYPE_BASE + rel });
+  }
+  return { label: 'Пройти чек М1', url: PROTOTYPE_BASE + 'module_check.html?m=1', point: 'Т3', module: 1 };
+}
+
+function pathValueMap() {
+  const st = getPersonalPathState();
+  if (!st || !st.valueMap) return null;
+  return st.valueMap;
+}
 
 const STATE = {
   view: "dashboard",
@@ -1032,44 +1070,44 @@ const TRIGGERS = [
 
   // ============ ДИАГНОСТИКА — входная и выходная по каждому модулю (18 триггеров) ============
   // Парная диагностика на Д1 (входная) и Д5 (выходная) каждого модуля.
-  // Даёт измеримую дельту по каждому модулю отдельно + накопительный эффект к Д45.
+  // Даёт измеримую дельту по каждому модулю отдельно + накопительный эффект к Д36.
   // Все диагностики проходят автоматически Assessment Agent-ом (квиз + AI Maturity).
 
   // М1 — Стратегия трансформации
   { id: "diag.in.M1", traj: "ep", title: "Входная М1 · стратегия трансформации", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по понятиям «агентная компания», «КП», «KPT», стратегические рамки + AI Maturity Self-Assessment baseline (6 измерений). Без этого нечем измерять рост.", verifier: "Assessment Agent + Module Owner М1", module: 1, day: 1 },
-  { id: "diag.out.M1", traj: "ep", title: "Выходная М1 · дельта по стратегии", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по стратегии трансформации + проверка применимости понятий к своей компании. Измеримая дельта vs входной М1.", verifier: "Assessment Agent + Module Owner М1", module: 1, day: 5 },
+  { id: "diag.out.M1", traj: "ep", title: "Выходная М1 · дельта по стратегии", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по стратегии трансформации + проверка применимости понятий к своей компании. Измеримая дельта vs входной М1.", verifier: "Assessment Agent + Module Owner М1", module: 1, day: 5 },
 
   // М4 — Архитектура агентной платформы
   { id: "diag.in.M4", traj: "ep", title: "Входная М4 · архитектура платформы", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по 9 слоям архитектуры, federation моделей, MCP. Baseline инженерного понимания.", verifier: "Assessment Agent + Module Owner М4", module: 4, day: 16 },
-  { id: "diag.out.M4", traj: "ep", title: "Выходная М4 · дельта по архитектуре", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по архитектуре + проектирование диаграммы 9 слоёв своего пилота. Дельта vs входной М4.", verifier: "Assessment Agent + Module Owner М4", module: 4, day: 20 },
+  { id: "diag.out.M4", traj: "ep", title: "Выходная М4 · дельта по архитектуре", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по архитектуре + проектирование диаграммы 9 слоёв своего пилота. Дельта vs входной М4.", verifier: "Assessment Agent + Module Owner М4", module: 4, day: 20 },
 
   // М2 — Машина Знаний и СМД-методология
   { id: "diag.in.M2", traj: "ep", title: "Входная М2 · Машина Знаний и СМД", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по Knowledge Graph, KPT, понятиям СМД-методологии. Baseline методологического аппарата.", verifier: "Assessment Agent + Methodology Guardian", module: 2, day: 6 },
-  { id: "diag.out.M2", traj: "ep", title: "Выходная М2 · дельта по МЗ", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по МЗ + декомпозиция KPT для 3 процессов + рабочий МЗ-компонент пилота.", verifier: "Assessment Agent + Module Owner М2", module: 2, day: 10 },
+  { id: "diag.out.M2", traj: "ep", title: "Выходная М2 · дельта по МЗ", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по МЗ + декомпозиция KPT для 3 процессов + рабочий МЗ-компонент пилота.", verifier: "Assessment Agent + Module Owner М2", module: 2, day: 10 },
 
   // М3 — Multi-agent + evals + safety
   { id: "diag.in.M3", traj: "ep", title: "Входная М3 · multi-agent инженерия и evals", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по evals, blast radius, policy-as-code, multi-agent паттернам.", verifier: "Assessment Agent + Eval Coach", module: 3, day: 11 },
-  { id: "diag.out.M3", traj: "ep", title: "Выходная М3 · дельта по multi-agent", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по безопасной агентной инженерии + работающая multi-agent система с eval-набором.", verifier: "Assessment Agent + Module Owner М3", module: 3, day: 15 },
+  { id: "diag.out.M3", traj: "ep", title: "Выходная М3 · дельта по multi-agent", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по безопасной агентной инженерии + работающая multi-agent система с eval-набором.", verifier: "Assessment Agent + Module Owner М3", module: 3, day: 15 },
 
   // М5 — Unit-экономика и токеномика
   { id: "diag.in.M5", traj: "ep", title: "Входная М5 · экономика и токеномика", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по TCO, ROI, токеномике (input/output/reasoning/cached), sensitivity-анализу.", verifier: "Assessment Agent + Module Owner М5", module: 5, day: 21 },
-  { id: "diag.out.M5", traj: "ep", title: "Выходная М5 · дельта по экономике", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по экономике платформы + рабочий калькулятор пилота с 3 сценариями чувствительности.", verifier: "Assessment Agent + Module Owner М5", module: 5, day: 25 },
+  { id: "diag.out.M5", traj: "ep", title: "Выходная М5 · дельта по экономике", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по экономике платформы + рабочий калькулятор пилота с 3 сценариями чувствительности.", verifier: "Assessment Agent + Module Owner М5", module: 5, day: 25 },
 
   // М6 — Команда и операционная модель
   { id: "diag.in.M6", traj: "ep", title: "Входная М6 · команда и оргмодель", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по новым ролям в агентной компании, RACI, change management, дизайну операционной модели.", verifier: "Assessment Agent + Module Owner М6", module: 6, day: 26 },
-  { id: "diag.out.M6", traj: "ep", title: "Выходная М6 · дельта по оргдизайну", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по org-дизайну + план найма + операционная модель пилота.", verifier: "Assessment Agent + Module Owner М6", module: 6, day: 30 },
+  { id: "diag.out.M6", traj: "ep", title: "Выходная М6 · дельта по оргдизайну", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по org-дизайну + план найма + операционная модель пилота.", verifier: "Assessment Agent + Module Owner М6", module: 6, day: 30 },
 
   // М7 — Регуляторика, AI Security, Governance
   { id: "diag.in.M7", traj: "ep", title: "Входная М7 · регуляторика и AI Security", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по 152-ФЗ, EU AI Act, threat modeling (STRIDE), AI Security принципам.", verifier: "Assessment Agent + Module Owner М7", module: 7, day: 31 },
-  { id: "diag.out.M7", traj: "ep", title: "Выходная М7 · дельта по compliance и SAD", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по compliance-карте + SAD из 8 разделов + red-team отчёт.", verifier: "Assessment Agent + Module Owner М7", module: 7, day: 35 },
+  { id: "diag.out.M7", traj: "ep", title: "Выходная М7 · дельта по compliance и SAD", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по compliance-карте + SAD из 8 разделов + red-team отчёт.", verifier: "Assessment Agent + Module Owner М7", module: 7, day: 35 },
 
   // М8 — AgentOps и раскатка
   { id: "diag.in.M8", traj: "ep", title: "Входная М8 · AgentOps как дисциплина", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по AgentOps, observability, FinOps, runbook-практикам, lifecycle агентов.", verifier: "Assessment Agent + Module Owner М8", module: 8, day: 36 },
-  { id: "diag.out.M8", traj: "ep", title: "Выходная М8 · дельта по операционной модели", type: ["DIAG","AUTO"], desc: "Д5 модуля: квиз по AgentOps + полный observability-стек пилота + план раскатки 18-36 мес.", verifier: "Assessment Agent + Module Owner М8", module: 8, day: 40 },
+  { id: "diag.out.M8", traj: "ep", title: "Выходная М8 · дельта по операционной модели", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по AgentOps + полный observability-стек пилота + план раскатки 18-36 мес.", verifier: "Assessment Agent + Module Owner М8", module: 8, day: 40 },
 
   // М9 — Защита платформенной программы
   { id: "diag.in.M9", traj: "ep", title: "Входная М9 · готовность к финальной защите", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по интеграции 9 разделов в единый артефакт + предварительная сборка Программы платформы.", verifier: "Assessment Agent + Module Owner М9", module: 9, day: 41 },
-  { id: "diag.out.M9", traj: "ep", title: "Выходная М9 · итоговый замер, дельта vs М1 baseline", type: ["DIAG","AUTO","EXPERT"], desc: "Д5 модуля: финальный комплексный замер КП по всем 9 модулям + AI Maturity повторно + сравнение с baseline М1. Защитимо перед панелью CAIO.", verifier: "Assessment Agent + панель CAIO + Module Owner М9", module: 9, day: 45 },
+  { id: "diag.out.M9", traj: "ep", title: "Выходная М9 · итоговый замер, дельта vs М1 baseline", type: ["DIAG","AUTO","EXPERT"], desc: "Д4 модуля: финальный комплексный замер КП по всем 9 модулям + AI Maturity повторно + сравнение с baseline М1. Защитимо перед панелью CAIO.", verifier: "Assessment Agent + панель CAIO + Module Owner М9", module: 9, day: 45 },
 
   // ============ ДРУГИЕ ДИАГНОСТИЧЕСКИЕ ИНСТРУМЕНТЫ ============
   { id: "diag.eval.M3", traj: "co", title: "Свой eval-набор студента проходит порог", type: ["DIAG","ARTIFACT"], desc: "Eval-набор слушателя (50+ кейсов) для его агента показывает ≥80% pass rate. Объективный признак готовности агента к production.", verifier: "CI/eval runner (автоматически) + Eval Coach", module: 3, day: 14 },
@@ -1099,10 +1137,10 @@ const TRIGGERS = [
 // Каждая зависимость привязана к триггеру-источнику (fromTrigger):
 // стрелка прорисовывается на схеме только когда этот триггер закрыт/сработал.
 const TRAJ_DEPS = [
-  { fromTrigger: "s.1.troika", from: { track: "soc", day: 1, label: "Peer-тройка" }, to: { track: "ep", day: 5, label: "Peer-review" }, type: "enables" },
+  { fromTrigger: "s.1.troika", from: { track: "soc", day: 1, label: "Peer-тройка" }, to: { track: "ep", day: 4, label: "Peer-review" }, type: "enables" },
   { fromTrigger: "ep.1.M1", from: { track: "ep", day: 1, label: "Методология" }, to: { track: "ep", day: 11, label: "Применение паттернов" }, type: "enables" },
-  { fromTrigger: "ep.4.M1", from: { track: "ep", day: 3, label: "KPT-упражнения" }, to: { track: "con", day: 5, label: "Раздел 1" }, type: "feeds" },
-  { fromTrigger: "con.M1.done", from: { track: "con", day: 5, label: "М1 готов" }, to: { track: "con", day: 10, label: "М2 строит на этом" }, type: "requires" },
+  { fromTrigger: "ep.4.M1", from: { track: "ep", day: 3, label: "KPT-упражнения" }, to: { track: "con", day: 4, label: "Раздел 1" }, type: "feeds" },
+  { fromTrigger: "con.M1.done", from: { track: "con", day: 4, label: "М1 готов" }, to: { track: "con", day: 10, label: "М2 строит на этом" }, type: "requires" },
   { fromTrigger: "s.2.trust", from: { track: "soc", day: 7, label: "Гостевая CAIO" }, to: { track: "ep", day: 25, label: "Diff с экспертом" }, type: "enables" },
   { fromTrigger: "s.2.trust", from: { track: "soc", day: 12, label: "Когорта окрепла" }, to: { track: "ep", day: 14, label: "Multi-agent peer-work" }, type: "enables" },
   { fromTrigger: "ep.4.M3", from: { track: "ep", day: 14, label: "Blast radius" }, to: { track: "con", day: 34, label: "SAD · М7 Security" }, type: "feeds" },
@@ -1424,7 +1462,7 @@ const MODULES = [
       "Итоговая рефлексия и сертификация"
     ],
     artifacts: ["Программа построения агентной платформы (9 разделов)", "Работающий пилот: 3-5 агентов", "Демо вживую перед панелью CAIO", "Личный 12-месячный контракт", "Alumni-контракт"],
-    fullSchedule: false
+    fullSchedule: true
   }
 ];
 
@@ -1527,7 +1565,7 @@ const MODULE_1_SCHEDULE = [
     ]
   },
   {
-    day: 5,
+    day: 4,
     theme: "Защита платформенной стратегии",
     sessions: [
       { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Сборка Платформенной стратегии v0.1 (1-страничный документ)" },
@@ -1865,6 +1903,44 @@ const ALL_SCHEDULES = {
   9: MODULE_9_SCHEDULE
 };
 
+// Программа работает в формате 9 модулей × 4 очных дня.
+// Пятый тематический блок исходной сборки объединяется с четвёртым днём:
+// защиты, рефлексия и фиксация артефактов не удаляются.
+const DAYS_PER_MODULE = 4;
+const TOTAL_DAYS = 36;
+const day4 = oldDay => {
+  const moduleIndex = Math.floor((oldDay - 1) / 5);
+  const dayInModule = (oldDay - 1) % 5 + 1;
+  return moduleIndex * DAYS_PER_MODULE + Math.min(dayInModule, DAYS_PER_MODULE);
+};
+
+MODULES.forEach((module, index) => {
+  const start = index * DAYS_PER_MODULE + 1;
+  module.days = `${start}-${start + DAYS_PER_MODULE - 1}`;
+  if (module.dayThemes.length === 5) {
+    module.dayThemes[3] = `${module.dayThemes[3]} + ${module.dayThemes[4]}`;
+    module.dayThemes.pop();
+  }
+
+  const schedule = ALL_SCHEDULES[module.num];
+  if (schedule && schedule.length === 5) {
+    schedule[3].theme = `${schedule[3].theme} + ${schedule[4].theme}`;
+    schedule[3].sessions.push(...schedule[4].sessions);
+    schedule.pop();
+  }
+  if (schedule) schedule.forEach((day, dayIndex) => {
+    day.day = start + dayIndex;
+  });
+});
+
+TRIGGERS.forEach(trigger => {
+  if (trigger.day) trigger.day = day4(trigger.day);
+});
+TRAJ_DEPS.forEach(dep => {
+  if (dep.from && dep.from.day) dep.from.day = day4(dep.from.day);
+  if (dep.to && dep.to.day) dep.to.day = day4(dep.to.day);
+});
+
 // Упражнения Модуля 1
 const MODULE_1_EXERCISES = [
   {
@@ -2047,7 +2123,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E5.1", name: "Pre-mortem собственной стратегии",
-    pattern: "3.2 Pre-mortem", trains: ["УВЕР"], day: 5, time: "11:15-12:00", duration: "45 минут",
+    pattern: "3.2 Pre-mortem", trains: ["УВЕР"], day: 4, time: "11:15-12:00", duration: "45 минут",
     goal: "Заставить посмотреть на стратегию как на провалившуюся, прежде чем выходить с ней на защиту.",
     structure: [
       "5 мин: установка",
@@ -2058,7 +2134,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E5.2", name: "Адверсариальный peer-review стратегии",
-    pattern: "3.6 Адверсариальный peer-review", trains: ["УВЕР", "РАЗЛ"], day: 5, time: "12:00-13:00", duration: "90 минут",
+    pattern: "3.6 Адверсариальный peer-review", trains: ["УВЕР", "РАЗЛ"], day: 4, time: "12:00-13:00", duration: "90 минут",
     goal: "Прогнать каждую стратегию через адверсариальный peer-review до публичной защиты.",
     structure: [
       "Цикл 30 мин на каждого в тройке: 5 мин презентация + 20 мин жёсткие вопросы + 5 мин фиксация"
@@ -2067,7 +2143,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E5.3", name: "Защита платформенной стратегии",
-    pattern: "3.8 Защита под жёстким оппонированием (кульминация)", trains: ["УВЕР", "СРЕД", "РАЗЛ"], day: 5, time: "14:00-16:00", duration: "по 15-20 мин на участника",
+    pattern: "3.8 Защита под жёстким оппонированием (кульминация)", trains: ["УВЕР", "СРЕД", "РАЗЛ"], day: 4, time: "14:00-16:00", duration: "по 15-20 мин на участника",
     goal: "Финальная проверка способности удержать стратегическую позицию под адверсариальным давлением экспертов Сколково.",
     structure: [
       "5 мин: презентация Платформенной стратегии v0.1",
@@ -2114,6 +2190,109 @@ const TOOLS = [
   }
 ];
 
+const MODULE_2_EXERCISES = [
+  {
+    id: "E2.1", name: "Картирование Машины Знаний моей компании",
+    pattern: "2.1 Применение к собственной компании", trains: ["РАЗЛ", "СРЕД"], day: 6, time: "11:15-13:00", duration: "105 минут",
+    goal: "Построить карту МЗ компании: источники знаний, узкие места, разрывы между созданием / обращением / употреблением знаний.",
+    structure: [
+      "10 мин: эталон карты МЗ + 3 разреза (создание/обращение/употребление)",
+      "60 мин: индивидуальная работа — карта МЗ своей компании на флипчарте",
+      "20 мин: пометка узких мест и кандидатов на агентизацию",
+      "15 мин: peer-сверка в тройке"
+    ],
+    output: "Карта МЗ компании с 3+ узкими местами"
+  },
+  {
+    id: "E2.2", name: "Экспресс-аудит data governance ключевых источников",
+    pattern: "1.2 Differential diagnosis", trains: ["РАЗЛ"], day: 6, time: "14:00-15:00", duration: "60 минут",
+    goal: "Оценить готовность данных к МЗ: качество, lineage, классификация, PII / 152-ФЗ как ограничение retrieval.",
+    structure: [
+      "10 мин: чек-лист data governance (owner, steward, retention, PII)",
+      "30 мин: аудит 2–3 ключевых источников своей компании",
+      "20 мин: разбор типичных рисков (data leakage, отсутствие lineage)"
+    ],
+    output: "Аудит 2–3 источников с пометкой PII-ограничений"
+  },
+  {
+    id: "E2.3", name: "Проектирование Knowledge Graph пилота",
+    pattern: "2.2 Сборка инструмента под задачу", trains: ["СРЕД", "РАЗЛ"], day: 6, time: "16:15-17:30", duration: "75 минут",
+    goal: "Спроектировать KG пилота: entity, отношения, связи с источниками данных.",
+    structure: [
+      "10 мин: онтологии и KG как backbone МЗ",
+      "45 мин: схема entity + отношения для своего пилота",
+      "20 мин: сверка с источниками из карты МЗ"
+    ],
+    output: "Схема Knowledge Graph пилота (entity + связи)"
+  },
+  {
+    id: "E2.4", name: "Graph + Vector в agentic retrieval: выбор под задачу",
+    pattern: "1.4 Карта различений", trains: ["РАЗЛ"], day: 6, time: "встроено в лекцию", duration: "30 минут",
+    goal: "Различать, где нужен Vector, где Graph, где гибрид — на retrieval-потребностях пилота.",
+    structure: [
+      "5 мин: критерии выбора (структурность, связи, точность)",
+      "15 мин: классификация 3 retrieval-задач пилота",
+      "10 мин: round-robin обоснований"
+    ],
+    output: "3 retrieval-задачи с выбором Vector/Graph/гибрид"
+  },
+  {
+    id: "E2.5", name: "Построение ingestion-агента",
+    pattern: "2.2 Сборка инструмента под задачу", trains: ["СРЕД"], day: 7, time: "11:15-16:00", duration: "Hands-on (2 части)",
+    goal: "Собрать агента-добытчика: неструктурированные данные → структурированные знания в KG, с валидацией качества.",
+    structure: [
+      "Часть 1: ingestion для одного источника знаний компании",
+      "Часть 2: подключение к Knowledge Graph + валидация качества"
+    ],
+    output: "Рабочий ingestion-агент на одном источнике"
+  },
+  {
+    id: "E2.6", name: "Построение application-агента + grounding",
+    pattern: "2.2 Сборка инструмента под задачу", trains: ["СРЕД"], day: 8, time: "11:15-16:00", duration: "Hands-on (2 части)",
+    goal: "Собрать агента-исполнителя: retrieval + reasoning + action; минимизировать галлюцинации через grounding на МЗ.",
+    structure: [
+      "Часть 1: агент использует МЗ для решения задачи пилота",
+      "Часть 2: связка с ingestion-агентом через МЗ, end-to-end тест"
+    ],
+    output: "Application-агент, работающий на МЗ end-to-end"
+  },
+  {
+    id: "E2.7", name: "KPT-декомпозиция пилота (цикл 2)",
+    pattern: "2.1 Применение к собственной компании", trains: ["СРЕД"], day: 9, time: "11:15-13:00", duration: "105 минут",
+    goal: "Декомпозировать KPT по этапам (wait / active / handover / rework), задать целевые KPT для классов задач.",
+    structure: [
+      "10 мин: эталон декомпозиции KPT",
+      "60 мин: расчёт детального KPT пилота (углубление от М1)",
+      "35 мин: связка KPT × cycle time / throughput (подготовка к М5)"
+    ],
+    output: "Детальный KPT пилота с целевыми значениями"
+  },
+  {
+    id: "E2.8", name: "Защита KPT-модели в малых группах",
+    pattern: "3.2 Защита под давлением", trains: ["УВЕР"], day: 9, time: "16:15-17:30", duration: "75 минут",
+    goal: "Проверить реалистичность оценок KPT под вопросами группы.",
+    structure: [
+      "5 мин: формат защиты",
+      "60 мин: защиты по кругу + критические вопросы",
+      "10 мин: корректировка нереалистичных оценок"
+    ],
+    output: "KPT-модель, прошедшая peer-защиту"
+  },
+  {
+    id: "E2.9", name: "Pre-mortem и защита МЗ-компонента",
+    pattern: "3.4 Pre-mortem", trains: ["УВЕР"], day: 10, time: "11:15-13:00", duration: "105 минут",
+    goal: "Найти слабые места МЗ-компонента до защиты; учесть knowledge security (классификация, IP, data leakage).",
+    structure: [
+      "30 мин: pre-mortem МЗ-компонента (что сломается)",
+      "45 мин: устранение топ-рисков",
+      "30 мин: прогон защиты + security check"
+    ],
+    output: "МЗ-компонент, готовый к защите перед экспертами"
+  }
+];
+
+const EXERCISES_BY_MODULE = { 1: MODULE_1_EXERCISES, 2: MODULE_2_EXERCISES };
+
 /* ============================================================
    HELPERS
    ============================================================ */
@@ -2128,7 +2307,11 @@ function trainPill(label) {
 }
 
 function findExercise(exId) {
-  return MODULE_1_EXERCISES.find(e => e.id === exId);
+  for (const k in EXERCISES_BY_MODULE) {
+    const hit = EXERCISES_BY_MODULE[k].find(e => e.id === exId);
+    if (hit) return hit;
+  }
+  return null;
 }
 
 /* ============================================================
@@ -2149,6 +2332,10 @@ function renderSidebar() {
       <div class="nav-item ${STATE.view === 'dashboard' ? 'active' : ''}" onclick="navigate('dashboard')">
         <span class="nav-item-icon">🏠</span>
         <span class="label">Мой старт</span>
+      </div>
+      <div class="nav-item ${STATE.view === 'path' ? 'active' : ''}" onclick="navigate('path')">
+        <span class="nav-item-icon">🛤</span>
+        <span class="label">Карта пути</span>
       </div>
       <div class="nav-item ${STATE.view === 'trajectory' ? 'active' : ''}" onclick="navigate('trajectory')">
         <span class="nav-item-icon">🧭</span>
@@ -2262,7 +2449,7 @@ function renderModuleDetailPanel(m) {
   const readiness = moduleReadiness(m.num);
   const color = MODULE_COLORS[m.num];
   const status = moduleTileStatus(m);
-  const dayInMod = status === "current" ? STATE.currentDay : (status === "completed" ? 5 : 0);
+  const dayInMod = status === "current" ? STATE.currentDay : (status === "completed" ? 4 : 0);
   return `
     <div class="module-detail-panel">
       <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:flex-start;">
@@ -2473,9 +2660,160 @@ function renderCommunityBlock() {
     </div>`;
 }
 
+/* ============================================================
+   PATH VIEW — Карта пути (личный маршрут, Т0–Т6)
+   Демо-данные цели/пилота; в проде их заполняет «Композитор маршрута»
+   из сигналов первого экрана и онбординга (см. 15_Поддержка_пути).
+   ============================================================ */
+
+const JOURNEY_POINTS = [
+  { k: "Т0", nm: "Осознание", done: true },
+  { k: "Т1", nm: "Базлайн", done: true },
+  { k: "Т2", nm: "Контракт ценности", done: true },
+  { k: "Т3", nm: "Способность", cur: true },
+  { k: "Т4", nm: "Пилот" },
+  { k: "Т5", nm: "Дельта" },
+  { k: "Т6", nm: "Позиция выше" }
+];
+
+const PATH_ROUTE = [
+  { mn: "М2", tt: "Машина Знаний", ww: "ядро вашей цели: у процесса заявок нет МЗ", emph: "now", el: "с этого начинаем" },
+  { mn: "М3", tt: "Инженерия агентов", ww: "довести агентов заявок до промышленного уровня", emph: "core", el: "ядро" },
+  { mn: "М4", tt: "Архитектура платформы", ww: "та самая обвязка, в которой вы вязнете", emph: "core", el: "ядро" },
+  { mn: "М5", tt: "Экономика и дельта", ww: "доказать деньги — аргумент для мандата CAIO", emph: "core", el: "ядро" },
+  { mn: "М7", tt: "Безопасность и регуляторика", ww: "ПДн в заявках → обязательно", emph: "core", el: "ядро" },
+  { mn: "М1", tt: "Стратегия трансформации", ww: "не на веру: 5-мин чек средств мышления (различать / иметь средство / быть уверенным) → подсветим, что усилить", emph: "verify", el: "сверим" }
+];
+
+function renderPath() {
+  const name = (STATE.user.name || "").split(" ")[0] || "Слушатель";
+  const journey = pathJourneyPoints();
+  const routeData = pathRouteUI();
+  const next = pathNextStep();
+  const vm = pathValueMap();
+  const st = getPersonalPathState();
+  const lvl = st && st.rung ? PathStore.levelLabel(st.rung) : 'L2';
+  const goal = (st && st.onboarding && st.onboarding.goal) || 'CAIO с мандатом';
+  const pilot = (st && st.onboarding && st.onboarding.pilot) || 'обработка заявок (ритейл, ПДн)';
+  const stepper = journey.map((p, i) => {
+    const cls = p.done ? "done" : (p.cur ? "cur" : "");
+    const line = i < journey.length - 1 ? `<div class="pm-line"></div>` : "";
+    return `<div class="pm-jp ${cls}">${line}<div class="pm-dot">${p.done ? "✓" : i}</div><div class="pm-nm">${esc(p.nm)}</div></div>`;
+  }).join("");
+
+  const route = routeData.map(m => `
+    <div class="pm-mod" style="cursor:pointer" onclick="location.href='${PROTOTYPE_BASE}module_check.html?m=${m.num || parseInt(m.mn.replace('М',''),10)}'" title="Чек / план / pre-work">
+      <span class="pm-mn">${m.mn}</span>
+      <div class="pm-mt"><div class="pm-tt">${esc(m.tt)}</div><div class="pm-ww">${esc(m.ww)}</div></div>
+      <span class="pm-emph ${m.emph}">${esc(m.el)}</span>
+    </div>`).join("");
+
+  return `
+    <div class="topline">
+      <div class="breadcrumb">Карта пути · от выбора образования к позиции выше</div>
+      <div class="user-info">
+        <span>${esc(STATE.user.company)}</span>
+        <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
+      </div>
+    </div>
+
+    <style>
+      .pm-pill{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-green);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.28);padding:5px 12px;border-radius:100px;margin-bottom:12px}
+      .pm-sub{font-size:14px;color:var(--text-dim);margin-bottom:6px;max-width:640px}
+      .pm-sec{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin:26px 0 12px}
+      .pm-vbadge{font-size:10px;font-weight:700;color:var(--accent-2);background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3);padding:1px 8px;border-radius:99px;margin-left:8px}
+      .pm-vmap{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+      @media (max-width:760px){.pm-vmap{grid-template-columns:repeat(2,1fr)}}
+      .pm-vcard{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px}
+      .pm-vcard .ic{font-size:16px;margin-bottom:6px}
+      .pm-vcard .lbl{font-size:10.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}
+      .pm-vcard .val{font-size:14px;font-weight:700;line-height:1.3}
+      .pm-vcard .dl{font-size:10.5px;color:var(--accent-green);margin-top:4px}
+      .pm-journey{display:flex;align-items:flex-start;gap:0}
+      .pm-jp{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+      .pm-jp .pm-line{position:absolute;top:14px;left:50%;width:100%;height:2px;background:var(--border);z-index:0}
+      .pm-jp.done .pm-line,.pm-jp.cur .pm-line{background:var(--gradient)}
+      .pm-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;z-index:1;border:2px solid var(--border);background:var(--bg-card);color:var(--text-muted)}
+      .pm-jp.done .pm-dot{background:var(--gradient);border-color:transparent;color:#fff}
+      .pm-jp.cur .pm-dot{border-color:var(--accent);background:rgba(107,138,255,.18);color:var(--accent);box-shadow:0 0 0 4px rgba(107,138,255,.14)}
+      .pm-jp .pm-nm{font-size:10.5px;margin-top:8px;color:var(--text-muted);line-height:1.25;max-width:80px}
+      .pm-jp.done .pm-nm{color:var(--text-dim)}
+      .pm-jp.cur .pm-nm{color:var(--text);font-weight:700}
+      .pm-youhint{display:flex;justify-content:center;margin-top:10px}
+      .pm-youhint span{font-size:11px;color:var(--accent);background:rgba(107,138,255,.1);border:1px solid rgba(107,138,255,.25);padding:3px 11px;border-radius:99px}
+      .pm-route{display:flex;flex-direction:column;gap:8px}
+      .pm-mod{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+      .pm-mn{font-weight:800;color:var(--accent);font-size:12px;min-width:30px}
+      .pm-mt{flex:1}
+      .pm-tt{font-size:14px;font-weight:600}
+      .pm-ww{font-size:12px;color:var(--text-dim);margin-top:2px}
+      .pm-emph{font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+      .pm-emph.core{color:var(--accent-2);background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3)}
+      .pm-emph.light{color:var(--text-muted);background:var(--bg);border:1px solid var(--border)}
+      .pm-emph.verify{color:var(--accent-warm);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.34)}
+      .pm-emph.now{color:var(--accent-green);background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3)}
+      .pm-first{background:linear-gradient(135deg,rgba(107,138,255,.14),rgba(167,139,250,.06));border:1px solid rgba(107,138,255,.4);border-radius:16px;padding:20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+      .pm-first .body{flex:1;min-width:240px}
+      .pm-first .k{font-size:10.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-bottom:5px}
+      .pm-first .t{font-size:16px;font-weight:700;margin-bottom:4px}
+      .pm-first .d{font-size:13px;color:var(--text-dim)}
+      .pm-btn{background:var(--gradient);color:#fff;border:none;border-radius:11px;padding:13px 22px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+      .pm-byline{font-size:11px;color:var(--text-muted);margin-top:16px;display:flex;align-items:center;gap:8px}
+      .pm-byline .av{width:20px;height:20px;border-radius:6px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:11px}
+    </style>
+
+    <span class="pm-pill">✓ Маршрут v${st ? st.version : 2} · синхрон с прототипом пути</span>
+    <h1 style="margin-bottom:6px;">${esc(name)}, ваша карта пути</h1>
+    <p class="pm-sub">Цель — ${esc(goal)}. Пилот — ${esc(pilot)}. Все 9 модулей в персональном порядке.</p>
+
+    <div class="pm-sec">Личная карта ценности · v${st ? st.version : 2}</div>
+    <div class="pm-vmap">
+      <div class="pm-vcard"><div class="ic">🛠</div><div class="lbl">Способность</div><div class="val">${esc((vm && vm.capability && vm.capability.now) || lvl)} → L4</div><div class="dl">цель программы</div></div>
+      <div class="pm-vcard"><div class="ic">🧭</div><div class="lbl">Позиция</div><div class="val">${esc((vm && vm.position && vm.position.target) || 'CAIO')}</div><div class="dl">мандат</div></div>
+      <div class="pm-vcard"><div class="ic">💰</div><div class="lbl">Экономика</div><div class="val">${esc((vm && vm.economics && vm.economics.target) || '8–12 млн ₽/год')}</div><div class="dl">от пилота</div></div>
+      <div class="pm-vcard"><div class="ic">🎯</div><div class="lbl">Цель-позиция</div><div class="val">${esc(goal.split(' ')[0] || 'CAIO')}</div><div class="dl">с мандатом</div></div>
+    </div>
+
+    <div class="pm-sec">Где вы на пути</div>
+    <div class="pm-journey">${stepper}</div>
+    <div class="pm-youhint"><span>↑ вы здесь — начинаете накапливать способность</span></div>
+
+    <div class="pm-sec">Маршрут по модулям <span class="pm-vbadge">v2 · под вашу цель</span></div>
+    <div class="pm-route">${route}</div>
+
+    <div class="pm-sec">Verify-first — все модули M1–M9 (не на веру)</div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px;">
+      <div style="font-size:12.5px;color:var(--text-dim);margin-bottom:14px;">Каждый модуль начинается с 5-мин чека средств мышления. При зрелости <b style="color:var(--text)">${esc(lvl)}</b> часть средств уже владеете, часть — в фокус. Шкала: <b style="color:var(--text)">различать → иметь средство → уверенно применять</b>.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <div style="font-size:11px;color:var(--accent-green);text-transform:uppercase;letter-spacing:.04em;font-weight:700;margin-bottom:8px;">✓ Вероятно владеете — подтвердите</div>
+          <div style="font-size:12.5px;color:var(--text-dim);line-height:1.75;">• Личный стек ИИ-лидера<br>• 10 признаков промышленного агента<br>• AI Maturity: само-размещение L0–L5</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--accent-warm);text-transform:uppercase;letter-spacing:.04em;font-weight:700;margin-bottom:8px;">◎ В фокус под вашу зрелость</div>
+          <div style="font-size:12.5px;color:var(--text);line-height:1.75;">• KPT: baseline/целевая + связь с экономикой<br>• Когнитивная разметка: 4 типа операций<br>• Платформенная стратегия + Дельта-модель</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pm-sec">Следующий шаг</div>
+    <div class="pm-first">
+      <div class="body">
+        <div class="k">Сейчас · ${esc(next.point)} · Trajectory Coach</div>
+        <div class="t">${esc(next.label)}</div>
+        <div class="d">Чек → план → pre-work для каждого модуля. Затем расписание и упражнения в портале. Данные: ai_mba_path_v1 ↔ aimba_portal_v1.</div>
+      </div>
+      <button class="pm-btn" onclick="${next.inPortal ? `navigate('module',${next.module || 1})` : `location.href='${String(next.url).replace(/'/g, '%27')}'`}">Перейти →</button>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--text-muted)">Или <a href="${PROTOTYPE_BASE}journey_map.html" style="color:var(--accent)">открыть карту пути в прототипе</a></p>
+
+    <div class="pm-byline"><span class="av">🧩</span> «Композитор маршрута» + «Trajectory Coach» · ${st ? st.signals.length : 0} сигналов в хранилище</div>
+  `;
+}
+
 function renderDashboard() {
   const currMod = MODULES.find(m => m.num === STATE.currentModule);
-  const globalDay = (STATE.currentModule - 1) * 5 + STATE.currentDay;
+  const globalDay = (STATE.currentModule - 1) * 4 + STATE.currentDay;
   const prestartDone = PRESTART_ITEMS.filter(i => i.done()).length;
 
   return `
@@ -2491,12 +2829,12 @@ function renderDashboard() {
       <div>
         <h1 style="margin-bottom:8px;">${esc((STATE.user.name || "").split(" ")[0] || "Слушатель")}, ваш путь к CAIO</h1>
         <p class="lead" style="margin-bottom:0;">
-          9 модулей · 45 дней · сквозной пилот платформы. Сейчас: <strong>День ${globalDay}</strong> (М${STATE.currentModule} · Д${STATE.currentDay} — ${esc(currMod.short)}).
+          9 модулей · 36 дней · сквозной пилот платформы. Сейчас: <strong>День ${globalDay}</strong> (М${STATE.currentModule} · Д${STATE.currentDay} — ${esc(currMod.short)}).
         </p>
       </div>
       <div class="hub-hero-stats">
         <div class="hub-pill"><div class="n">${STATE.currentModule}/9</div><div class="l">модуль</div></div>
-        <div class="hub-pill"><div class="n">${globalDay}/45</div><div class="l">день программы</div></div>
+        <div class="hub-pill"><div class="n">${globalDay}/36</div><div class="l">день программы</div></div>
         <div class="hub-pill"><div class="n">${projectSectionsDone()}/9</div><div class="l">разделов пилота</div></div>
         <div class="hub-pill"><div class="n">${prestartDone}/${PRESTART_ITEMS.length}</div><div class="l">готовность</div></div>
       </div>
@@ -2533,6 +2871,7 @@ function renderDashboard() {
       <div class="hub-section-head"><h2>Быстрые ссылки</h2></div>
       <div class="quick-access" style="margin-top:0;">
         <div class="quick-link" onclick="navigate('module', ${STATE.currentModule})"><div class="icon">📋</div><div class="name">Расписание сегодня</div><div class="desc">М${STATE.currentModule} Д${STATE.currentDay}</div></div>
+        <div class="quick-link" onclick="navigate('path')"><div class="icon">🛤</div><div class="name">Карта пути</div><div class="desc">Маршрут v2 + первый шаг</div></div>
         <div class="quick-link" onclick="navigate('personal-stack')"><div class="icon">⚡</div><div class="name">Личный стек</div><div class="desc">6 компонентов ИИ-лидера</div></div>
         <div class="quick-link" onclick="navigate('library')"><div class="icon">📚</div><div class="name">Worksheet</div><div class="desc">Сквозной артефакт пилота</div></div>
         <div class="quick-link" onclick="navigate('tools')"><div class="icon">📊</div><div class="name">AI Maturity</div><div class="desc">Диагностика зрелости</div></div>
@@ -2595,7 +2934,7 @@ function renderModule(num) {
       <h2>Программа дней</h2>
       <div class="days-timeline">
         ${mod.dayThemes.map((theme, idx) => {
-          const dayNum = (num - 1) * 5 + idx + 1;
+          const dayNum = (num - 1) * 4 + idx + 1;
           return `
             <div class="day-block">
               <div class="day-header" style="cursor: default;">
@@ -2615,9 +2954,10 @@ function renderModule(num) {
   }
 
   let exercisesHtml = '';
-  if (num === 1) {
+  const exList = EXERCISES_BY_MODULE[num];
+  if (exList) {
     exercisesHtml = `
-      <h2>Упражнения модуля (19)</h2>
+      <h2>Упражнения модуля (${exList.length})</h2>
       <p style="color: var(--text-dim); margin-bottom: 16px; font-size: 14px;">
         Каждое упражнение тренирует одну или несколько подзадач производства знания:
         <span class="trains-pill razl">РАЗЛ</span> различать ·
@@ -2625,7 +2965,7 @@ function renderModule(num) {
         <span class="trains-pill uver">УВЕР</span> быть уверенным
       </p>
       <div class="exercises-grid">
-        ${MODULE_1_EXERCISES.map(ex => `
+        ${exList.map(ex => `
           <div class="exercise-card" onclick="showExercise('${ex.id}')">
             <div class="top">
               <div class="id">${ex.id}</div>
@@ -2642,12 +2982,22 @@ function renderModule(num) {
       </div>
     `;
   } else {
+    const mPath = typeof PathStore !== 'undefined' ? (PathStore.load().modules['M' + num] || {}) : {};
+    const pw = typeof PathStore !== 'undefined' ? PathStore.preworkProgress(PathStore.load(), num) : { n: 0, total: 5 };
     exercisesHtml = `
-      <h2>Упражнения модуля</h2>
-      <div class="placeholder">
-        <h3>Каталог упражнений в разработке</h3>
-        <p>Команда М${num} формирует упражнения по стандарту 22 паттернов методологии «средства мышления».</p>
-        <p style="margin-top: 12px;">Эталон — Каталог Модуля 1 (19 упражнений), доступен в навигации.</p>
+      <h2>Подготовка и упражнения · М${num}</h2>
+      <div class="placeholder" style="opacity:1;">
+        <h3>Личная траектория модуля</h3>
+        <p>Чек средств мышления → план → pre-work → дни модуля в расписании.</p>
+        <p style="margin-top:10px;color:var(--text-dim);font-size:13px;">
+          Чек: ${mPath.checkDone ? '✓ пройден' : '○ не пройден'} ·
+          План: ${mPath.planViewed ? '✓ открыт' : '○'} ·
+          Pre-work: ${pw.n}/${pw.total}
+        </p>
+        <button class="btn-primary" style="margin-top:14px;" onclick="location.href='${PROTOTYPE_BASE}module_check.html?m=${num}'">
+          ${mPath.checkDone ? 'Открыть план / pre-work →' : 'Пройти чек М' + num + ' →'}
+        </button>
+        <p style="margin-top: 12px;font-size:12px;color:var(--text-muted);">Полный каталог упражнений М${num} — по мере публикации командой модуля (эталон: М1, 19 упражнений).</p>
       </div>
     `;
   }
@@ -2669,7 +3019,7 @@ function renderModule(num) {
         <span class="dot"></span>
         <span>🏛 ${esc(mod.partner)}</span>
         <span class="dot"></span>
-        <span>📊 ${mod.fullSchedule ? '19 упражнений' : 'упражнения в разработке'}</span>
+        <span>📊 ${exList ? exList.length + ' упражнений' : 'упражнения в разработке'}</span>
       </div>
       <div class="key-q">${esc(mod.keyQuestion)}</div>
     </div>
@@ -2701,8 +3051,8 @@ function renderCalendar() {
 
     <h1>📅 Расписание программы · 9 месяцев</h1>
     <p class="lead">
-      9 модулей по 5 дней, один модуль в месяц + межмодульная работа.
-      Текущий день программы: ${(STATE.currentModule - 1) * 5 + STATE.currentDay} из 45.
+      9 модулей по 4 дня, один модуль в месяц + межмодульная работа.
+      Текущий день программы: ${(STATE.currentModule - 1) * 4 + STATE.currentDay} из 36.
     </p>
 
     <div class="calendar-grid">
@@ -2713,8 +3063,8 @@ function renderCalendar() {
             <div class="month-name">${esc(m.short)}</div>
           </div>
           <div class="days-strip">
-            ${[1,2,3,4,5].map(d => {
-              const globalDay = (m.num - 1) * 5 + d;
+            ${[1,2,3,4].map(d => {
+              const globalDay = (m.num - 1) * 4 + d;
               const isCurrent = m.num === STATE.currentModule && d === STATE.currentDay;
               const isCompleted = m.num < STATE.currentModule || (m.num === STATE.currentModule && d < STATE.currentDay);
               return `<div class="cal-day ${isCurrent ? 'current' : ''} ${isCompleted ? 'completed' : ''}"
@@ -3145,7 +3495,7 @@ function renderPractices() {
       <div class="card">
         <h3>🚀 Сквозной пилот «Моя платформа»</h3>
         <p style="color: var(--text-dim); font-size: 13px; line-height: 1.55;">
-          С Дня 1 до Дня 45. К финалу — 3-5 агентов с эвалами, observability, планом масштабирования.
+          С Дня 1 до Дня 36. К финалу — 3-5 агентов с эвалами, observability, планом масштабирования.
         </p>
       </div>
       <div class="card">
@@ -3636,7 +3986,7 @@ function renderMeans() {
   const constructMode = STATE.constructMode;
   const simOn = !constructMode && STATE.simMode && STATE.simResult;
   const activeFired = constructMode ? STATE.constructFired : (simOn ? STATE.simResult.fired : STATE.firedTriggers);
-  const currentGlobalDay = (STATE.currentModule - 1) * 5 + STATE.currentDay;
+  const currentGlobalDay = (STATE.currentModule - 1) * 4 + STATE.currentDay;
 
   // Уровень собирается по ДОЛЕ закрытых активностей, что на него работают (а не только по ключевому).
   const closed = id => activeFired.has(id);
@@ -3665,8 +4015,8 @@ function renderMeans() {
 
   // Геометрия: модули по горизонтали, 3 уровня средства по вертикали
   const W = 1100, H = 460;
-  const dayX = day => 60 + (day - 1) * ((W - 110) / 44);
-  const meanX = m => dayX(m * 5 - 2);
+  const dayX = day => 60 + (day - 1) * ((W - 110) / 35);
+  const meanX = m => dayX(m * 4 - 1.5);
   const laneY = { dist: 120, real: 240, conf: 360 };
   const ANIM_SPAN = 2.6;
   const dlyM = m => ((m - 1) / 8 * ANIM_SPAN).toFixed(2);
@@ -3951,8 +4301,8 @@ function renderTrajectory() {
   const activeFired = constructMode ? STATE.constructFired : (simOn ? STATE.simResult.fired : STATE.firedTriggers);
 
   // Текущая позиция слушателя
-  const currentGlobalDay = (STATE.currentModule - 1) * 5 + STATE.currentDay;
-  const totalDays = 45;
+  const currentGlobalDay = (STATE.currentModule - 1) * 4 + STATE.currentDay;
+  const totalDays = 36;
   const currentPercent = (currentGlobalDay / totalDays) * 100;
 
   // Эпистемические станции — повторяются 9 раз
@@ -3963,9 +4313,9 @@ function renderTrajectory() {
     { name: "Знакомство", dayStart: 1, dayEnd: 1, desc: "Установка Дня 1 М1, формирование peer-троек" },
     { name: "Peer-тройка", dayStart: 2, dayEnd: 12, desc: "Доверие в малой группе через 2-3 недели синков" },
     { name: "Когорта", dayStart: 12, dayEnd: 20, desc: "Идентичность Потока 001 через М3-М4" },
-    { name: "Индустрия", dayStart: 6, dayEnd: 40, desc: "Гостевые CAIO, защиты — связи с действующими директорами" },
-    { name: "Партнёры", dayStart: 40, dayEnd: 45, desc: "Финальная защита перед панелью CAIO внешних компаний" },
-    { name: "Alumni", dayStart: 45, dayEnd: 45, desc: "Alumni-сеть на годы вперёд (пожизненно)" }
+    { name: "Индустрия", dayStart: 5, dayEnd: 32, desc: "Гостевые CAIO, защиты — связи с действующими директорами" },
+    { name: "Партнёры", dayStart: 32, dayEnd: 36, desc: "Финальная защита перед панелью CAIO внешних компаний" },
+    { name: "Alumni", dayStart: 36, dayEnd: 36, desc: "Alumni-сеть на годы вперёд (пожизненно)" }
   ];
 
   // 9 разделов финальной Программы платформы и их прогресс к каждому модулю
@@ -4006,13 +4356,13 @@ function renderTrajectory() {
   deps.forEach((d, i) => { if (depVisible(d)) curShownDeps.add(i); });
   STATE._shownDeps = curShownDeps;
 
-  // Координаты — 45 дней на ширину 1100px (используем viewBox)
+  // Координаты — 36 дней на ширину 1100px (используем viewBox)
   const W = 1100;
-  const dayX = day => 50 + (day - 1) * ((W - 100) / 44);
+  const dayX = day => 50 + (day - 1) * ((W - 100) / 35);
   const cy = (track) => ({ ep: 90, con: 215, co: 340, soc: 455 }[track] || 90);
   // Задержка анимации построения по дню (схема «строится» слева направо за ~2.6с)
   const ANIM_SPAN = 2.6;
-  const dly = day => ((Math.max(1, Math.min(45, day)) - 1) / 44 * ANIM_SPAN).toFixed(2);
+  const dly = day => ((Math.max(1, Math.min(36, day)) - 1 ) / 35 * ANIM_SPAN).toFixed(2);
 
   // SVG для связей
   function depPath(from, to) {
@@ -4034,7 +4384,7 @@ function renderTrajectory() {
 
     <h1>🧭 Моя траектория · 4 оси одновременно</h1>
     <p class="lead">
-      Вы движетесь по программе сразу по четырём осям в разных ритмах. Текущая позиция — День ${currentGlobalDay} из 45.
+      Вы движетесь по программе сразу по четырём осям в разных ритмах. Текущая позиция — День ${currentGlobalDay} из 36.
     </p>
 
     ${renderTrajModeToggle()}
@@ -4055,7 +4405,7 @@ function renderTrajectory() {
 
     <h2 style="margin-top: 32px;">Визуализация всех четырёх траекторий</h2>
     <p style="color: var(--text-dim); font-size: 13px; margin-bottom: 16px;">
-      Четыре горизонтальные дорожки — четыре траектории; ось снизу — дни программы (1–45).
+      Четыре горизонтальные дорожки — четыре траектории; ось снизу — дни программы (1–36).
       Стрелки-зависимости <b>появляются не сразу</b>: каждая прорисовывается, когда вы закрываете её активность-источник (в режиме «Смоделировать» — когда включаете нужные активности).
       Оранжевая пунктирная линия — где вы сейчас. Наведите курсор на любую точку, чтобы увидеть детали.
     </p>
@@ -4089,7 +4439,7 @@ function renderTrajectory() {
 
         <!-- Сетка по границам модулей -->
         <g>
-          ${[5,10,15,20,25,30,35,40].map(d => `<line x1="${dayX(d)}" y1="56" x2="${dayX(d)}" y2="472" stroke="#1f2740" stroke-width="1" opacity="0.5"/>`).join('')}
+          ${[4,8,12,16,20,24,28,32,36].map(d => `<line x1="${dayX(d)}" y1="56" x2="${dayX(d)}" y2="472" stroke="#1f2740" stroke-width="1" opacity="0.5"/>`).join('')}
         </g>
 
         <!-- Подложки треков -->
@@ -4101,8 +4451,8 @@ function renderTrajectory() {
           <text x="50" y="120" fill="#5a6478" font-size="9">Станции цикла: ${epStations.join(' · ')}</text>
 
           ${MODULES.map((m, i) => {
-            const x1 = dayX(m.num * 5 - 4);
-            const x2 = dayX(m.num * 5);
+            const x1 = dayX(m.num * 4 - 3);
+            const x2 = dayX(m.num * 4);
             const xmid = (x1 + x2) / 2;
             return `
               <rect x="${x1 - 8}" y="78" width="${x2 - x1 + 16}" height="24" fill="rgba(107, 138, 255, 0.05)" rx="4"/>
@@ -4113,10 +4463,10 @@ function renderTrajectory() {
           ${[1,2,3,4,5,6,7,8,9].flatMap(modNum => {
             return epStations.map((st, idx) => {
               const dayInMod = Math.min(5, Math.ceil((idx + 1) / 1.2));
-              const globalDay = (modNum - 1) * 5 + dayInMod;
+              const globalDay = (modNum - 1) * 4 + dayInMod;
               const isCompleted = globalDay < currentGlobalDay;
               const isCurrent = modNum === STATE.currentModule;
-              const cx = dayX((modNum - 1) * 5 + (idx + 1) * 5 / 6);
+              const cx = dayX((modNum - 1) * 4 + (idx + 1) * 4 / 6);
               const r = isCurrent ? 4 : 3;
               return `<circle class="traj-node" style="animation-delay:${dly(globalDay)}s" cx="${cx}" cy="90" r="${r}" fill="${isCompleted ? '#34d399' : (isCurrent ? '#6b8aff' : '#3a4358')}"><title>${esc(st)} · М${modNum} (день ${globalDay})</title></circle>`;
             }).join('');
@@ -4126,17 +4476,17 @@ function renderTrajectory() {
         <!-- СОДЕРЖАНИЕ -->
         <g>
           <text x="20" y="170" fill="#e4e8f1" font-size="13" font-weight="700">СОДЕРЖАНИЕ</text>
-          <text x="20" y="185" fill="#8590a8" font-size="10">9 модулей × 5 дней</text>
+          <text x="20" y="185" fill="#8590a8" font-size="10">9 модулей × 4 дня</text>
           ${MODULES.map((m, i) => {
-            const x1 = dayX(m.num * 5 - 4);
-            const x2 = dayX(m.num * 5);
+            const x1 = dayX(m.num * 4 - 3);
+            const x2 = dayX(m.num * 4);
             const xmid = (x1 + x2) / 2;
             const isCurrent = m.num === STATE.currentModule;
             const isDone = m.num < STATE.currentModule;
             const fill = isDone ? "rgba(52, 211, 153, 0.15)" : (isCurrent ? "rgba(107, 138, 255, 0.2)" : "rgba(60, 70, 90, 0.3)");
             const stroke = isDone ? "#34d399" : (isCurrent ? "#6b8aff" : "#1f2740");
             return `
-              <rect class="traj-node" style="animation-delay:${dly(m.num * 5 - 4)}s" x="${x1 - 6}" y="200" width="${x2 - x1 + 12}" height="30" fill="${fill}" stroke="${stroke}" stroke-width="1.5" rx="4"/>
+              <rect class="traj-node" style="animation-delay:${dly(m.num * 4 - 3)}s" x="${x1 - 6}" y="200" width="${x2 - x1 + 12}" height="30" fill="${fill}" stroke="${stroke}" stroke-width="1.5" rx="4"/>
               <text x="${xmid}" y="219" text-anchor="middle" fill="${isDone ? '#34d399' : (isCurrent ? '#6b8aff' : '#8590a8')}" font-size="11" font-weight="700">М${m.num}</text>
             `;
           }).join('')}
@@ -4150,7 +4500,7 @@ function renderTrajectory() {
             const groups = {};
             constructSections.forEach(s => { (groups[s.readyAfterModule] = groups[s.readyAfterModule] || []).push(s.num); });
             return constructSections.map((s) => {
-              const x = dayX(s.readyAfterModule * 5);
+              const x = dayX(s.readyAfterModule * 4);
               const grp = groups[s.readyAfterModule];
               const idx = grp.indexOf(s.num);
               const yc = 340 + (idx - (grp.length - 1) / 2) * 14;
@@ -4158,7 +4508,7 @@ function renderTrajectory() {
               const isWorking = STATE.currentModule === s.readyAfterModule;
               const col = isReady ? '#34d399' : '#3a4358';
               return `
-              <circle class="traj-node" style="animation-delay:${dly(s.readyAfterModule * 5)}s" cx="${x}" cy="${yc}" r="${isWorking ? 6 : 4}" fill="${col}"><title>§${s.num} ${esc(s.name)} · готов после М${s.readyAfterModule}</title></circle>
+              <circle class="traj-node" style="animation-delay:${dly(s.readyAfterModule * 4)}s" cx="${x}" cy="${yc}" r="${isWorking ? 6 : 4}" fill="${col}"><title>§${s.num} ${esc(s.name)} · готов после М${s.readyAfterModule}</title></circle>
               <text x="${x + 8}" y="${yc + 3}" text-anchor="start" fill="${isReady ? '#34d399' : '#5a6478'}" font-size="9" font-weight="600">§${s.num}</text>
             `;
             }).join('');
@@ -4241,7 +4591,7 @@ function renderTrajectory() {
           ${[['ep', 90], ['con', 215], ['co', 340], ['soc', 455]].map(([k, laneY]) => {
             const pct = STATE.simResult.axisBalance[k];
             const col = TRAJECTORY_LABELS[k].color;
-            const fx = dayX(1 + pct / 100 * 44);
+            const fx = dayX(1 + pct / 100 * 35);
             const yy = laneY - 30;
             return `
               <line x1="${dayX(1)}" y1="${yy}" x2="${fx}" y2="${yy}" stroke="${col}" stroke-width="2.5" stroke-dasharray="7,4" opacity="0.9"/>
@@ -4253,14 +4603,14 @@ function renderTrajectory() {
 
         <!-- Сканирующая линия построения (сметает слева направо при загрузке/повторе) -->
         <line class="traj-scan" x1="${dayX(1)}" y1="56" x2="${dayX(1)}" y2="486" stroke="#6b8aff" stroke-width="2">
-          <animate attributeName="x1" from="${dayX(1)}" to="${dayX(45)}" dur="${ANIM_SPAN}s" fill="freeze"/>
-          <animate attributeName="x2" from="${dayX(1)}" to="${dayX(45)}" dur="${ANIM_SPAN}s" fill="freeze"/>
+          <animate attributeName="x1" from="${dayX(1)}" to="${dayX(36)}" dur="${ANIM_SPAN}s" fill="freeze"/>
+          <animate attributeName="x2" from="${dayX(1)}" to="${dayX(36)}" dur="${ANIM_SPAN}s" fill="freeze"/>
         </line>
 
         <!-- Ось времени (дни программы) -->
         <g>
-          <line x1="${dayX(1)}" y1="486" x2="${dayX(45)}" y2="486" stroke="#2a3350" stroke-width="1"/>
-          ${[1,5,10,15,20,25,30,35,40,45].map(d => `
+          <line x1="${dayX(1)}" y1="486" x2="${dayX(36)}" y2="486" stroke="#2a3350" stroke-width="1"/>
+          ${[1,4,8,12,16,20,24,28,32,36].map(d => `
             <line x1="${dayX(d)}" y1="483" x2="${dayX(d)}" y2="489" stroke="#5a6478" stroke-width="1"/>
             <text x="${dayX(d)}" y="501" text-anchor="middle" fill="#5a6478" font-size="9">Д${d}</text>
           `).join('')}
@@ -4401,7 +4751,7 @@ function renderTrajectory() {
         <div style="font-size: 11px; font-weight: 700; color: #f59e0b; letter-spacing: 0.05em; margin-bottom: 6px;">ТРАЕКТОРИЯ 3 · КОНСТРУКТИВНАЯ</div>
         <h3>Что собирается на выходе · аккумулятивная</h3>
         <p style="color: var(--text-dim); font-size: 13px; line-height: 1.6; margin-bottom: 10px;">
-          9 разделов Программы платформы, наполняются по мере прохождения модулей. К Дню 45 — 100% собрано.
+          9 разделов Программы платформы, наполняются по мере прохождения модулей. К Дню 36 — 100% собрано.
         </p>
         <div style="background: var(--bg); border-radius: 6px; overflow: hidden; height: 8px; margin-bottom: 8px;">
           <div style="height: 100%; background: var(--gradient); width: ${constructPercent}%"></div>
@@ -4476,13 +4826,13 @@ function renderPlanMap() {
 
     <h1>🗺 План-карта программы AI MBA v3.0</h1>
     <p class="lead">
-      Все 9 модулей одним взглядом · 45 дней · 9 месяцев · 31 агент · 54 скила · 22 паттерна упражнений.
+      Все 9 модулей одним взглядом · 36 дней · 9 месяцев · 31 агент · 54 скила · 22 паттерна упражнений.
       Программа выращивает будущих директоров по ИИ через построение реальной агентной платформы.
     </p>
 
     <div class="dash-stats">
       <div class="dash-stat"><div class="num">9</div><div class="label">модулей</div></div>
-      <div class="dash-stat"><div class="num">45</div><div class="label">очных дней</div></div>
+      <div class="dash-stat"><div class="num">36</div><div class="label">очных дней</div></div>
       <div class="dash-stat"><div class="num">~900</div><div class="label">часов работы</div></div>
       <div class="dash-stat"><div class="num">9</div><div class="label">месяцев</div></div>
     </div>
@@ -4536,7 +4886,7 @@ function renderPlanMap() {
                 <div style="font-style: italic; color: var(--text-dim); font-size: 13px; margin-bottom: 14px; padding-left: 12px; border-left: 2px solid ${color};">
                   ${esc(m.keyQuestion)}
                 </div>
-                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">5 дней:</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">4 дня:</div>
                 <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px;">
                   ${m.dayThemes.map((t, i) => `
                     <div style="font-size: 13px; line-height: 1.5; padding: 4px 0;">
@@ -4561,7 +4911,7 @@ function renderPlanMap() {
 
     <h2 style="margin-top: 48px;">Финальный артефакт — Программа платформы (9 разделов)</h2>
     <p style="color: var(--text-dim); font-size: 13px; margin-bottom: 16px;">
-      К Дню 45 каждый слушатель защищает «Программу построения агентной производственной платформы» для своей компании. Содержание ровно соответствует пути через 9 модулей.
+      К Дню 36 каждый слушатель защищает «Программу построения агентной производственной платформы» для своей компании. Содержание ровно соответствует пути через 9 модулей.
     </p>
     <div class="grid-3">
       ${[
@@ -4695,6 +5045,7 @@ function toggleDay(day) {
 function renderContent() {
   let content;
   if (STATE.view === 'dashboard') content = renderDashboard();
+  else if (STATE.view === 'path') content = renderPath();
   else if (STATE.view === 'module') content = renderModule(STATE.currentModule);
   else if (STATE.view === 'calendar') content = renderCalendar();
   else if (STATE.view === 'tools') content = renderTools();
@@ -4763,6 +5114,7 @@ function loadState() {
     if (d.personalStack) STATE.personalStack = d.personalStack;
     if (Array.isArray(d.tutorLog)) STATE.tutorLog = d.tutorLog;
     if (d.hubExpandedModule) STATE.hubExpandedModule = d.hubExpandedModule;
+    if (d.personalRoute) STATE.personalRoute = d.personalRoute;
     return true;
   } catch (e) { return false; }
 }
@@ -4848,7 +5200,7 @@ const QUIZ_M1 = [
   { q: 'Принцип «AgentOps по умолчанию» означает, что каждый агент:',
     options: ['Запускается без тестов, чтобы быстрее', 'Имеет эвалы, observability, кост-трекинг и kill-switch с самого начала', 'Работает только в выходные', 'Управляется вручную оператором'], correct: 1 },
   { q: 'Структура программы:',
-    options: ['12 модулей по 3 дня за полгода', '9 модулей по 5 дней, разнесённых на 9 месяцев', '6 модулей по неделе за 2 месяца', '1 интенсив на 45 дней подряд'], correct: 1 }
+    options: ['12 модулей по 3 дня за полгода', '9 модулей по 4 дня, разнесённых на 9 месяцев', '6 модулей по неделе за 2 месяца', '1 интенсив на 36 дней подряд'], correct: 1 }
 ];
 STATE.quizDraft = {};
 
@@ -5025,11 +5377,11 @@ function tutorPreStudy() {
 }
 
 function tutorProgramOverview() {
-  return `Программа — <strong>9 модулей × 5 дней</strong>, разнесённых на 9 месяцев.<br><br>
+  return `Программа — <strong>9 модулей × 4 дня</strong>, разнесённых на 9 месяцев.<br><br>
     <strong>Формула:</strong> Машина Знаний → агентная платформа → KPT → AgentOps.<br><br>
     <strong>Карта программы</strong> (выше) — все модули с готовностью. Кликните модуль — увидите артефакты и % по осям «понимаю / уверен / строю».<br><br>
     <strong>Проектный трек</strong> — сквозной пилот: каждый модуль добавляет раздел в финальную «Программу построения агентной платформы». К М9 — документ + работающий пилот 3–5 агентов.<br><br>
-    Сейчас вы на <strong>Дне ${(STATE.currentModule - 1) * 5 + STATE.currentDay}</strong> программы.`;
+    Сейчас вы на <strong>Дне ${(STATE.currentModule - 1) * 4 + STATE.currentDay}</strong> программы.`;
 }
 
 function tutorProjectTrackExplain() {
@@ -5183,20 +5535,26 @@ function tutorSend() {
 
 /* --- Загрузка приложения --- */
 function boot() {
+  const bootParams = new URLSearchParams(location.search);
+  const bootView = bootParams.get('view');
+  const bootMod = parseInt(bootParams.get('n') || '0', 10);
   const had = loadState();
   if (!had) {
-    // Первый вход реального участника — чистый старт
     STATE.firedTriggers = new Set();
     STATE.currentDay = 1;
     STATE.currentModule = 1;
     STATE.user = { name: '', company: '' };
     STATE.onboarded = false;
   }
+  if (typeof PathStore !== 'undefined') {
+    PathStore.syncToPortal();
+    loadState();
+  }
   syncMaturity();
   ensurePersonalStack();
-  // очистить служебные query-параметры возврата из инструмента
   if (location.search) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
   render();
+  if (bootView) navigate(bootView, bootMod || undefined);
   if (!STATE.onboarded) showOnboarding();
 }
 
