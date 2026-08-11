@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI MBA · Мой старт</title>
-<meta name="description" content="Операционная точка входа слушателя AI MBA: карта программы, проектный трек, тьютор онбординга, сообщество.">
+<title>Директор по ИИ · Мой старт</title>
+<meta name="description" content="Портал программы «Директор по ИИ» · AI MBA: карта программы, проектный трек, тьютор онбординга и сообщество.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
@@ -1034,7 +1034,7 @@ const TRIGGERS = [
   { id: "ep.4.M2", traj: "ep", title: "Станция 4 М2 · МЗ-компонент пилота", type: ["ARTIFACT","TEAM"], desc: "Ingestion-агент + application-агент работают на корпоративных данных.", verifier: "Module Owner М2", module: 2, day: 9 },
   { id: "ep.4.M3", traj: "ep", title: "Станция 4 М3 · multi-agent пилот", type: ["ARTIFACT","MOD"], desc: "Eval-набор 50+, policy-as-code, multi-agent система работает. Eval Coach валидирует.", verifier: "Eval Coach (модератор практикумов) + Module Owner М3", module: 3, day: 14 },
   { id: "ep.4.M5", traj: "ep", title: "Станция 4 М5 · экономика пилота", type: ["ARTIFACT","TEAM"], desc: "Калькулятор токеномики + TCO/ROI на 36 мес + 3 сценария чувствительности.", verifier: "Module Owner М5", module: 5, day: 24 },
-  { id: "ep.4.M6", traj: "ep", title: "Станция 4 М6 · org-дизайн пилота", type: ["ARTIFACT","TEAM"], desc: "Org-схема команды + план найма + дизайн новой операционной модели.", verifier: "Module Owner М6", module: 6, day: 29 },
+  { id: "ep.4.M6", traj: "ep", title: "Станция 4 М6 · org-дизайн пилота", type: ["ARTIFACT","TEAM"], desc: "Org-схема команды + capability map и resourcing + дизайн новой операционной модели.", verifier: "Module Owner М6", module: 6, day: 29 },
   { id: "ep.4.M7", traj: "ep", title: "Станция 4 М7 · SAD пилота", type: ["ARTIFACT","TEAM"], desc: "Security Architecture Document собран из 8 разделов + red-team отчёт.", verifier: "Module Owner М7 + Security Track", module: 7, day: 34 },
   { id: "ep.4.M8", traj: "ep", title: "Станция 4 М8 · AgentOps стек пилота", type: ["ARTIFACT","TEAM"], desc: "Observability подключена, runbook'и написаны, FinOps-план работает.", verifier: "Module Owner М8", module: 8, day: 39 },
   { id: "ep.4.M9", traj: "ep", title: "Станция 4 М9 · собрана Программа платформы", type: ["ARTIFACT","TEAM"], desc: "9 разделов финального артефакта сведены в защитимый документ.", verifier: "Module Owner М9", module: 9, day: 41 },
@@ -1042,14 +1042,14 @@ const TRIGGERS = [
   // ============ СОДЕРЖАНИЕ (10 триггеров) ============
   // Завершение каждого модуля (9 триггеров) + старт программы
   { id: "con.start", traj: "con", title: "Старт программы · Установка Дня 1", type: ["TEAM"], desc: "Слушатель присутствовал на установке + представился когорте.", verifier: "Module Owner М1", module: 1, day: 1 },
-  { id: "con.M1.done", traj: "con", title: "Модуль 1 завершён · защита пройдена", type: ["TEAM","EXPERT"], desc: "Защита Дня 5 М1 пройдена. Платформенная стратегия v0.1 защищена перед экспертами Сколково.", verifier: "Module Owner М1 + экспертная панель Сколково", module: 1, day: 5 },
-  { id: "con.M4.done", traj: "con", title: "Модуль 4 завершён · архитектура защищена", type: ["TEAM","EXPERT"], desc: "Архитектура платформы пилота защищена перед панелью ИТМО + Яндекс.", verifier: "Module Owner М4 + экспертная панель ИТМО + Яндекс", module: 4, day: 20 },
+  { id: "con.M1.done", traj: "con", title: "Модуль 1 завершён · защита пройдена", type: ["TEAM","EXPERT"], desc: "Ротационная защита Дня 4 пройдена. Платформенная стратегия v0.1 получила обратную связь.", verifier: "Module Owner М1 + профильный эксперт + peer-рецензенты", module: 1, day: 5 },
+  { id: "con.M4.done", traj: "con", title: "Модуль 4 завершён · архитектура защищена", type: ["TEAM","EXPERT"], desc: "Архитектура платформы пилота защищена в ротационной группе.", verifier: "Module Owner М4 + профильный эксперт + peer-рецензенты", module: 4, day: 20 },
   { id: "con.M2.done", traj: "con", title: "Модуль 2 завершён · МЗ-компонент защищён", type: ["TEAM"], desc: "МЗ-компонент пилота защищён + KPT декомпозирован.", verifier: "Module Owner М2", module: 2, day: 10 },
-  { id: "con.M3.done", traj: "con", title: "Модуль 3 завершён · Agent of the Month", type: ["TEAM","EXPERT"], desc: "Multi-agent система защищена + награждение Agent of the Month экспертами ИТМО.", verifier: "Module Owner М3 + экспертная панель ИТМО", module: 3, day: 15 },
-  { id: "con.M5.done", traj: "con", title: "Модуль 5 завершён · экономика защищена", type: ["TEAM","EXPERT"], desc: "Защита экономики платформы перед панелью МШУ.", verifier: "Module Owner М5 + экспертная панель МШУ", module: 5, day: 25 },
-  { id: "con.M6.done", traj: "con", title: "Модуль 6 завершён · оргпрограмма защищена", type: ["TEAM"], desc: "Оргпрограмма + план найма + новая операционная модель.", verifier: "Module Owner М6", module: 6, day: 30 },
+  { id: "con.M3.done", traj: "con", title: "Модуль 3 завершён · Agent of the Month", type: ["TEAM","EXPERT"], desc: "Multi-agent система защищена + награждение Agent of the Month.", verifier: "Module Owner М3 + эксперт ИТМО + peer-рецензенты", module: 3, day: 15 },
+  { id: "con.M5.done", traj: "con", title: "Модуль 5 завершён · экономика защищена", type: ["TEAM","EXPERT"], desc: "Индивидуальная защита экономики платформы в ротационной группе.", verifier: "Module Owner М5 + профильный эксперт + peer-рецензенты", module: 5, day: 25 },
+  { id: "con.M6.done", traj: "con", title: "Модуль 6 завершён · оргпрограмма защищена", type: ["TEAM"], desc: "Оргпрограмма + карта компетенций и resourcing + новая операционная модель.", verifier: "Module Owner М6", module: 6, day: 30 },
   { id: "con.M7.done", traj: "con", title: "Модуль 7 завершён · SAD защищён", type: ["TEAM","EXPERT"], desc: "Security Architecture Document + compliance-карта + foresight playbook защищены перед security-экспертами.", verifier: "Module Owner М7 + security-эксперты индустрии", module: 7, day: 35 },
-  { id: "con.M8.done", traj: "con", title: "Модуль 8 завершён · AgentOps защищён", type: ["TEAM","EXPERT"], desc: "AgentOps-стек + план раскатки 18-36 мес защищены перед Яндекс.", verifier: "Module Owner М8 + экспертная панель Яндекс", module: 8, day: 40 },
+  { id: "con.M8.done", traj: "con", title: "Модуль 8 завершён · AgentOps защищён", type: ["TEAM","EXPERT"], desc: "AgentOps-стек + план раскатки 18-36 мес защищены в ротационной группе.", verifier: "Module Owner М8 + эксперт Яндекса + peer-рецензенты", module: 8, day: 40 },
   { id: "con.M9.done", traj: "con", title: "Модуль 9 завершён · программа защищена", type: ["EXPERT","TEAM"], desc: "Финальная защита Программы платформы перед внешней панелью действующих CAIO.", verifier: "Внешняя панель CAIO + Module Owner М9", module: 9, day: 45 },
 
   // ============ КОНСТРУКТИВ (9 триггеров — по разделам финального артефакта) ============
@@ -1057,7 +1057,7 @@ const TRIGGERS = [
   { id: "c.sec2", traj: "co", title: "Раздел 2 · Карта процессов с KPT", type: ["ARTIFACT","TEAM"], desc: "3 процесса с baseline/целевой KPT + классификация когнитивных операций.", verifier: "Module Owner М2", module: 2, day: 10 },
   { id: "c.sec3", traj: "co", title: "Раздел 3 · Архитектура платформы", type: ["ARTIFACT","TEAM"], desc: "Диаграмма 9 слоёв + federation + MCP-каталог.", verifier: "Module Owner М4", module: 4, day: 20 },
   { id: "c.sec4", traj: "co", title: "Раздел 4 · МЗ-компонент", type: ["ARTIFACT","TEAM"], desc: "Knowledge Graph + ingestion/application агенты + KPT-метрики.", verifier: "Module Owner М2", module: 2, day: 10 },
-  { id: "c.sec5", traj: "co", title: "Раздел 5 · Команда платформы", type: ["ARTIFACT","TEAM"], desc: "Org-схема + план найма + RACI + change management.", verifier: "Module Owner М6", module: 6, day: 30 },
+  { id: "c.sec5", traj: "co", title: "Раздел 5 · Команда платформы", type: ["ARTIFACT","TEAM"], desc: "Org-схема + capability map + resourcing + RACI + change management.", verifier: "Module Owner М6", module: 6, day: 30 },
   { id: "c.sec6", traj: "co", title: "Раздел 6 · Унит-экономика и токеномика", type: ["ARTIFACT","TEAM"], desc: "Калькулятор пилота + TCO/ROI 36 мес + sensitivity-анализ.", verifier: "Module Owner М5", module: 5, day: 25 },
   { id: "c.sec7", traj: "co", title: "Раздел 7 · Регуляторика, Security, Governance", type: ["ARTIFACT","TEAM"], desc: "Compliance-карта + SAD из 8 разделов + red-team отчёт.", verifier: "Module Owner М7", module: 7, day: 35 },
   { id: "c.sec8", traj: "co", title: "Раздел 8 · AgentOps и операционная модель", type: ["ARTIFACT","TEAM"], desc: "Lifecycle + observability + FinOps + governance + раскатка.", verifier: "Module Owner М8", module: 8, day: 40 },
@@ -1095,7 +1095,7 @@ const TRIGGERS = [
 
   // М6 — Команда и операционная модель
   { id: "diag.in.M6", traj: "ep", title: "Входная М6 · команда и оргмодель", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по новым ролям в агентной компании, RACI, change management, дизайну операционной модели.", verifier: "Assessment Agent + Module Owner М6", module: 6, day: 26 },
-  { id: "diag.out.M6", traj: "ep", title: "Выходная М6 · дельта по оргдизайну", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по org-дизайну + план найма + операционная модель пилота.", verifier: "Assessment Agent + Module Owner М6", module: 6, day: 30 },
+  { id: "diag.out.M6", traj: "ep", title: "Выходная М6 · дельта по оргдизайну", type: ["DIAG","AUTO"], desc: "Д4 модуля: квиз по org-дизайну + resourcing + операционная модель пилота.", verifier: "Assessment Agent + Module Owner М6", module: 6, day: 30 },
 
   // М7 — Регуляторика, AI Security, Governance
   { id: "diag.in.M7", traj: "ep", title: "Входная М7 · регуляторика и AI Security", type: ["DIAG","AUTO"], desc: "Д1 модуля: квиз по 152-ФЗ, EU AI Act, threat modeling (STRIDE), AI Security принципам.", verifier: "Assessment Agent + Module Owner М7", module: 7, day: 31 },
@@ -1321,7 +1321,7 @@ const TRIGGER_TYPE_LABELS = {
   "PEER": { label: "PEER", color: "#a78bfa", desc: "Подтверждает peer-тройка (2 из 3)" },
   "MOD": { label: "MOD", color: "#c084fc", desc: "Подтверждает модератор группы или трек-наставник" },
   "TEAM": { label: "TEAM", color: "#6b8aff", desc: "Подтверждает операционная команда программы (Module Owner, Cohort, Ops)" },
-  "EXPERT": { label: "EXPERT", color: "#ec4899", desc: "Внешняя экспертная панель на защите (CAIO, Сколково, ИТМО, Яндекс, МШУ)" },
+  "EXPERT": { label: "EXPERT", color: "#ec4899", desc: "Профильный эксперт на модульной защите; внешняя CAIO-панель — на финале" },
   "ARTIFACT": { label: "ARTIFACT", color: "#fb7185", desc: "Зафиксирован файл / документ / код в портфолио" }
 };
 
@@ -1417,12 +1417,12 @@ const MODULES = [
     keyQuestion: "Как устроить команду платформы и перевести компанию на agent-augmented модель?",
     dayThemes: [
       "Команда платформы и новые роли",
-      "Кадровая стратегия 2026",
+      "Карта компетенций и resourcing",
       "Сопротивление и замещение ролей",
       "AI-augmented operating model",
       "Защита оргпрограммы"
     ],
-    artifacts: ["Org-схема команды платформы", "План найма на 18 месяцев", "RACI-карта", "Стратегия change management", "Дизайн новой операционной модели"],
+    artifacts: ["Org-схема команды платформы", "Карта компетенций + план resourcing", "RACI-карта", "Стратегия change management", "Дизайн новой операционной модели"],
     fullSchedule: true
   },
   { num: 7, name: "Регуляторика, AI Security и стратегическое предвидение", short: "Регуляторика + Security", icon: "🔒",
@@ -1502,6 +1502,7 @@ const COHORT = {
 
 const PRESTART_ITEMS = [
   { id: "diag", label: "Входная диагностика", done: () => diagnosticDone(), action: "AI Maturity + квиз понятий — блок справа от тьютора", nav: null },
+  { id: "project", label: "Паспорт реального проекта", done: () => projectSectionsDone() > 0 || STATE.firedTriggers.has("m1.ex_check"), action: "Бизнес-проблема · метрика · владелец · данные · ограничения", nav: "library" },
   { id: "premodule", label: "Премодульные материалы М1", done: () => STATE.firedTriggers.has("m1.premodule"), action: "Глоссарий + видео «Что такое агентная платформа»", nav: "library" },
   { id: "stack", label: "Личный стек ИИ-лидера v1.0", done: () => STATE.currentDay > 1 || STATE.firedTriggers.has("m1.ex_learn"), action: "6 компонентов рабочего контура CAIO — собрать на Д1", nav: null },
   { id: "worksheet", label: "Worksheet «Моя компания»", done: () => STATE.firedTriggers.has("m1.ex_check"), action: "Открыть шаблон и заполнить §1 стратегии", nav: "library" },
@@ -1612,7 +1613,7 @@ const MODULE_4_SCHEDULE = [
   { day: 20, theme: "C-level защита 4 архитектурных вариантов + ADR", sessions: [
     { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "C-level архитектурный канвас: in-house, российское облако, внешний API и гибрид" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Аудит архитектуры + pre-mortem перед защитой" },
-    { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Защиты архитектуры перед панелью ИТМО + Яндекс" },
+    { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Ротация индивидуальных архитектур: профильный эксперт + peer-рецензенты" },
     { time: "16:15-17:30", type: "defense", typeLabel: "Security check", title: "Security как Layer 8: sensitivity-aware federation, network segmentation, secrets management" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты модуля. Контракт на 3 недели до М5" }
   ]}
@@ -1690,7 +1691,7 @@ const MODULE_3_SCHEDULE = [
   { day: 15, theme: "Agent of the Month + защита инженерных решений", sessions: [
     { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Сборка инженерных артефактов: eval-набор + policy-as-code + multi-agent схема" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Подготовка к Agent of the Month: показательная демонстрация" },
-    { time: "14:00-16:00", type: "defense", typeLabel: "Демо", title: "Agent of the Month: финальные демонстрации перед панелью ИТМО + магистрантов" },
+    { time: "14:00-16:00", type: "defense", typeLabel: "Демо", title: "Agent of the Month: индивидуальные демонстрации, эксперт ИТМО + peer-рецензенты" },
     { time: "16:15-17:30", type: "defense", typeLabel: "Security check", title: "Награждение Agent of the Month + кульминация по blast radius и action security" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Что я теперь могу как инженер агентов?" }
   ]}
@@ -1746,7 +1747,7 @@ const MODULE_6_SCHEDULE = [
   ]},
   { day: 27, theme: "Кадровая стратегия 2026", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Кадровая стратегия в условиях рынка 2026. Зарплаты ML-инженеров выросли в 1.5x" },
-    { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "План найма команды платформы на 18 месяцев" },
+    { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Capability map и resourcing: build / buy / partner" },
     { time: "14:00-16:00", type: "guest", typeLabel: "Гостевая", title: "Q&A с VP People AI-компании: как нанимать и удерживать ML-инженеров" },
     { time: "16:15-17:30", type: "workshop", typeLabel: "Воркшоп", title: "Стратегия удержания сениоров. Compensation, mission, career path" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Кого мне труднее всего нанять?" }
@@ -1766,9 +1767,9 @@ const MODULE_6_SCHEDULE = [
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какой ритуал моей компании первым изменится из-за агентов?" }
   ]},
   { day: 30, theme: "Защита оргпрограммы + AI Security Engineer", sessions: [
-    { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Сборка оргпрограммы: org-схема + план найма + change management + новая операционная модель" },
+    { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "Сборка оргпрограммы: org-схема + resourcing + change management + новая операционная модель" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Pre-mortem программы + подготовка к защите" },
-    { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Защиты оргпрограмм перед панелью HR-директоров и change-практиков Сколково" },
+    { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Ротация индивидуальных оргпроектов: профильный эксперт + peer-рецензенты" },
     { time: "16:15-17:30", type: "defense", typeLabel: "Security check", title: "Роль AI Security Engineer в команде. Взаимодействие с CISO. SOC и инциденты" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты по org-дизайну" }
   ]}
@@ -1846,7 +1847,7 @@ const MODULE_8_SCHEDULE = [
   { day: 40, theme: "Раскатка платформы + Security в продакшене", sessions: [
     { time: "09:00-11:00", type: "workshop", typeLabel: "Проектная", title: "План раскатки платформы пилота на 18-36 месяцев. Волны, KPI, риски, хеджи" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Сборка AgentOps-стека: lifecycle + observability + FinOps + governance + раскатка" },
-    { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Защиты AgentOps-стеков перед панелью Яндекса" },
+    { time: "14:00-16:00", type: "defense", typeLabel: "Защита", title: "Ротация индивидуальных AgentOps-стеков: эксперт Яндекса + peer-рецензенты" },
     { time: "16:15-17:30", type: "defense", typeLabel: "Security check", title: "Security в продакшене: audit-trail, kill-switches, аномалии, automated red-teaming" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Готова ли моя платформа к production?" }
   ]}
@@ -1921,6 +1922,7 @@ MODULES.forEach((module, index) => {
     module.dayThemes[3] = `${module.dayThemes[3]} + ${module.dayThemes[4]}`;
     module.dayThemes.pop();
   }
+  module.artifacts.push("Живая схема модуля: общая → групповая → индивидуальная");
 
   const schedule = ALL_SCHEDULES[module.num];
   if (schedule && schedule.length === 5) {
@@ -2321,7 +2323,7 @@ function findExercise(exId) {
 function renderSidebar() {
   const html = `
     <div class="sidebar-brand">
-      <div class="logo">AI MBA · Портал</div>
+      <div class="logo">Директор по ИИ · AI MBA</div>
       <div class="role">${STATE.user && STATE.user.name ? esc(STATE.user.name) + (STATE.user.company && STATE.user.company !== '—' ? ' · ' + esc(STATE.user.company) : '') : 'Поток 001 · Пилотный'}</div>
       <a href="../index.html" style="display:inline-block;margin-top:8px;font-size:12px;color:var(--accent);text-decoration:none;">← На главную программы</a>
       <a onclick="resetProgress()" style="display:inline-block;margin-top:6px;margin-left:12px;font-size:12px;color:var(--text-muted);text-decoration:none;cursor:pointer;">⟳ Сбросить</a>
@@ -3022,6 +3024,19 @@ function renderModule(num) {
         <span>📊 ${exList ? exList.length + ' упражнений' : 'упражнения в разработке'}</span>
       </div>
       <div class="key-q">${esc(mod.keyQuestion)}</div>
+    </div>
+
+    <div class="hub-section" style="margin-top:0;">
+      <div class="hub-section-head">
+        <h2>Ритм модуля: действие → рефлексия → новое действие</h2>
+        <p>Схемы строятся вживую: общая → групповая → индивидуальная. ИИ подключается после содержательной сборки.</p>
+      </div>
+      <div class="quick-access" style="margin-top:0;">
+        <div class="quick-link"><div class="icon">1</div><div class="name">Ситуация</div><div class="desc">Проблематизация · схема v0</div></div>
+        <div class="quick-link"><div class="icon">2</div><div class="name">Пленарная сборка</div><div class="desc">Средства · схема v1</div></div>
+        <div class="quick-link"><div class="icon">3</div><div class="name">Групповая работа</div><div class="desc">Проверка на проектах · v2</div></div>
+        <div class="quick-link"><div class="icon">4</div><div class="name">Ярмарка решений</div><div class="desc">Защита · рефлексия · v3</div></div>
+      </div>
     </div>
 
     ${scheduleHtml}
