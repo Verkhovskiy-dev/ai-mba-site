@@ -63,6 +63,15 @@ jobs:
           git push "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
           echo "published=true" >> "$GITHUB_OUTPUT"
 
+      - name: Запустить сборку GitHub Pages
+        # Push из воркфлоу не всегда триггерит deploy.yml (проверено 12.08:
+        # коммит ушёл, а Pages не собрался) — запускаем сборку явно.
+        # Дубликаты гасит concurrency group "pages" в deploy.yml.
+        if: steps.push.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
+        run: gh workflow run deploy.yml --repo ${{ github.repository }}
+
       - name: Подтверждение в Telegram
         if: steps.push.outputs.published == 'true'
         env:
