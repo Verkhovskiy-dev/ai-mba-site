@@ -1,20 +1,23 @@
 name: Публикация портала
 
-# Кнопка «опубликовать портал на прод» без локального деплоя:
-# берёт 13_Платформа-стенд/Портал_слушателя/index.html из main контент-репо
-# (ai-mba-content), проверяет JS-синтаксис и коммитит в site/portal/index.html.
-# Push сделан PAT'ом, поэтому deploy.yml (GitHub Pages) срабатывает автоматически.
+# Публикует портал на прод и сам проверяет результат:
+# 1) забирает 13_Платформа-стенд/Портал_слушателя/index.html из main контент-репо,
+# 2) проверяет JS-синтаксис, коммитит в site/portal/,
+# 3) запускает сборку GitHub Pages и ждёт её,
+# 4) сверяет хэш файла на https://agentmba.ai/portal/ с источником,
+# 5) шлёт итог всей команде в Telegram — никому не нужно проверять глазами.
 #
-# Запуск: Actions → «Публикация портала» → Run workflow. Только вручную,
-# человеком, после ревью и merge PR в контент-репо (см. AGENTS.md).
-# Секреты: CONTENT_REPO_TOKEN (чтение ai-mba-content + push сюда),
-#          TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (необязательно — подтверждение).
+# Запускается автоматически из контент-репо (auto-publish.yml при изменении
+# портала в main) или вручную: Actions → Run workflow.
+# Секреты: CONTENT_REPO_TOKEN, TELEGRAM_BOT_TOKEN, TELEGRAM_TEAM_IDS
+# (список chat_id через запятую; fallback — TELEGRAM_CHAT_ID).
 
 on:
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: publish-portal
@@ -27,6 +30,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Забрать портал из контент-репо (main)
+        id: fetch
         env:
           GH_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
         run: |
@@ -34,6 +38,9 @@ jobs:
           gh api "repos/Verkhovskiy-dev/ai-mba-content/contents/$SRC_PATH?ref=main" \
             -H "Accept: application/vnd.github.raw" > /tmp/portal.html
           [ -s /tmp/portal.html ] || { echo "Пустой файл из контент-репо"; exit 1; }
+          # Тема последнего изменения — для человекочитаемого уведомления.
+          SUBJECT=$(gh api repos/Verkhovskiy-dev/ai-mba-content/commits/main -q '.commit.message' | head -1)
+          echo "subject=$SUBJECT" >> "$GITHUB_OUTPUT"
 
       - name: Проверить JS-синтаксис
         run: |
@@ -63,26 +70,51 @@ jobs:
           git push "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
           echo "published=true" >> "$GITHUB_OUTPUT"
 
-      - name: Запустить сборку GitHub Pages
-        # Push из воркфлоу не всегда триггерит deploy.yml (проверено 12.08:
-        # коммит ушёл, а Pages не собрался) — запускаем сборку явно.
-        # Дубликаты гасит concurrency group "pages" в deploy.yml.
+      - name: Собрать Pages и проверить прод
+        id: verify
         if: steps.push.outputs.published == 'true'
         env:
           GH_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
-        run: gh workflow run deploy.yml --repo ${{ github.repository }}
+        run: |
+          # Push из воркфлоу не триггерит deploy.yml — запускаем сборку явно.
+          gh workflow run deploy.yml --repo ${{ github.repository }}
+          sleep 10
+          RUN_ID=$(gh run list --repo ${{ github.repository }} --workflow deploy.yml \
+            --limit 1 --json databaseId -q '.[0].databaseId')
+          gh run watch "$RUN_ID" --repo ${{ github.repository }} --exit-status
 
-      - name: Подтверждение в Telegram
+          # Ждём, пока CDN начнёт отдавать новую версию (до ~3 мин).
+          WANT=$(sha256sum portal/index.html | awk '{print $1}')
+          VERIFIED=false
+          for i in $(seq 1 12); do
+            GOT=$(curl -s "https://agentmba.ai/portal/index.html?nocache=$(date +%s)" | sha256sum | awk '{print $1}')
+            if [ "$GOT" = "$WANT" ]; then VERIFIED=true; break; fi
+            sleep 15
+          done
+          echo "verified=$VERIFIED" >> "$GITHUB_OUTPUT"
+          [ "$VERIFIED" = "true" ] && echo "Прод совпадает с источником." || echo "Прод пока отдаёт старую версию."
+
+      - name: Итог команде в Telegram
         if: steps.push.outputs.published == 'true'
         env:
           BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TEAM_IDS: ${{ secrets.TELEGRAM_TEAM_IDS }}
           CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          VERIFIED: ${{ steps.verify.outputs.verified }}
+          SUBJECT: ${{ steps.fetch.outputs.subject }}
         run: |
           [ -n "$BOT_TOKEN" ] || { echo "Telegram-секретов нет — пропускаю"; exit 0; }
           NL=$'\n'
-          TEXT="🚀 Портал опубликован на прод (запустил ${{ github.actor }}).${NL}Через 1–2 мин обновится https://agentmba.ai/portal/"
-          curl -s -o /dev/null -w "telegram http %{http_code}\n" \
-            "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
-            --data-urlencode "chat_id=$CHAT_ID" \
-            --data-urlencode "text=$TEXT" \
-            -d "disable_web_page_preview=true"
+          if [ "$VERIFIED" = "true" ]; then
+            TEXT="🚀 Портал опубликован и проверен: прод совпадает с источником.${NL}Что вошло: $SUBJECT${NL}https://agentmba.ai/portal/ (если видна старая версия — Cmd+Shift+R)"
+          else
+            TEXT="⚠️ Портал опубликован, но прод ещё отдаёт старую версию (кэш CDN). Проверьте через пару минут: https://agentmba.ai/portal/${NL}Что вошло: $SUBJECT"
+          fi
+          IDS="${TEAM_IDS:-$CHAT_ID}"
+          for id in ${IDS//,/ }; do
+            curl -s -o /dev/null -w "telegram $id http %{http_code}\n" \
+              "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+              --data-urlencode "chat_id=$id" \
+              --data-urlencode "text=$TEXT" \
+              -d "disable_web_page_preview=true"
+          done
