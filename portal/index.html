@@ -1501,6 +1501,8 @@ const PRESTART_ITEMS = [
   { id: "troika", label: "Peer-тройка", done: () => STATE.firedTriggers.has("s.1.troika"), action: "Познакомиться с сокурсниками — блок «Сообщество» ниже", nav: null }
 ];
 
+// Стандарт последнего дня модуля: 09:00–20:30, сборка утром, защита днём, разбор и рефлексия вечером.
+
 const MODULE_1_SCHEDULE = [
   {
     day: 1,
@@ -1508,13 +1510,11 @@ const MODULE_1_SCHEDULE = [
     sessions: [
       { time: "09:00-09:30", type: "lecture", typeLabel: "Установка", title: "Открытие программы и Модуля 1: сквозные практики, образ выпускника, контракт" },
       { time: "09:30-11:00", type: "guest", typeLabel: "Лекция", title: "Будущее ИИ. Куда мы движемся?", speaker: "Себрант (Яндекс)" },
-      { time: "11:15-12:30", type: "workshop", typeLabel: "Воркшоп", title: "Карта различений: ИИ-проект vs Платформа vs Agent-augmented", exId: "E1.1" },
-      { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Сборка личного стека ИИ-лидера v1.0", stackLink: true },
-      { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "AI Maturity Index v2026: 5 уровней зрелости агентной платформы" },
-      { time: "16:00-16:30", type: "workshop", typeLabel: "Воркшоп", title: "Анти-примеры AI Maturity Levels", exId: "E1.2" },
+      { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Сборка личного стека ИИ-лидера v1.0 + карта различений «ИИ-проект vs Платформа vs Agent-augmented»", exId: "E1.1", stackLink: true },
+      { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "AI Maturity Index v2026: 5 уровней зрелости + мини-воркшоп «Анти-примеры Maturity Levels»", exId: "E1.2" },
       { time: "16:15-17:30", type: "workshop", typeLabel: "Практикум", title: "Диагностика зрелости моей компании (Worksheet)", exId: "E1.3" },
-      { time: "17:15-17:30", type: "defense", typeLabel: "Commitment", title: "Public commitment на личный стек", exId: "E1.4" },
-      { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Рефлексия Дня 1 + старт калибровки прогнозов", exId: "E1.5" }
+      { time: "17:30-17:45", type: "defense", typeLabel: "Commitment", title: "Public commitment на личный стек", exId: "E1.4" },
+      { time: "17:45-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Рефлексия Дня 1 + старт калибровки прогнозов", exId: "E1.5" }
     ]
   },
   {
@@ -1522,9 +1522,9 @@ const MODULE_1_SCHEDULE = [
     theme: "Стратегия как платформенная стратегия",
     sessions: [
       { time: "09:00-10:30", type: "lecture", typeLabel: "Лекция", title: "От ИИ-стратегии к стратегии агентной платформы. Build vs Buy vs Partner" },
-      { time: "10:45-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Декомпозиция бизнес-целей + Tool selection по Дельта-модели", exId: "E2.1" },
-      { time: "12:30-13:00", type: "workshop", typeLabel: "Практикум", title: "Steel-manning конкурирующей стратегии", exId: "E2.3" },
-      { time: "14:00-16:00", type: "lecture", typeLabel: "Лекция", title: "AI-First → Agent-First компания. Кейсы Klarna, Anthropic, JPMorgan" },
+      { time: "10:45-12:15", type: "workshop", typeLabel: "Воркшоп", title: "Декомпозиция бизнес-целей + Tool selection по Дельта-модели", exId: "E2.1" },
+      { time: "12:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Steel-manning конкурирующей стратегии", exId: "E2.3" },
+      { time: "14:00-15:30", type: "lecture", typeLabel: "Лекция", title: "AI-First → Agent-First компания. Кейсы Klarna, Anthropic, JPMorgan" },
       { time: "15:30-16:00", type: "workshop", typeLabel: "Практикум", title: "Differential diagnosis: AI-First vs использующая ИИ", exId: "E2.2" },
       { time: "16:15-17:15", type: "guest", typeLabel: "Гостевая", title: "Q&A с действующим CAIO: путь от проектов к платформе" },
       { time: "17:15-17:30", type: "workshop", typeLabel: "Peer-review", title: "Адверсариальный peer-review тезисов гостя", exId: "E2.4" },
@@ -1547,11 +1547,11 @@ const MODULE_1_SCHEDULE = [
     day: 4,
     theme: "Первый агент + защита платформенной стратегии",
     sessions: [
-      { time: "09:00-11:00", type: "handson", typeLabel: "Hands-on", title: "Запуск первого агента: спецификация, базовый агент, eval-набор, Langfuse, cost-tracking, kill-switch", exId: "E4.1" },
-      { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Сборка Платформенной стратегии v0.1 + pre-mortem и peer-review в тройке", exId: "E5.2" },
+      { time: "09:00-11:00", type: "handson", typeLabel: "Hands-on", title: "Запуск первого агента: задача, спецификация, базовый агент, eval-набор, Langfuse, kill-switch, полный прогон", exId: "E4.1" },
+      { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Сборка Платформенной стратегии v0.1 + pre-mortem и адверсариальный peer-review в тройке", exId: "E5.2" },
       { time: "14:00-16:00", type: "defense", typeLabel: "Демо", title: "Agent of the Week #1: первые демонстрации агентов", exId: "E4.3" },
       { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты платформенных стратегий + Threat model компании v0.1", exId: "E5.3", speaker: "Эксперты Сколково" },
-      { time: "18:30-20:00", type: "workshop", typeLabel: "Анализ", title: "Разбор failures чужого агента + обратная связь экспертов. Промышленный агент: 10 признаков", exId: "E4.2" },
+      { time: "18:30-20:00", type: "workshop", typeLabel: "Анализ", title: "Разбор защит и failures чужого агента. Промышленный агент: 10 признаков", exId: "E4.2" },
       { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Рефлексия Модуля 1 + контракт на межмодульную работу" }
     ]
   }
@@ -1583,11 +1583,11 @@ const MODULE_4_SCHEDULE = [
   ]},
   { day: 16, theme: "Orchestration + A2A + C-level защита и ADR", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Паттерны оркестрации: planner-executor, hierarchical, swarm, supervisor-worker. A2A: agent cards, discovery, доверие" },
-    { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Подключение 2–3 агентов пилота через оркестратор + выбор A2A-протокола", speaker: "Павел Мягких" },
-    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "C-level архитектурный канвас: in-house, российское облако, внешний API, гибрид + pre-mortem" },
-    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Ротация индивидуальных архитектур + Security как Layer 8. Фиксация ADR", speaker: "Профильный эксперт + peer-рецензенты" },
-    { time: "18:30-20:00", type: "workshop", typeLabel: "Проектная", title: "Разбор защит + working prototype: EDA → multi-agent аналитика (AI South Hack)", speaker: "Павел Мягких" },
-    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты модуля. Где границы автономии агентов? Контракт на 3 недели до М5" }
+    { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Проектирование оркестрации + подключение 2–3 агентов через оркестратор, выбор A2A-протокола (AI South Hack)", speaker: "Павел Мягких" },
+    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "C-level архитектурный канвас: in-house, российское облако, внешний API и гибрид. Pre-mortem перед защитой" },
+    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Ротация индивидуальных архитектур + Security как Layer 8: sensitivity-aware federation, segmentation, secrets. Фиксация ADR", speaker: "Профильный эксперт + peer-рецензенты" },
+    { time: "18:30-20:00", type: "lecture", typeLabel: "Обратная связь", title: "Разбор защит с экспертами. Где границы автономии агентов?" },
+    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты модуля. Контракт на 3 недели до М5" }
   ]}
 ];
 
@@ -1615,12 +1615,12 @@ const MODULE_2_SCHEDULE = [
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где галлюцинации критичны и как их предотвратить?" }
   ]},
   { day: 8, theme: "KPT как продуктовая метрика + защита МЗ-компонента", sessions: [
-    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "KPT детально: wait/active/handover/rework. KPT × бизнес-метрики: cycle time, throughput, conversion (мост к М5)" },
-    { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Расчёт детального KPT пилота (цикл 2) + защита KPT-моделей в малых группах" },
-    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Сборка МЗ-компонента: ingestion + application + KPT в единую архитектуру + pre-mortem" },
+    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "KPT детально: wait/active/handover/rework. Целевые KPT по классам задач. KPT × бизнес-метрики (подготовка к М5)" },
+    { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Расчёт детального KPT пилота — цикл 2 + защита KPT-моделей в малых группах" },
+    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Сборка МЗ-компонента: ingestion + application + KPT в единую архитектуру. Pre-mortem перед защитой" },
     { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты МЗ-компонентов + Knowledge security: классификация, IP, data leakage" },
     { time: "18:30-20:00", type: "lecture", typeLabel: "Обратная связь", title: "Разбор защит с экспертами" },
-    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты по МЗ и KPT. Реалистична ли моя целевая KPT? Контракт на 3 недели" }
+    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты по МЗ и KPT. Контракт на 3 недели" }
   ]}
 ];
 
@@ -1648,11 +1648,11 @@ const MODULE_3_SCHEDULE = [
     { time: "18:30-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Что показал мой eval-сет о моём агенте?" }
   ]},
   { day: 12, theme: "Blast radius + Agent of the Month и защита", sessions: [
-    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Blast radius: главное отличие агентов от LLM. Классификация действий, policy-as-code, HITL-классы, sandboxing, audit trail" },
+    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Blast radius: агенты действуют. Классификация действий, audit trail, policy-as-code, HITL-классы, sandboxing и dry-run" },
     { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Policy-as-code для пилота: HITL-gates, классификация действий, dry-run blast radius", speaker: "Павел Мягких" },
-    { time: "14:00-16:00", type: "defense", typeLabel: "Демо", title: "Agent of the Month: индивидуальные демонстрации — блок 1", speaker: "Эксперт ИТМО + peer-рецензенты" },
-    { time: "16:15-18:00", type: "defense", typeLabel: "Демо", title: "Agent of the Month — блок 2 + награждение + security-разбор лучших решений" },
-    { time: "18:30-20:00", type: "workshop", typeLabel: "Проектная", title: "Интеграция multi-agent: бизнес-анализ → архитектура → прогон (AI South Hack)", speaker: "Павел Мягких" },
+    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Сборка инженерных артефактов: eval + policy-as-code + multi-agent схема. Подготовка демонстрации", speaker: "Павел Мягких" },
+    { time: "16:15-18:00", type: "defense", typeLabel: "Демо", title: "Agent of the Month: индивидуальные демонстрации + награждение", speaker: "Эксперт ИТМО + peer-рецензенты" },
+    { time: "18:30-20:00", type: "defense", typeLabel: "Security check", title: "Blast radius и action security: разбор лучших решений. Интеграция multi-agent (AI South Hack)", speaker: "Павел Мягких" },
     { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Что я теперь могу как инженер агентов? Что в blast radius самое опасное?" }
   ]}
 ];
@@ -1681,10 +1681,10 @@ const MODULE_5_SCHEDULE = [
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Какие 3 сценария чувствительности самые опасные?" }
   ]},
   { day: 20, theme: "Переговоры с провайдерами + защита экономики", sessions: [
-    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Переговоры с foundation-провайдерами: дисконты, latency SLA, caching credits. Новые бизнес-модели при удешевлении машинного мышления" },
+    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Переговоры с foundation-провайдерами: дисконты, latency SLA, caching credits. Due diligence ИИ-стартапов и оценка ИИ-IP" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Кейс-переговоры: ролевая игра CAIO vs провайдер" },
-    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Финальная сборка калькулятора и презентации для инвест-комитета + pre-mortem" },
-    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты экономики: ТЭО + калькулятор + 3 сценария чувствительности", speaker: "Эксперты МШУ" },
+    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Финальная сборка калькулятора и презентации для инвест-комитета. Pre-mortem экономики платформы" },
+    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты экономики: ТЭО + калькулятор + 3 сценария", speaker: "Эксперты МШУ" },
     { time: "18:30-20:00", type: "lecture", typeLabel: "Дискуссия", title: "Обратная связь от экспертов МШУ + Security check: TCO безопасности" },
     { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты по токеномике. Что в мой переговорный playbook?" }
   ]}
@@ -1715,11 +1715,11 @@ const MODULE_6_SCHEDULE = [
   ]},
   { day: 24, theme: "Команда платформы + защита оргпрограммы", sessions: [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Новые роли: Platform/AgentOps/Reliability/Eval/Security/Knowledge Engineer, AI PM. Spotify-модель, ошибки org-дизайна" },
-    { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Org-дизайн команды + RACI платформа ↔ продукт → §5.2. Доработка СРT, план найма из gap-анализа" },
-    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Сборка оргпрограммы: СРT + §5.1–§5.4 + план найма + pre-mortem" },
+    { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Org-дизайн команды + RACI (платформа ↔ продукт) → §5.2. Доработка СРT, черновик плана найма из gap-анализа" },
+    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Сборка оргпрограммы: СРT + §5.1–§5.4 + план найма. Pre-mortem перед защитой" },
     { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Ротация индивидуальных оргпроектов + Security check: AI Security Engineer и CISO", speaker: "Профильный эксперт (HR/change) + peer-рецензенты" },
-    { time: "18:30-20:00", type: "lecture", typeLabel: "Обратная связь", title: "Разбор защит с экспертами" },
-    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты по org-дизайну. Сколько людей реально нужно?" }
+    { time: "18:30-20:00", type: "lecture", typeLabel: "Обратная связь", title: "Разбор защит с экспертами. Сколько людей реально нужно?" },
+    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты по org-дизайну" }
   ]}
 ];
 
@@ -1740,10 +1740,10 @@ const MODULE_7_SCHEDULE = [
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где я выйду за рамки регуляторики, если не исправлю?" }
   ]},
   { day: 27, theme: "AI Security: кульминация + red-team спринт и SAD", sessions: [
-    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "AI Security: OWASP Top 10 for LLM, prompt injection (direct, indirect, jailbreak), adversarial robustness, supply chain, confidential computing" },
+    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "OWASP Top 10 for LLM, prompt injection (direct, indirect, jailbreak). Adversarial robustness, supply chain, confidential computing" },
     { time: "11:15-13:00", type: "handson", typeLabel: "Hands-on", title: "Red-team спринт: атаки на агента соседа + защита своего агента от найденных атак" },
     { time: "14:00-16:00", type: "guest", typeLabel: "Гостевая", title: "Q&A с CISO крупной российской компании. Реальная картина безопасности" },
-    { time: "16:15-18:00", type: "handson", typeLabel: "Hands-on", title: "Сборка Security Architecture Document (8 разделов) + демо лучших атак и защит" },
+    { time: "16:15-18:00", type: "handson", typeLabel: "Hands-on", title: "Сборка SAD (разделы 1–8) + демо лучших атак и защит" },
     { time: "18:30-20:00", type: "workshop", typeLabel: "Проектная", title: "Финализация SAD и подготовка к защите (Д28)" },
     { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Какие prompt injection атаки сработают на моём агенте? Что было страшнее всего в red-team?" }
   ]},
@@ -1780,13 +1780,13 @@ const MODULE_8_SCHEDULE = [
     { time: "16:15-17:30", type: "agent-week", typeLabel: "Agent of the Week", title: "Демонстрация агентов слушателей с FinOps-фокусом" },
     { time: "17:30-18:00", type: "reflection", typeLabel: "Рефлексия", title: "Где у меня biggest cost-leak?" }
   ]},
-  { day: 32, theme: "Governance + раскатка + защита AgentOps-стека", sessions: [
-    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Governance: реестр агентов, каталог тулзов, policy-as-code, RBAC/ABAC. Раскатка платформы: волны, ранние клиенты, бета-программы" },
-    { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Реестр и каталог пилота + черновик плана раскатки 18–36 мес" },
-    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Сборка AgentOps-стека: lifecycle + observability + FinOps + governance + раскатка + pre-mortem" },
-    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Ротация AgentOps-стеков + Security в продакшене: audit-trail, kill-switches, red-teaming", speaker: "Эксперт Яндекса + peer-рецензенты" },
-    { time: "18:30-20:00", type: "guest", typeLabel: "Гостевая", title: "Разбор защит + Q&A: раскатка ИИ-платформы в продакшене", speaker: "Практик Яндекса (уточнить)" },
-    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Готова ли моя платформа к production? Какая волна раскатки — первая?" }
+  { day: 32, theme: "Governance + раскатка + защита AgentOps", sessions: [
+    { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Governance: реестр агентов, каталог тулзов, policy-as-code, RBAC/ABAC. Раскатка: волны, ранние клиенты, бета-программы" },
+    { time: "11:15-13:00", type: "workshop", typeLabel: "Воркшоп", title: "Реестр и каталог пилота + черновик плана раскатки 18–36 мес. Q&A: раскатка ИИ-платформы в продакшене", speaker: "Практик Яндекса (уточнить)" },
+    { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Сборка AgentOps-стека: lifecycle + observability + FinOps + governance + раскатка. Pre-mortem перед защитой" },
+    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Ротация индивидуальных AgentOps-стеков + Security в продакшене: audit-trail, kill-switches, red-teaming", speaker: "Эксперт Яндекса + peer-рецензенты" },
+    { time: "18:30-20:00", type: "lecture", typeLabel: "Обратная связь", title: "Разбор защит с экспертами. Какая волна раскатки — первая?" },
+    { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Готова ли моя платформа к production?" }
   ]}
 ];
 
@@ -1863,7 +1863,7 @@ TRAJ_DEPS.forEach(dep => {
 const MODULE_1_EXERCISES = [
   {
     id: "E1.1", name: "Карта различений «ИИ-проект vs Платформа vs Agent-augmented»",
-    pattern: "1.4 Карта различений", trains: ["РАЗЛ"], day: 1, time: "11:15-12:30", duration: "75 минут",
+    pattern: "1.4 Карта различений", trains: ["РАЗЛ"], day: 1, time: "11:15-13:00 (в hands-on стека)", duration: "75 минут",
     goal: "Зафиксировать различие между тремя состояниями организации, которые слушатели часто путают.",
     structure: [
       "5 мин: Module Owner показывает шаблон карты",
@@ -1875,7 +1875,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E1.2", name: "Анти-примеры AI Maturity Levels",
-    pattern: "1.3 Анти-примеры", trains: ["РАЗЛ"], day: 1, time: "16:00-16:30", duration: "30 минут",
+    pattern: "1.3 Анти-примеры", trains: ["РАЗЛ"], day: 1, time: "встроено в лекцию 14:00-16:00", duration: "30 минут",
     goal: "Заострить понимание границ между уровнями зрелости через поиск обманчиво похожих случаев.",
     structure: [
       "5 мин: установка задачи — найти 3 фальшивых L3",
@@ -1897,7 +1897,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E1.4", name: "Public commitment на личный стек",
-    pattern: "3.1 Public commitment", trains: ["УВЕР"], day: 1, time: "17:15-17:30", duration: "15 минут",
+    pattern: "3.1 Public commitment", trains: ["УВЕР"], day: 1, time: "17:30-17:45", duration: "15 минут",
     goal: "Зафиксировать обязательство по личному стеку как первый opportunity для тренировки публичной уверенности.",
     structure: [
       "3 мин: установка",
@@ -1918,7 +1918,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E2.1", name: "Tool selection по Дельта-модели",
-    pattern: "2.3 Tool selection под задачу", trains: ["СРЕД", "РАЗЛ"], day: 2, time: "11:00-12:00", duration: "60 минут",
+    pattern: "2.3 Tool selection под задачу", trains: ["СРЕД", "РАЗЛ"], day: 2, time: "10:45-12:15", duration: "60 минут",
     goal: "Тренировать Дельта-модель как инструмент. 6 кейсов реальных компаний.",
     structure: [
       "5 мин: установка",
@@ -2005,7 +2005,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E4.1", name: "Hands-on: запуск первого агента (8 шагов)",
-    pattern: "2.2 Поэтапная сборка под надзором", trains: ["СРЕД"], day: 4, time: "09:00-13:00", duration: "3 ч 45 мин (слоты 1–2)",
+    pattern: "2.2 Поэтапная сборка под надзором", trains: ["СРЕД"], day: 4, time: "09:00-11:00", duration: "2 часа",
     goal: "Главное hands-on упражнение модуля. Запуск работающего агента с минимальной AgentOps-обвязкой.",
     structure: [
       "20 мин: выбор задачи. Checkpoint: чёткий input → output",
@@ -2021,7 +2021,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E4.2", name: "Анализ failures чужого агента",
-    pattern: "2.6 Анализ failures", trains: ["СРЕД"], day: 4, time: "16:15-18:00", duration: "1 ч 45 мин",
+    pattern: "2.6 Анализ failures", trains: ["СРЕД"], day: 4, time: "18:30-20:00", duration: "1 ч 30 мин",
     goal: "Препарирование ошибок чужого агента — учиться на чужих failures до собственных.",
     structure: [
       "5 мин: установка",
@@ -2061,7 +2061,7 @@ const MODULE_1_EXERCISES = [
   },
   {
     id: "E5.3", name: "Защита платформенной стратегии",
-    pattern: "3.8 Защита под жёстким оппонированием (кульминация)", trains: ["УВЕР", "СРЕД", "РАЗЛ"], day: 4, time: "14:00-16:00", duration: "по 15-20 мин на участника",
+    pattern: "3.8 Защита под жёстким оппонированием (кульминация)", trains: ["УВЕР", "СРЕД", "РАЗЛ"], day: 4, time: "16:15-18:00", duration: "по 15-20 мин на участника",
     goal: "Финальная проверка способности удержать стратегическую позицию под адверсариальным давлением экспертов Сколково.",
     structure: [
       "5 мин: презентация Платформенной стратегии v0.1",
