@@ -1,0 +1,79 @@
+name: Публикация портала
+
+# Кнопка «опубликовать портал на прод» без локального деплоя:
+# берёт 13_Платформа-стенд/Портал_слушателя/index.html из main контент-репо
+# (ai-mba-content), проверяет JS-синтаксис и коммитит в site/portal/index.html.
+# Push сделан PAT'ом, поэтому deploy.yml (GitHub Pages) срабатывает автоматически.
+#
+# Запуск: Actions → «Публикация портала» → Run workflow. Только вручную,
+# человеком, после ревью и merge PR в контент-репо (см. AGENTS.md).
+# Секреты: CONTENT_REPO_TOKEN (чтение ai-mba-content + push сюда),
+#          TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (необязательно — подтверждение).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-portal
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Забрать портал из контент-репо (main)
+        env:
+          GH_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
+        run: |
+          SRC_PATH=$(python3 -c "import urllib.parse; print(urllib.parse.quote('13_Платформа-стенд/Портал_слушателя/index.html'))")
+          gh api "repos/Verkhovskiy-dev/ai-mba-content/contents/$SRC_PATH?ref=main" \
+            -H "Accept: application/vnd.github.raw" > /tmp/portal.html
+          [ -s /tmp/portal.html ] || { echo "Пустой файл из контент-репо"; exit 1; }
+
+      - name: Проверить JS-синтаксис
+        run: |
+          python3 - <<'PY'
+          import re
+          html = open('/tmp/portal.html', encoding='utf-8').read()
+          scripts = re.findall(r'<script[^>]*>(.*?)</script>', html, re.S)
+          open('/tmp/portal.js', 'w', encoding='utf-8').write('\n;\n'.join(scripts))
+          PY
+          node --check /tmp/portal.js && echo "JS-синтаксис: OK"
+
+      - name: Закоммитить и запушить, если есть изменения
+        id: push
+        env:
+          TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
+        run: |
+          cp /tmp/portal.html portal/index.html
+          if git diff --quiet -- portal/index.html; then
+            echo "Портал уже синхронен — публиковать нечего."
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "portal-publish[workflow]"
+          git config user.email "actions@github.com"
+          git add portal/index.html
+          git commit -m "deploy(portal): синхрон с контент-репо (workflow, запустил ${{ github.actor }})"
+          git push "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
+          echo "published=true" >> "$GITHUB_OUTPUT"
+
+      - name: Подтверждение в Telegram
+        if: steps.push.outputs.published == 'true'
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          [ -n "$BOT_TOKEN" ] || { echo "Telegram-секретов нет — пропускаю"; exit 0; }
+          NL=$'\n'
+          TEXT="🚀 Портал опубликован на прод (запустил ${{ github.actor }}).${NL}Через 1–2 мин обновится https://agentmba.ai/portal/"
+          curl -s -o /dev/null -w "telegram http %{http_code}\n" \
+            "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+            --data-urlencode "chat_id=$CHAT_ID" \
+            --data-urlencode "text=$TEXT" \
+            -d "disable_web_page_preview=true"
