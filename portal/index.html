@@ -270,6 +270,76 @@
   .quick-link .desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
 
   /* HUB — операционная точка входа */
+  /* HUB — операционная точка входа (упрощённая: сегодня + путь + аккордеон) */
+  .start-today {
+    background: linear-gradient(135deg, rgba(107,138,255,0.12), rgba(167,139,250,0.05));
+    border: 1px solid rgba(107,138,255,0.28); border-radius: 16px; padding: 24px 26px; margin-bottom: 20px;
+  }
+  .start-today .day-label { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .start-today h1 { font-size: 28px; margin-bottom: 6px; }
+  .start-today .theme { font-size: 16px; color: var(--text-dim); margin-bottom: 18px; line-height: 1.45; }
+  .start-cta {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px;
+    background: var(--gradient); color: #fff; border: none; border-radius: 10px;
+    font-weight: 700; font-size: 15px; cursor: pointer;
+  }
+  .start-cta.secondary {
+    background: transparent; border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 13px; margin-left: 10px;
+  }
+
+  .path-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 24px; }
+  .path-step {
+    display: flex; gap: 14px; align-items: flex-start; padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .path-step:last-child { border-bottom: none; }
+  .path-step .mark { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .path-step.done .mark { background: rgba(52,211,153,0.15); color: var(--accent-green); }
+  .path-step.now .mark { background: rgba(107,138,255,0.2); color: var(--accent); box-shadow: 0 0 0 3px rgba(107,138,255,0.15); }
+  .path-step.todo .mark { background: var(--bg); border: 1px solid var(--border); color: var(--text-muted); }
+  .path-step .body { flex: 1; min-width: 0; }
+  .path-step .title { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+  .path-step .desc { font-size: 13px; color: var(--text-dim); line-height: 1.4; }
+  .path-step .act { margin-top: 8px; font-size: 12px; color: var(--accent); font-weight: 600; cursor: pointer; background: none; border: none; padding: 0; }
+
+  .program-strip {
+    display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 8px; scrollbar-width: thin;
+  }
+  .strip-mod {
+    flex: 0 0 auto; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--bg); cursor: pointer; font-size: 12px; white-space: nowrap; transition: all 0.15s;
+  }
+  .strip-mod.done { opacity: 0.55; }
+  .strip-mod.current { border-color: var(--accent); background: rgba(107,138,255,0.1); font-weight: 700; }
+  .strip-mod:hover { border-color: rgba(107,138,255,0.35); }
+
+  .hub-acc { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; background: var(--bg-card); }
+  .hub-acc-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 16px; cursor: pointer; user-select: none;
+  }
+  .hub-acc-head:hover { background: var(--bg-card-hover); }
+  .hub-acc-head .left { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+  .hub-acc-head .hint { font-size: 12px; color: var(--text-muted); font-weight: 400; }
+  .hub-acc-body { padding: 0 16px 16px; display: none; border-top: 1px solid var(--border); }
+  .hub-acc.open .hub-acc-body { display: block; padding-top: 14px; }
+  .hub-acc.open .hub-acc-chevron { transform: rotate(180deg); }
+  .hub-acc-chevron { color: var(--text-muted); transition: transform 0.2s; font-size: 12px; }
+
+  .project-mini { display: flex; flex-wrap: wrap; gap: 6px; }
+  .project-chip {
+    font-size: 11px; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--border); background: var(--bg);
+  }
+  .project-chip.done { border-color: rgba(52,211,153,0.4); color: var(--accent-green); }
+  .project-chip.now { border-color: var(--accent); color: var(--accent); }
+
+  .community-mini { display: flex; gap: 8px; flex-wrap: wrap; }
+  .community-mini .peer-card { flex: 1; min-width: 140px; padding: 10px; }
+  .community-mini .peer-avatar { width: 32px; height: 32px; font-size: 11px; }
+
+  .tutor-compact .tutor-msgs { max-height: 200px; }
+  .tutor-compact .tutor-panel { min-height: 0; padding: 14px; }
+
   .hub-hero { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; }
   .hub-hero-stats { display: flex; gap: 12px; flex-wrap: wrap; }
   .hub-pill { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; min-width: 88px; }
@@ -835,7 +905,8 @@ const STATE = {
   meansOnlyTodo: false,        // фильтр: показывать только то, что нужно закрыть (незакрытое до текущего дня)
   arenaColoring: false,        // на карте раскрашивать активности по арене (контент/проект/социальное)
   _shownDeps: null,            // какие связи уже отрисованы (для анимации «прорисовки» новых)
-  hubExpandedModule: null      // раскрытый модуль на главной (карта программы)
+  hubExpandedModule: null,     // раскрытый модуль на главной (карта программы)
+  hubPanel: null               // раскрытая панель аккордеона: program | project | community | tutor | links
 };
 
 function defaultSim() {
@@ -2467,13 +2538,13 @@ function ensureTutorBoot() {
   if (!STATE.tutorLog) STATE.tutorLog = [];
   if (!STATE.tutorLog.length) {
     const name = (STATE.user.name || "").split(" ")[0] || "коллега";
-    STATE.tutorLog.push({ role: "tutor", html: `Здравствуйте, ${esc(name)}! Я ваш <strong>тьютор онбординга</strong>. Помогу разобраться с программой, оценить готовность и подсказать, что изучить перед стартом.<br><br>${tutorNextStep()}` });
+    STATE.tutorLog.push({ role: "tutor", html: `Привет, ${esc(name)}! Подскажу следующий шаг. Сейчас главное — блок «Сегодня» выше.<br><br>${tutorNextStep()}` });
   }
 }
 
 function renderTutorInline() {
   ensureTutorBoot();
-  const chips = ["Что мне делать дальше?", "Оцени мою готовность", "Что изучить перед стартом?", "Как устроена программа?", "Что такое проектный трек?"];
+  const chips = ["Что делать сейчас?", "Оцени готовность", "Что изучить перед стартом?"];
   const msgs = STATE.tutorLog.map(m => m.role === "user"
     ? `<div class="tutor-msg-user">${esc(m.html)}</div>`
     : `<div class="tutor-msg-bot"><span style="opacity:0.7;">🤖</span> ${m.html}</div>`
@@ -2730,75 +2801,187 @@ function renderPath() {
   `;
 }
 
-function renderDashboard() {
-  const currMod = MODULES.find(m => m.num === STATE.currentModule);
+function toggleHubPanel(panel) {
+  STATE.hubPanel = STATE.hubPanel === panel ? null : panel;
+  saveState();
+  renderContent();
+  if (STATE.hubPanel) {
+    setTimeout(() => {
+      const el = document.querySelector(".hub-acc.open");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 80);
+  }
+}
+
+function moduleSimpleStatus(m) {
+  if (STATE.firedTriggers.has(`con.M${m.num}.done`)) return "done";
+  if (m.num === STATE.currentModule) return "current";
+  if (m.num < STATE.currentModule) return "past";
+  return "upcoming";
+}
+
+function currentDayTheme() {
+  const mod = MODULES.find(m => m.num === STATE.currentModule);
+  const sched = ALL_SCHEDULES[STATE.currentModule];
+  if (sched && sched[STATE.currentDay - 1]) return sched[STATE.currentDay - 1].theme;
+  return mod?.dayThemes?.[STATE.currentDay - 1] || mod?.short || "";
+}
+
+function renderTodayCard() {
   const globalDay = (STATE.currentModule - 1) * 4 + STATE.currentDay;
-  const prestartDone = PRESTART_ITEMS.filter(i => i.done()).length;
+  const mod = MODULES.find(m => m.num === STATE.currentModule);
+  const theme = currentDayTheme();
+  const diagOk = diagnosticDone();
+  return `
+    <div class="start-today">
+      <div class="day-label">Сегодня · день ${globalDay} из 36</div>
+      <h1>М${STATE.currentModule} · День ${STATE.currentDay} — ${esc(mod.short)}</h1>
+      <div class="theme">${esc(theme)}</div>
+      <div>
+        <button class="start-cta" onclick="navigate('module', ${STATE.currentModule})">Открыть расписание дня →</button>
+        ${!diagOk ? `<button class="start-cta secondary" onclick="document.getElementById('start-path').scrollIntoView({behavior:'smooth'})">Сначала диагностика</button>` : ""}
+      </div>
+    </div>`;
+}
+
+function renderVerifiablePath() {
+  const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
+  const qDone = !!(STATE.quizM1 && STATE.quizM1.completedAt);
+  const diagOk = diagnosticDone();
+  const theme = currentDayTheme();
+
+  const steps = [];
+  steps.push({
+    state: diagOk ? "done" : "now",
+    title: "Входная диагностика",
+    desc: diagOk
+      ? `Готово · зрелость L${STATE.maturity?.overallLevel || "?"}, квиз ${STATE.quizM1?.correct || "?"}/${STATE.quizM1?.total || "?"}`
+      : `${mDone ? "✓ Maturity" : "○ Maturity"} · ${qDone ? "✓ Квиз" : "○ Квиз"} · ~20 мин`,
+    action: diagOk ? null : "showDiag"
+  });
+  steps.push({
+    state: diagOk ? "now" : "todo",
+    title: `М${STATE.currentModule} · День ${STATE.currentDay}`,
+    desc: theme,
+    action: "module"
+  });
+  if (STATE.firedTriggers.has("s.1.troika")) {
+    steps.push({ state: "done", title: "Peer-тройка", desc: "Группа из 3 слушателей · синки по понедельникам", action: "community" });
+  } else if (diagOk) {
+    steps.push({ state: "todo", title: "Peer-тройка", desc: "Познакомьтесь с сокурсниками — блок «Сообщество»", action: "community" });
+  }
 
   return `
+    <div id="start-path">
+      <h2 style="font-size:18px; margin-bottom:12px;">Ваш путь</h2>
+      <p style="font-size:13px; color:var(--text-dim); margin-bottom:14px;">Только то, что можно проверить и закрыть. Остальное — по раскрытию ниже.</p>
+      <div class="path-list">
+        ${steps.map(s => `
+          <div class="path-step ${s.state}">
+            <div class="mark">${s.state === "done" ? "✓" : s.state === "now" ? "→" : "○"}</div>
+            <div class="body">
+              <div class="title">${esc(s.title)}</div>
+              <div class="desc">${esc(s.desc)}</div>
+              ${s.action === "showDiag" ? `<button class="act" onclick="document.getElementById('diag-inline').scrollIntoView({behavior:'smooth'})">Пройти диагностику ↓</button>` : ""}
+              ${s.action === "module" && s.state !== "todo" ? `<button class="act" onclick="navigate('module', ${STATE.currentModule})">К расписанию →</button>` : ""}
+              ${s.action === "community" && s.state !== "done" ? `<button class="act" onclick="toggleHubPanel('community')">Открыть сообщество ↓</button>` : ""}
+            </div>
+          </div>`).join("")}
+      </div>
+      <div id="diag-inline">${renderDiagnosticCardCompact()}</div>
+    </div>`;
+}
+
+function renderProgramStrip() {
+  return `<div class="program-strip">
+    ${MODULES.map(m => {
+      const st = moduleSimpleStatus(m);
+      return `<div class="strip-mod ${st}" onclick="navigate('module', ${m.num})" title="${esc(m.name)}">${esc(m.icon)} М${m.num}</div>`;
+    }).join("")}
+  </div>`;
+}
+
+function renderProjectTrackMini() {
+  const doneN = projectSectionsDone();
+  const chips = PROJECT_SECTIONS.map(s => {
+    const done = STATE.firedTriggers.has(s.trigger);
+    const now = !done && s.module === STATE.currentModule;
+    return `<span class="project-chip ${done ? "done" : (now ? "now" : "")}" title="${esc(s.title)}">§${s.sec}${done ? " ✓" : ""}</span>`;
+  }).join("");
+  return `
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:12px; line-height:1.5;">
+      Сквозной пилот: ${doneN} из 9 разделов собрано в «Программу платформы». Зелёные — закрыты вами или наставником.
+    </p>
+    <div class="project-mini">${chips}</div>
+    <button onclick="navigate('plan-map')" style="margin-top:14px; font-size:12px; color:var(--accent); background:none; border:none; cursor:pointer; font-weight:600;">Подробная схема в план-карте →</button>`;
+}
+
+function renderCommunityMini() {
+  const userInitials = initials(STATE.user.name) || "—";
+  const peers = COHORT.troika.map(p => {
+    const isYou = (STATE.user.name && p.name === STATE.user.name) || p.initials === userInitials;
+    const displayName = isYou && STATE.user.name ? STATE.user.name.split(" ")[0] : p.name.split(" ")[0];
+    const av = isYou ? userInitials : p.initials;
+    return `<div class="peer-card${isYou ? " you" : ""}"><div class="peer-avatar">${esc(av)}</div><div><div style="font-weight:600;font-size:12px;">${esc(displayName)}</div><div style="font-size:11px;color:var(--text-muted);">${esc(p.company)}</div></div></div>`;
+  }).join("");
+  return `
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:12px;">${COHORT.stream} · ${COHORT.size} человек · alumni Сколково ${COHORT.alumni.total}</p>
+    <div class="community-mini">${peers}</div>`;
+}
+
+function renderHubLinks() {
+  return `<div class="quick-access" style="margin-top:0;">
+    <div class="quick-link" onclick="navigate('path')"><div class="icon">🛤</div><div class="name">Карта пути</div><div class="desc">Маршрут v2 + первый шаг</div></div>
+    <div class="quick-link" onclick="navigate('personal-stack')"><div class="icon">⚡</div><div class="name">Личный стек</div><div class="desc">6 компонентов ИИ-лидера</div></div>
+    <div class="quick-link" onclick="navigate('library')"><div class="icon">📚</div><div class="name">Worksheet</div><div class="desc">Сквозной артефакт пилота</div></div>
+    <div class="quick-link" onclick="navigate('tools')"><div class="icon">📊</div><div class="name">AI Maturity</div><div class="desc">Диагностика зрелости</div></div>
+    <div class="quick-link" onclick="navigate('plan-map')"><div class="icon">🗺</div><div class="name">План-карта</div><div class="desc">Полная структура программы</div></div>
+    <div class="quick-link" onclick="navigate('trajectory')"><div class="icon">🧭</div><div class="name">Траектория</div><div class="desc">Средства и триггеры</div></div>
+    <div class="quick-link" onclick="navigate('agents')"><div class="icon">🤖</div><div class="name">Агенты</div><div class="desc">Tutor · Companion · Eval Coach</div></div>
+  </div>`;
+}
+
+function renderHubAccordion() {
+  const panels = [
+    { id: "program", icon: "🗺", label: "Вся программа", hint: "9 модулей · тап = расписание" },
+    { id: "project", icon: "🏗", label: "Проектный трек", hint: `${projectSectionsDone()}/9 разделов` },
+    { id: "community", icon: "🤝", label: "Сообщество", hint: "peer-тройка" },
+    { id: "tutor", icon: "🤖", label: "Тьютор", hint: "спросить" },
+    { id: "links", icon: "🔗", label: "Инструменты и разделы", hint: "карта пути · стек · план-карта" }
+  ];
+  const bodies = {
+    program: renderProgramStrip(),
+    project: renderProjectTrackMini(),
+    community: renderCommunityMini(),
+    tutor: `<div class="tutor-compact">${renderTutorInline()}</div>`,
+    links: renderHubLinks()
+  };
+  return panels.map(p => `
+    <div class="hub-acc ${STATE.hubPanel === p.id ? "open" : ""}">
+      <div class="hub-acc-head" onclick="toggleHubPanel('${p.id}')">
+        <div class="left"><span>${p.icon}</span><span>${p.label}</span><span class="hint">${esc(p.hint)}</span></div>
+        <span class="hub-acc-chevron">▼</span>
+      </div>
+      <div class="hub-acc-body">${bodies[p.id]}</div>
+    </div>`).join("");
+}
+
+function renderDashboard() {
+  return `
     <div class="topline">
-      <div class="breadcrumb">Мой старт · операционная точка входа</div>
+      <div class="breadcrumb">Мой старт</div>
       <div class="user-info">
         <span>${esc(STATE.user.company)}</span>
         <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
 
-    <div class="hub-hero">
-      <div>
-        <h1 style="margin-bottom:8px;">${esc((STATE.user.name || "").split(" ")[0] || "Слушатель")}, ваш путь к CAIO</h1>
-        <p class="lead" style="margin-bottom:0;">
-          9 модулей · 36 дней · сквозной пилот платформы. Сейчас: <strong>День ${globalDay}</strong> (М${STATE.currentModule} · Д${STATE.currentDay} — ${esc(currMod.short)}).
-        </p>
-      </div>
-      <div class="hub-hero-stats">
-        <div class="hub-pill"><div class="n">${STATE.currentModule}/9</div><div class="l">модуль</div></div>
-        <div class="hub-pill"><div class="n">${globalDay}/36</div><div class="l">день программы</div></div>
-        <div class="hub-pill"><div class="n">${projectSectionsDone()}/9</div><div class="l">разделов пилота</div></div>
-        <div class="hub-pill"><div class="n">${prestartDone}/${PRESTART_ITEMS.length}</div><div class="l">готовность</div></div>
-      </div>
-    </div>
+    ${renderTodayCard()}
+    ${renderVerifiablePath()}
 
-    <div class="hub-section">
-      <div class="hub-section-head">
-        <h2>🗺 Карта программы</h2>
-        <p>9 модулей целиком · кликните модуль — увидите готовность и артефакты · откройте расписание</p>
-      </div>
-      ${renderProgramMap()}
-    </div>
-
-    <div class="hub-section">
-      <div class="hub-section-head">
-        <h2>🏗 Проектный трек</h2>
-        <p>Как артефакты модулей собираются в Программу построения агентной платформы</p>
-      </div>
-      ${renderProjectTrack()}
-    </div>
-
-    <div class="hub-split">
-      ${renderTutorInline()}
-      <div>
-        ${renderPrestartChecklist()}
-      </div>
-    </div>
-
-    <div class="hub-section">
-      ${renderCommunityBlock()}
-    </div>
-
-    <div class="hub-section">
-      <div class="hub-section-head"><h2>Быстрые ссылки</h2></div>
-      <div class="quick-access" style="margin-top:0;">
-        <div class="quick-link" onclick="navigate('module', ${STATE.currentModule})"><div class="icon">📋</div><div class="name">Расписание сегодня</div><div class="desc">М${STATE.currentModule} Д${STATE.currentDay}</div></div>
-        <div class="quick-link" onclick="navigate('path')"><div class="icon">🛤</div><div class="name">Карта пути</div><div class="desc">Маршрут v2 + первый шаг</div></div>
-        <div class="quick-link" onclick="navigate('personal-stack')"><div class="icon">⚡</div><div class="name">Личный стек</div><div class="desc">6 компонентов ИИ-лидера</div></div>
-        <div class="quick-link" onclick="navigate('library')"><div class="icon">📚</div><div class="name">Worksheet</div><div class="desc">Сквозной артефакт пилота</div></div>
-        <div class="quick-link" onclick="navigate('tools')"><div class="icon">📊</div><div class="name">AI Maturity</div><div class="desc">Диагностика зрелости</div></div>
-        <div class="quick-link" onclick="navigate('plan-map')"><div class="icon">🗺</div><div class="name">План-карта</div><div class="desc">Полная структура программы</div></div>
-        <div class="quick-link" onclick="navigate('trajectory')"><div class="icon">🧭</div><div class="name">Траектория</div><div class="desc">Средства и триггеры</div></div>
-        <div class="quick-link" onclick="navigate('agents')"><div class="icon">🤖</div><div class="name">Агенты</div><div class="desc">Tutor · Companion · Eval Coach</div></div>
-      </div>
-    </div>
+    <h2 style="font-size:18px; margin-top:28px; margin-bottom:12px;">Подробнее</h2>
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:14px;">Раскройте только то, что нужно сейчас.</p>
+    ${renderHubAccordion()}
   `;
 }
 
@@ -5028,7 +5211,8 @@ function saveState() {
       maturity: STATE.maturity || null,
       personalStack: STATE.personalStack || null,
       tutorLog: STATE.tutorLog || [],
-      hubExpandedModule: STATE.hubExpandedModule || null
+      hubExpandedModule: STATE.hubExpandedModule || null,
+      hubPanel: STATE.hubPanel || null
     }));
   } catch (e) {}
 }
@@ -5048,6 +5232,7 @@ function loadState() {
     if (d.personalStack) STATE.personalStack = d.personalStack;
     if (Array.isArray(d.tutorLog)) STATE.tutorLog = d.tutorLog;
     if (d.hubExpandedModule) STATE.hubExpandedModule = d.hubExpandedModule;
+    if (d.hubPanel) STATE.hubPanel = d.hubPanel;
     if (d.personalRoute) STATE.personalRoute = d.personalRoute;
     return true;
   } catch (e) { return false; }
