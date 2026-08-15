@@ -362,7 +362,14 @@
     font-weight: 700; font-size: 15px; cursor: pointer;
   }
   .start-cta.secondary {
-    background: transparent; border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 13px; margin-left: 10px;
+    background: transparent; border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 13px;
+  }
+  .start-cta-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .mcp-pre {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px; line-height: 1.45; white-space: pre-wrap; word-break: break-word;
+    background: var(--input-bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; color: var(--text); margin: 10px 0 8px;
   }
   .start-now-rows { display: flex; flex-direction: column; gap: 12px; max-width: 520px; }
   .start-now-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 15px; padding: 4px 0; }
@@ -933,6 +940,20 @@
    ============================================================ */
 
 const PROTOTYPE_BASE = '../Прототипы/Путь_слушателя_v0.1/';
+
+const MCP_CONNECT_SNIPPET = `{
+  "mcpServers": {
+    "ai-mba-learner": {
+      "command": "/ABS/13_Платформа-стенд/MCP_каталог/learner-mcp/.venv/bin/python",
+      "args": [
+        "/ABS/13_Платформа-стенд/MCP_каталог/learner-mcp/server/learner_mcp.py"
+      ],
+      "env": {
+        "AIMBA_LEARNER_ID": "demo-001"
+      }
+    }
+  }
+}`;
 
 function getPersonalPathState() {
   if (typeof PathStore === 'undefined') return null;
@@ -2460,6 +2481,10 @@ function renderSidebar() {
         <span class="nav-item-icon">🤖</span>
         <span class="label">Агенты программы</span>
       </div>
+      <div class="nav-item" onclick="showConnectAgent()">
+        <span class="nav-item-icon">🔌</span>
+        <span class="label">Подключить своего агента</span>
+      </div>
     </div>
 
     <div class="nav-section">
@@ -2909,7 +2934,10 @@ function renderDashboard() {
       <div class="day-label">Сейчас · день ${globalDay} из 36</div>
       <h1>М${STATE.currentModule} · День ${STATE.currentDay} — ${esc(mod.short)}</h1>
       <div class="theme">${esc(theme)}</div>
-      <button class="start-cta" onclick="navigate('module', ${STATE.currentModule})">Открыть расписание дня →</button>
+      <div class="start-cta-row">
+        <button class="start-cta" onclick="navigate('module', ${STATE.currentModule})">Открыть расписание дня →</button>
+        <button type="button" class="start-cta secondary" onclick="showConnectAgent()">Подключить своего агента</button>
+      </div>
     </div>` : `
     <div class="start-today">
       <div class="day-label">Сейчас${name ? " · " + esc(name) : ""}</div>
@@ -2928,6 +2956,9 @@ function renderDashboard() {
             ? `<span class="start-now-done">${STATE.quizM1.correct}/${STATE.quizM1.total}</span>`
             : `<button onclick="startQuizM1()" style="${btn(!mDone ? false : true)}">Пройти →</button>`}
         </div>
+      </div>
+      <div class="start-cta-row" style="margin-top:16px;">
+        <button type="button" class="start-cta secondary" onclick="showConnectAgent()">Подключить своего агента</button>
       </div>
     </div>`;
 
@@ -3308,6 +3339,15 @@ function renderAgents() {
     <p class="lead">
       Программа сама работает на агентной платформе. Eating own dog food: вы взаимодействуете напрямую с агентами слоя 5 (слушательские) + видите архитектуру всех остальных.
     </p>
+
+    <div class="current-module-card" style="margin: 8px 0 28px;">
+      <div class="tag">MCP · learner-mcp</div>
+      <h2 style="margin-top: 0;">Подключить своего агента</h2>
+      <p style="color: var(--text-dim); font-size: 14px; line-height: 1.65; margin-bottom: 14px;">
+        Cursor, Claude Desktop или любой MCP-клиент получает расписание, путь и следующий шаг — без копирования портала в чат.
+      </p>
+      <button type="button" class="start-cta" onclick="showConnectAgent()">Открыть инструкцию →</button>
+    </div>
 
     <h2>Доступные вам сейчас (Слой 5)</h2>
     <div class="grid-2">
@@ -5214,6 +5254,56 @@ function openModal(html) {
   document.getElementById('modal-overlay').classList.add('open');
 }
 
+function showConnectAgent() {
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div style="font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:8px;">MCP · learner-mcp</div>
+    <h2>Подключить своего агента</h2>
+    <p style="color:var(--text-dim); font-size:14px; line-height:1.65; margin:0 0 18px;">
+      Ваш Cursor, Claude Desktop или другой MCP-клиент получает расписание, путь и следующий шаг напрямую из каталога программы — без копирования портала в чат.
+    </p>
+    <ol style="margin:0 0 18px; padding-left:20px; color:var(--text); font-size:14px; line-height:1.7;">
+      <li style="margin-bottom:8px;">Нужна папка <code>13_Платформа-стенд/MCP_каталог/learner-mcp/</code> из материалов программы (локально на вашем компьютере).</li>
+      <li style="margin-bottom:8px;">В терминале:
+        <pre class="mcp-pre" style="margin-top:8px;">cd 13_Платформа-стенд/MCP_каталог/learner-mcp
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt</pre>
+      </li>
+      <li style="margin-bottom:8px;">Скопируйте конфиг ниже в <code>~/.cursor/mcp.json</code> (или в <code>.cursor/mcp.json</code> проекта). Замените <code>/ABS</code> на абсолютный путь к репозиторию. Для Claude Desktop — тот же блок в <code>claude_desktop_config.json</code>.</li>
+      <li>Перезапустите клиент. Скажите агенту: «что у меня сегодня по расписанию».</li>
+    </ol>
+    <pre class="mcp-pre" id="mcp-json">${esc(MCP_CONNECT_SNIPPET)}</pre>
+    <div class="start-cta-row">
+      <button type="button" class="start-cta" onclick="copyConnectSnippet()">Скопировать mcp.json</button>
+      <span id="mcp-copy-status" style="font-size:13px; color:var(--accent);"></span>
+    </div>
+    <p style="color:var(--text-muted); font-size:12px; line-height:1.55; margin:16px 0 0;">
+      Профиль по умолчанию — <code>demo-001</code>. Свой: скопируйте <code>data/learners/_template.json</code> в <code>data/learners/ВАШ-ID.json</code> и поставьте тот же id в <code>AIMBA_LEARNER_ID</code>. Не используйте ФИО и почту.
+    </p>
+  `);
+}
+
+function copyConnectSnippet() {
+  const el = document.getElementById('mcp-json');
+  const status = document.getElementById('mcp-copy-status');
+  const text = el ? el.textContent : MCP_CONNECT_SNIPPET;
+  const done = function () { if (status) status.textContent = 'Скопировано'; };
+  const fail = function () { if (status) status.textContent = 'Скопируйте вручную'; };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(fail);
+    return;
+  }
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    done();
+  } catch (e) { fail(); }
+}
+
 /* --- Подхват результата AI Maturity из общего хранилища --- */
 function syncMaturity() {
   try {
@@ -5655,7 +5745,11 @@ function boot() {
   applyTheme(STATE.theme || "dark");
   if (location.search) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
   render();
-  if (bootView) navigate(bootView, bootMod || undefined);
+  if (bootView === 'connect-agent') {
+    if (STATE.onboarded) showConnectAgent();
+  } else if (bootView) {
+    navigate(bootView, bootMod || undefined);
+  }
   if (!STATE.onboarded) showOnboarding();
 }
 
