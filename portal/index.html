@@ -286,6 +286,9 @@
   .start-cta.secondary {
     background: transparent; border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 13px; margin-left: 10px;
   }
+  .start-now-rows { display: flex; flex-direction: column; gap: 12px; max-width: 520px; }
+  .start-now-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 15px; padding: 4px 0; }
+  .start-now-done { color: var(--accent-green); font-weight: 700; }
 
   .path-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 24px; }
   .path-step {
@@ -2801,25 +2804,6 @@ function renderPath() {
   `;
 }
 
-function toggleHubPanel(panel) {
-  STATE.hubPanel = STATE.hubPanel === panel ? null : panel;
-  saveState();
-  renderContent();
-  if (STATE.hubPanel) {
-    setTimeout(() => {
-      const el = document.querySelector(".hub-acc.open");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 80);
-  }
-}
-
-function moduleSimpleStatus(m) {
-  if (STATE.firedTriggers.has(`con.M${m.num}.done`)) return "done";
-  if (m.num === STATE.currentModule) return "current";
-  if (m.num < STATE.currentModule) return "past";
-  return "upcoming";
-}
-
 function currentDayTheme() {
   const mod = MODULES.find(m => m.num === STATE.currentModule);
   const sched = ALL_SCHEDULES[STATE.currentModule];
@@ -2827,146 +2811,43 @@ function currentDayTheme() {
   return mod?.dayThemes?.[STATE.currentDay - 1] || mod?.short || "";
 }
 
-function renderTodayCard() {
+function renderDashboard() {
+  const name = (STATE.user.name || "").split(" ")[0];
   const globalDay = (STATE.currentModule - 1) * 4 + STATE.currentDay;
   const mod = MODULES.find(m => m.num === STATE.currentModule);
   const theme = currentDayTheme();
-  const diagOk = diagnosticDone();
-  return `
-    <div class="start-today">
-      <div class="day-label">Сегодня · день ${globalDay} из 36</div>
-      <h1>М${STATE.currentModule} · День ${STATE.currentDay} — ${esc(mod.short)}</h1>
-      <div class="theme">${esc(theme)}</div>
-      <div>
-        <button class="start-cta" onclick="navigate('module', ${STATE.currentModule})">Открыть расписание дня →</button>
-        ${!diagOk ? `<button class="start-cta secondary" onclick="document.getElementById('start-path').scrollIntoView({behavior:'smooth'})">Сначала диагностика</button>` : ""}
-      </div>
-    </div>`;
-}
-
-function renderVerifiablePath() {
   const mDone = !!(STATE.maturity && STATE.maturity.completedAt);
   const qDone = !!(STATE.quizM1 && STATE.quizM1.completedAt);
   const diagOk = diagnosticDone();
-  const theme = currentDayTheme();
+  const btn = (primary) => `text-decoration:none; display:inline-flex; align-items:center; padding:12px 22px; border-radius:10px; font-weight:700; font-size:15px; cursor:pointer; border:1px solid ${primary ? "transparent" : "var(--border)"}; background:${primary ? "var(--gradient)" : "transparent"}; color:${primary ? "#fff" : "var(--text)"};`;
 
-  const steps = [];
-  steps.push({
-    state: diagOk ? "done" : "now",
-    title: "Входная диагностика",
-    desc: diagOk
-      ? `Готово · зрелость L${STATE.maturity?.overallLevel || "?"}, квиз ${STATE.quizM1?.correct || "?"}/${STATE.quizM1?.total || "?"}`
-      : `${mDone ? "✓ Maturity" : "○ Maturity"} · ${qDone ? "✓ Квиз" : "○ Квиз"} · ~20 мин`,
-    action: diagOk ? null : "showDiag"
-  });
-  steps.push({
-    state: diagOk ? "now" : "todo",
-    title: `М${STATE.currentModule} · День ${STATE.currentDay}`,
-    desc: theme,
-    action: "module"
-  });
-  if (STATE.firedTriggers.has("s.1.troika")) {
-    steps.push({ state: "done", title: "Peer-тройка", desc: "Группа из 3 слушателей · синки по понедельникам", action: "community" });
-  } else if (diagOk) {
-    steps.push({ state: "todo", title: "Peer-тройка", desc: "Познакомьтесь с сокурсниками — блок «Сообщество»", action: "community" });
-  }
-
-  return `
-    <div id="start-path">
-      <h2 style="font-size:18px; margin-bottom:12px;">Ваш путь</h2>
-      <p style="font-size:13px; color:var(--text-dim); margin-bottom:14px;">Только то, что можно проверить и закрыть. Остальное — по раскрытию ниже.</p>
-      <div class="path-list">
-        ${steps.map(s => `
-          <div class="path-step ${s.state}">
-            <div class="mark">${s.state === "done" ? "✓" : s.state === "now" ? "→" : "○"}</div>
-            <div class="body">
-              <div class="title">${esc(s.title)}</div>
-              <div class="desc">${esc(s.desc)}</div>
-              ${s.action === "showDiag" ? `<button class="act" onclick="document.getElementById('diag-inline').scrollIntoView({behavior:'smooth'})">Пройти диагностику ↓</button>` : ""}
-              ${s.action === "module" && s.state !== "todo" ? `<button class="act" onclick="navigate('module', ${STATE.currentModule})">К расписанию →</button>` : ""}
-              ${s.action === "community" && s.state !== "done" ? `<button class="act" onclick="toggleHubPanel('community')">Открыть сообщество ↓</button>` : ""}
-            </div>
-          </div>`).join("")}
+  const nowCard = diagOk ? `
+    <div class="start-today">
+      <div class="day-label">Сейчас · день ${globalDay} из 36</div>
+      <h1>М${STATE.currentModule} · День ${STATE.currentDay} — ${esc(mod.short)}</h1>
+      <div class="theme">${esc(theme)}</div>
+      <button class="start-cta" onclick="navigate('module', ${STATE.currentModule})">Открыть расписание дня →</button>
+    </div>` : `
+    <div class="start-today">
+      <div class="day-label">Сейчас${name ? " · " + esc(name) : ""}</div>
+      <h1>Входная диагностика</h1>
+      <div class="theme">Два шага до старта модуля · около 20 минут. Расписание откроется после этого.</div>
+      <div class="start-now-rows">
+        <div class="start-now-row">
+          <span>${mDone ? "✅" : "○"} AI Maturity Index</span>
+          ${mDone
+            ? `<span class="start-now-done">L${STATE.maturity.overallLevel}</span>`
+            : `<a href="../tools/maturity/?from=portal" style="${btn(true)}">Пройти →</a>`}
+        </div>
+        <div class="start-now-row">
+          <span>${qDone ? "✅" : "○"} Квиз понятий М1</span>
+          ${qDone
+            ? `<span class="start-now-done">${STATE.quizM1.correct}/${STATE.quizM1.total}</span>`
+            : `<button onclick="startQuizM1()" style="${btn(!mDone ? false : true)}">Пройти →</button>`}
+        </div>
       </div>
-      <div id="diag-inline">${renderDiagnosticCardCompact()}</div>
     </div>`;
-}
 
-function renderProgramStrip() {
-  return `<div class="program-strip">
-    ${MODULES.map(m => {
-      const st = moduleSimpleStatus(m);
-      return `<div class="strip-mod ${st}" onclick="navigate('module', ${m.num})" title="${esc(m.name)}">${esc(m.icon)} М${m.num}</div>`;
-    }).join("")}
-  </div>`;
-}
-
-function renderProjectTrackMini() {
-  const doneN = projectSectionsDone();
-  const chips = PROJECT_SECTIONS.map(s => {
-    const done = STATE.firedTriggers.has(s.trigger);
-    const now = !done && s.module === STATE.currentModule;
-    return `<span class="project-chip ${done ? "done" : (now ? "now" : "")}" title="${esc(s.title)}">§${s.sec}${done ? " ✓" : ""}</span>`;
-  }).join("");
-  return `
-    <p style="font-size:13px; color:var(--text-dim); margin-bottom:12px; line-height:1.5;">
-      Сквозной пилот: ${doneN} из 9 разделов собрано в «Программу платформы». Зелёные — закрыты вами или наставником.
-    </p>
-    <div class="project-mini">${chips}</div>
-    <button onclick="navigate('plan-map')" style="margin-top:14px; font-size:12px; color:var(--accent); background:none; border:none; cursor:pointer; font-weight:600;">Подробная схема в план-карте →</button>`;
-}
-
-function renderCommunityMini() {
-  const userInitials = initials(STATE.user.name) || "—";
-  const peers = COHORT.troika.map(p => {
-    const isYou = (STATE.user.name && p.name === STATE.user.name) || p.initials === userInitials;
-    const displayName = isYou && STATE.user.name ? STATE.user.name.split(" ")[0] : p.name.split(" ")[0];
-    const av = isYou ? userInitials : p.initials;
-    return `<div class="peer-card${isYou ? " you" : ""}"><div class="peer-avatar">${esc(av)}</div><div><div style="font-weight:600;font-size:12px;">${esc(displayName)}</div><div style="font-size:11px;color:var(--text-muted);">${esc(p.company)}</div></div></div>`;
-  }).join("");
-  return `
-    <p style="font-size:13px; color:var(--text-dim); margin-bottom:12px;">${COHORT.stream} · ${COHORT.size} человек · alumni Сколково ${COHORT.alumni.total}</p>
-    <div class="community-mini">${peers}</div>`;
-}
-
-function renderHubLinks() {
-  return `<div class="quick-access" style="margin-top:0;">
-    <div class="quick-link" onclick="navigate('path')"><div class="icon">🛤</div><div class="name">Карта пути</div><div class="desc">Маршрут v2 + первый шаг</div></div>
-    <div class="quick-link" onclick="navigate('personal-stack')"><div class="icon">⚡</div><div class="name">Личный стек</div><div class="desc">6 компонентов ИИ-лидера</div></div>
-    <div class="quick-link" onclick="navigate('library')"><div class="icon">📚</div><div class="name">Worksheet</div><div class="desc">Сквозной артефакт пилота</div></div>
-    <div class="quick-link" onclick="navigate('tools')"><div class="icon">📊</div><div class="name">AI Maturity</div><div class="desc">Диагностика зрелости</div></div>
-    <div class="quick-link" onclick="navigate('plan-map')"><div class="icon">🗺</div><div class="name">План-карта</div><div class="desc">Полная структура программы</div></div>
-    <div class="quick-link" onclick="navigate('trajectory')"><div class="icon">🧭</div><div class="name">Траектория</div><div class="desc">Средства и триггеры</div></div>
-    <div class="quick-link" onclick="navigate('agents')"><div class="icon">🤖</div><div class="name">Агенты</div><div class="desc">Tutor · Companion · Eval Coach</div></div>
-  </div>`;
-}
-
-function renderHubAccordion() {
-  const panels = [
-    { id: "program", icon: "🗺", label: "Вся программа", hint: "9 модулей · тап = расписание" },
-    { id: "project", icon: "🏗", label: "Проектный трек", hint: `${projectSectionsDone()}/9 разделов` },
-    { id: "community", icon: "🤝", label: "Сообщество", hint: "peer-тройка" },
-    { id: "tutor", icon: "🤖", label: "Тьютор", hint: "спросить" },
-    { id: "links", icon: "🔗", label: "Инструменты и разделы", hint: "карта пути · стек · план-карта" }
-  ];
-  const bodies = {
-    program: renderProgramStrip(),
-    project: renderProjectTrackMini(),
-    community: renderCommunityMini(),
-    tutor: `<div class="tutor-compact">${renderTutorInline()}</div>`,
-    links: renderHubLinks()
-  };
-  return panels.map(p => `
-    <div class="hub-acc ${STATE.hubPanel === p.id ? "open" : ""}">
-      <div class="hub-acc-head" onclick="toggleHubPanel('${p.id}')">
-        <div class="left"><span>${p.icon}</span><span>${p.label}</span><span class="hint">${esc(p.hint)}</span></div>
-        <span class="hub-acc-chevron">▼</span>
-      </div>
-      <div class="hub-acc-body">${bodies[p.id]}</div>
-    </div>`).join("");
-}
-
-function renderDashboard() {
   return `
     <div class="topline">
       <div class="breadcrumb">Мой старт</div>
@@ -2975,14 +2856,7 @@ function renderDashboard() {
         <div class="user-avatar">${esc(initials(STATE.user.name))}</div>
       </div>
     </div>
-
-    ${renderTodayCard()}
-    ${renderVerifiablePath()}
-
-    <h2 style="font-size:18px; margin-top:28px; margin-bottom:12px;">Подробнее</h2>
-    <p style="font-size:13px; color:var(--text-dim); margin-bottom:14px;">Раскройте только то, что нужно сейчас.</p>
-    ${renderHubAccordion()}
-  `;
+    ${nowCard}`;
 }
 
 /* ============================================================
