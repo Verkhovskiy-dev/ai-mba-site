@@ -4,12 +4,12 @@
 <script>
 (function(){
   try {
+    var t = null;
     var raw = localStorage.getItem('aimba_portal_v1');
-    if (raw) {
-      var d = JSON.parse(raw);
-      if (d.theme === 'light' || d.theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', d.theme);
-      }
+    if (raw) t = (JSON.parse(raw) || {}).theme;
+    if (t !== 'light' && t !== 'dark') t = localStorage.getItem('aimba_theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
     }
   } catch (e) {}
 })();
@@ -5193,6 +5193,12 @@ function loadState() {
     if (d.hubPanel) STATE.hubPanel = d.hubPanel;
     if (d.personalRoute) STATE.personalRoute = d.personalRoute;
     if (d.theme === "light" || d.theme === "dark") STATE.theme = d.theme;
+    else {
+      try {
+        const t = localStorage.getItem('aimba_theme');
+        if (t === 'light' || t === 'dark') STATE.theme = t;
+      } catch (e) {}
+    }
     return true;
   } catch (e) { return false; }
 }
@@ -5615,6 +5621,7 @@ function tutorSend() {
 function applyTheme(theme) {
   STATE.theme = theme === "light" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", STATE.theme);
+  try { localStorage.setItem('aimba_theme', STATE.theme); } catch (e) {}
   saveState();
   renderSidebar();
 }
@@ -5634,6 +5641,10 @@ function boot() {
     STATE.currentModule = 1;
     STATE.user = { name: '', company: '' };
     STATE.onboarded = false;
+    try {
+      const t = localStorage.getItem('aimba_theme');
+      if (t === 'light' || t === 'dark') STATE.theme = t;
+    } catch (e) {}
   }
   if (typeof PathStore !== 'undefined') {
     PathStore.syncToPortal();
