@@ -9,11 +9,11 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agentmba.ai/">
 <meta property="og:title" content="Директор по ИИ · AI MBA">
-<meta property="og:description" content="Программа выращивает будущих CAIO, способных построить агентную платформу компании. Сама работает на той же платформе, которой учит.">
+<meta property="og:description" content="От разрозненных ИИ-пилотов к агентной платформе компании. 9 модулей, 36 дней, свой пилот с первого дня.">
 <meta property="og:image" content="https://agentmba.ai/favicon.svg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Директор по ИИ · AI MBA">
-<meta name="twitter:description" content="Будущие CAIO строят агентную платформу компании. 9 модулей · 9 месяцев.">
+<meta name="twitter:description" content="От разрозненных ИИ-пилотов к агентной платформе. 9 модулей · 36 дней · свой пилот.">
 <style>
   :root {
     --bg: #0a0e1a;
@@ -92,8 +92,8 @@
   }
 
   .hero-stats {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
-    margin-top: 56px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    margin-top: 40px;
   }
   .stat .num {
     font-size: 42px; font-weight: 700; letter-spacing: -0.02em;
@@ -101,6 +101,48 @@
     line-height: 1;
   }
   .stat .label { color: var(--text-dim); font-size: 13px; margin-top: 8px; }
+
+  .formula-line {
+    font-size: 15px; color: var(--text-dim); margin: -8px 0 28px;
+    letter-spacing: -0.01em;
+  }
+  .formula-line strong {
+    background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .who { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .who span {
+    font-size: 13px; color: var(--text); padding: 6px 12px;
+    border: 1px solid var(--border); border-radius: 100px; background: var(--bg-card);
+  }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn-primary, .btn-ghost {
+    display: inline-flex; align-items: center; text-decoration: none;
+    padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 15px;
+  }
+  .btn-primary { background: var(--gradient); color: #fff; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent); }
+
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  .how-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+  }
+  .how-card .k { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .how-card h3 { font-size: 18px; margin-bottom: 8px; }
+  .how-card p { font-size: 14px; color: var(--text-dim); line-height: 1.55; }
+  .day-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0; }
+  .day-step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .day-step .n { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .day-step .t { font-size: 14px; font-weight: 600; }
+  .platform-note {
+    margin-top: 8px; padding: 20px 24px;
+    background: rgba(52, 211, 153, 0.05);
+    border: 1px solid rgba(52, 211, 153, 0.22);
+    border-radius: 14px; font-size: 15px; color: var(--text-dim); line-height: 1.55;
+  }
+  .cta-block .hero-cta { justify-content: center; margin-top: 24px; }
+  .cta-block .btn-ghost { border-color: rgba(255,255,255,.35); color: #fff; }
 
   .section-label {
     color: var(--accent); font-size: 13px; font-weight: 600;
@@ -425,7 +467,8 @@
   @media (max-width: 900px) {
     h1 { font-size: 40px; }
     h2 { font-size: 32px; }
-    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { grid-template-columns: 1fr; }
+    .how-grid, .day-steps { grid-template-columns: 1fr; }
     .whats-new { grid-template-columns: 1fr; }
     .modules-compact { grid-template-columns: 1fr; }
     .stats-row { grid-template-columns: repeat(2, 1fr); }
@@ -446,14 +489,9 @@
   <div class="inner">
     <div class="logo">Директор по ИИ · AI MBA</div>
     <div class="nav-links">
-      <a href="#concept">Концепт</a>
-      <a href="#whats-new">v3.1</a>
-      <a href="#modules">Модули</a>
-      <a href="#agents">Агенты</a>
-      <a href="#skills">Скилы</a>
-      <a href="#methodology">Методология</a>
-      <a href="#mvps">Прототипы</a>
-      <a href="#tracks">Треки</a>
+      <a href="#modules">Программа</a>
+      <a href="#how">Как устроено</a>
+      <a href="#partners">Партнёры</a>
       <a href="portal/" style="color:var(--accent);font-weight:600;">Портал слушателя &rarr;</a>
     </div>
   </div>
@@ -463,86 +501,26 @@
 
 <!-- HERO -->
 <section class="hero">
-  <span class="badge">Версия 3.1 · Полная сборка · май 2026</span>
+  <span class="badge">9 модулей · 36 очных дней · 9 месяцев</span>
   <h1><span class="accent">Директор по ИИ</span>: от бизнес-проекта к агентной платформе</h1>
+  <p class="formula-line"><strong>Машина Знаний</strong> → агентная платформа → <strong>KPT</strong> → <strong>AgentOps</strong></p>
   <p class="hero-sub">
-    Программа выращивает будущих CAIO, способных построить агентную производственную платформу
-    компании. Сама работает на той же платформе, которой учит.
+    Для тех, кто переводит компанию с разрозненных ИИ-пилотов на производственную агентную платформу
+    и готов возглавить эту трансформацию.
   </p>
+  <div class="who">
+    <span>Executive / CEO</span>
+    <span>Директор по ИИ</span>
+    <span>Техлид платформы</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn-primary" href="portal/">Портал слушателя →</a>
+    <a class="btn-ghost" href="#how">Как устроено</a>
+  </div>
   <div class="hero-stats">
-    <div class="stat"><div class="num">9</div><div class="label">модулей · 36 дней · 9 месяцев</div></div>
-    <div class="stat"><div class="num">31</div><div class="label">агент в команде программы</div></div>
-    <div class="stat"><div class="num">54</div><div class="label">скила в библиотеке</div></div>
-    <div class="stat"><div class="num">22</div><div class="label">паттерна упражнений</div></div>
-  </div>
-</section>
-
-<!-- CONCEPT -->
-<section id="concept">
-  <div class="section-label">Главная формула</div>
-  <h2>Машина Знаний → агентная платформа → KPT → AgentOps</h2>
-  <p class="section-intro">
-    Программа удерживается одной интеллектуальной формулой, которая соединяет методологию СМД-школы
-    с инженерной реальностью 2026 года.
-  </p>
-
-  <div class="concept-block">
-    <div class="formula">
-      <strong>Машина Знаний</strong> компании в 2026+ реализуется как <strong>агентная производственная платформа</strong>.
-      Её производительность измеряется через <strong>KPT</strong> (Knowledge Processing Time).
-      Её развитие управляется по продуктовой логике. Её операционная модель — <strong>AgentOps</strong>.
-    </div>
-  </div>
-</section>
-
-<!-- WHAT'S NEW IN v3.1 -->
-<section id="whats-new">
-  <div class="section-label">Что нового в v3.1</div>
-  <h2>Программа собрана как продакшен-система</h2>
-  <p class="section-intro">
-    v3.0 определила архитектуру программы. v3.1 — это полная сборка: команда агентов, библиотека скилов,
-    методология упражнений, первые цифровые прототипы.
-  </p>
-
-  <div class="whats-new">
-    <div class="new-card">
-      <span class="tag">🟢 NEW</span>
-      <h3>Команда из 31 агента в 6 слоях</h3>
-      <p>Программа сама работает на агентной платформе. Eating own dog food: то, что учим строить, и то, на чём работаем — одна и та же архитектура. Бюджет ~$11.4К/мес, 55 инструментов в реестре.</p>
-    </div>
-    <div class="new-card">
-      <span class="tag">🟢 NEW</span>
-      <h3>Библиотека из 54 скилов</h3>
-      <p>Переиспользуемые «навыки» в формате Anthropic Skills paradigm. 10 категорий — от контентного производства до AgentOps. Любой агент платформы может инвокировать любой скил. Слушатели используют те же скилы в своих пилотах.</p>
-    </div>
-    <div class="new-card">
-      <span class="tag">🟢 NEW</span>
-      <h3>Методология «средства мышления»</h3>
-      <p>Программа — не передача содержания, а тренажёр производства знания. 22 паттерна упражнений тренируют три подзадачи: различать / иметь средство / быть уверенным. В Модуле 1 уже 19 упражнений + 3 сквозные практики.</p>
-    </div>
-    <div class="new-card">
-      <span class="tag">🟢 NEW</span>
-      <h3>Три цифровых прототипа MVP</h3>
-      <p>AI Maturity Self-Assessment (v0.1 работает в браузере), KPT Calculator (спецификация готова), Forecasting Calibrator (Metaculus для пилота). Каждый — витрина агентной платформы программы.</p>
-    </div>
-  </div>
-</section>
-
-<!-- LEARNING RHYTHM -->
-<section id="rhythm">
-  <div class="section-label">Как устроено обучение</div>
-  <h2>Реальный проект начинается до первого дня</h2>
-  <p class="section-intro">
-    До старта слушатель фиксирует бизнес-проблему, метрику, владельца, данные и ограничения. Каждый модуль проводит проект через цикл действие → рефлексия → повторное действие и добавляет слой в персональный «верстак директора по ИИ».
-  </p>
-  <div class="whats-new">
-    <div class="new-card"><span class="tag">ДЕНЬ 1</span><h3>Ситуация и разрыв</h3><p>Проблематизация на реальном кейсе, первое действие и живая схема v0.</p></div>
-    <div class="new-card"><span class="tag">ДЕНЬ 2</span><h3>Пленарная сборка</h3><p>Понятия, фреймворки, практики и общая схема средств v1.</p></div>
-    <div class="new-card"><span class="tag">ДЕНЬ 3</span><h3>Групповая работа</h3><p>Проверка средств на проектах, второе действие и групповая схема v2.</p></div>
-    <div class="new-card"><span class="tag">ДЕНЬ 4</span><h3>Ярмарка решений</h3><p>Ротация индивидуальных защит, peer-feedback, рефлексия и схема v3. Внешняя CAIO-панель — на финале.</p></div>
-  </div>
-  <div class="concept-block" style="margin-top:28px;">
-    <div class="formula"><strong>Три траектории интенсивности:</strong> Executive / CEO · Директор по ИИ / владелец трансформации · Технический / проектный лидер. Схемы сначала строятся вживую от руки — общая → групповая → индивидуальная; ИИ помогает оформить уже собранное содержание.</div>
+    <div class="stat"><div class="num">9</div><div class="label">месяцев · свой пилот с первого дня</div></div>
+    <div class="stat"><div class="num">36</div><div class="label">очных дней · 4 дня раз в месяц</div></div>
+    <div class="stat"><div class="num">20</div><div class="label">слушателей в пилотном потоке</div></div>
   </div>
 </section>
 
@@ -612,339 +590,44 @@
   </div>
 </section>
 
-<!-- AGENT TEAM -->
-<section id="agents">
-  <div class="section-label">Команда агентов программы</div>
-  <h2>Программа сама работает на агентной платформе</h2>
+<!-- HOW -->
+<section id="how">
+  <div class="section-label">Как устроено</div>
+  <h2>Реальный проект начинается до первого дня</h2>
   <p class="section-intro">
-    Eating own dog food: то, что мы учим строить, и то, на чём работает программа — одна и та же архитектура.
-    31 агент в 6 слоях обслуживает программу.
+    До старта вы фиксируете бизнес-проблему, метрику, владельца и данные.
+    Каждый месяц добавляет слой в пилот платформы вашей компании.
   </p>
 
-  <div class="agent-stack">
-    <div class="agent-layer">
-      <div class="layer-num">Слой 0</div>
-      <div class="layer-name">Conductor (1)</div>
-      <div class="layer-desc">Оркестратор — единая точка входа, классификация запросов, маршрутизация</div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="k">До старта</div>
+      <h3>Свой кейс, не учебный</h3>
+      <p>Проблема, метрика, владелец, данные и ограничения. Это и есть объект трансформации на все 9 месяцев.</p>
     </div>
-    <div class="agent-layer">
-      <div class="layer-num">Слой 1</div>
-      <div class="layer-name">Программные (5)</div>
-      <div class="layer-desc">Strategy · Methodology Guardian · Tech Radar · Partnership Coordinator · Cohort Manager</div>
+    <div class="how-card">
+      <div class="k">Каждый месяц</div>
+      <h3>4 очных дня по одной схеме</h3>
+      <p>Разрыв → сборка средств → проверка на своём проекте → защита. Схемы сначала от руки, ИИ помогает оформить уже собранное.</p>
     </div>
-    <div class="agent-layer">
-      <div class="layer-num">Слой 2</div>
-      <div class="layer-name">Модульные (9)</div>
-      <div class="layer-desc">Один агент на каждый из 9 модулей — глубокая специализация на содержании модуля</div>
-    </div>
-    <div class="agent-layer">
-      <div class="layer-num">Слой 3</div>
-      <div class="layer-name">Трековые (4)</div>
-      <div class="layer-desc">Security · AgentOps · Knowledge Machine · Tech Radar — сквозные дисциплины</div>
-    </div>
-    <div class="agent-layer">
-      <div class="layer-num">Слой 4</div>
-      <div class="layer-name">Тулз-агенты (9)</div>
-      <div class="layer-desc">Content · Cases · Evals · Reviewer · Research · Translator · Viz · Docs · Glossary</div>
-    </div>
-    <div class="agent-layer">
-      <div class="layer-num">Слой 5</div>
-      <div class="layer-name">Слушательские (4)</div>
-      <div class="layer-desc">Personal Tutor · Pilot Companion · Red Team Sparring Partner · Eval Coach</div>
+    <div class="how-card">
+      <div class="k">Между модулями</div>
+      <h3>Пилот не останавливается</h3>
+      <p>Работа над платформой, peer-тройка по понедельникам, Agent of the Week. Гибрид: 60% очно, 40% онлайн · около 900 часов.</p>
     </div>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="num">31</div>
-      <div class="label">агент в команде</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">~$11.4К</div>
-      <div class="label">бюджет в месяц</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">55</div>
-      <div class="label">инструментов в реестре</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">12</div>
-      <div class="label">MCP-серверов программы</div>
-    </div>
+  <div class="day-steps">
+    <div class="day-step"><div class="n">День 1</div><div class="t">Ситуация и разрыв</div></div>
+    <div class="day-step"><div class="n">День 2</div><div class="t">Пленарная сборка</div></div>
+    <div class="day-step"><div class="n">День 3</div><div class="t">Практика на своём проекте</div></div>
+    <div class="day-step"><div class="n">День 4</div><div class="t">Защита и ярмарка решений</div></div>
   </div>
 
-  <div class="dog-food-block">
-    <h3>🍲 Eating own dog food</h3>
-    <p>
-      Слушатели в Модуле 3 (Инженерия) смотрят на наши system prompts и eval-наборы.
-      В Модуле 4 (Архитектура) — изучают платформу программы как референсную реализацию.
-      В Модуле 7 (Security) — атакуют Red Team Sparring Partner и видят, как мы защищаемся.
-      В Модуле 8 (AgentOps) — разбирают наши реальные инциденты и FinOps-данные.
-      Это уникальное педагогическое преимущество: программа выпускает специалистов, которые видели, как работает то, чему мы их учим.
-    </p>
-  </div>
-</section>
-
-<!-- SKILLS LIBRARY -->
-<section id="skills">
-  <div class="section-label">Библиотека скилов</div>
-  <h2>54 переиспользуемых навыка в 10 категориях</h2>
-  <p class="section-intro">
-    Совместимы с Anthropic Skills paradigm. Любой агент программы может инвокировать любой скил.
-    Слушатели программы используют те же скилы в своих пилотах.
-  </p>
-
-  <div class="skills-grid">
-    <div class="skill-cat">
-      <div class="head"><div class="name">📝 Контент</div><div class="count">6 скилов</div></div>
-      <div class="examples">create-lecture-slides · write-case-study · create-workshop-guide · adapt-international-case · generate-handout · create-glossary-entry</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">🧠 Методология</div><div class="count">6 скилов</div></div>
-      <div class="examples">check-smd-compliance · calculate-kpt · map-knowledge-machine · delta-model-classify · design-cognitive-mapping · write-reflection-prompt</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">✓ Эвалы</div><div class="count">5 скилов</div></div>
-      <div class="examples">design-eval-set · run-regression-eval · evaluate-artifact · compare-prompt-versions · detect-eval-drift</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">🏗 Архитектура</div><div class="count">5 скилов</div></div>
-      <div class="examples">design-federation · write-mcp-server-spec · design-multi-agent-workflow · classify-blast-radius · design-memory-architecture</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">🔒 Безопасность</div><div class="count">6 скилов</div></div>
-      <div class="examples">threat-model-stride · prompt-injection-test · audit-system-prompt · generate-red-team-attacks · assemble-sad-section · compliance-check</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">💰 Токеномика</div><div class="count">5 скилов</div></div>
-      <div class="examples">token-budget-estimate · model-cost-comparison · sensitivity-analysis-tokenomics · tco-projection-platform · finops-dashboard-spec</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">🔬 Исследование</div><div class="count">5 скилов</div></div>
-      <div class="examples">deep-research-multi-source · summarize-academic-paper · track-model-release · monitor-regulatory · generate-tech-radar-entry</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">📄 Документы</div><div class="count">6 скилов</div></div>
-      <div class="examples">assemble-platform-program · create-defense-deck · generate-certificate · assemble-portfolio · format-stakeholder-update · write-incident-report</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">⚡ Workflow</div><div class="count">5 скилов</div></div>
-      <div class="examples">multi-agent-orchestration · escalation-routing · session-summary · write-decision-record · pre-mortem-facilitation</div>
-    </div>
-    <div class="skill-cat">
-      <div class="head"><div class="name">🎓 Слушатель</div><div class="count">5 скилов</div></div>
-      <div class="examples">explain-concept-adjustable-depth · review-pilot-code · debug-student-agent · coach-eval-build · prepare-defense</div>
-    </div>
-  </div>
-</section>
-
-<!-- THINKING TOOLS METHODOLOGY -->
-<section id="methodology">
-  <div class="section-label">Методология средств мышления</div>
-  <h2>Программа — не передача содержания, а тренажёр производства знания</h2>
-  <p class="section-intro">
-    Производство знания распадается на три неразлучные подзадачи. Каждая тренируется специальными упражнениями.
-    Самые сильные упражнения тренируют все три одновременно.
-  </p>
-
-  <div class="thinking-grid">
-    <div class="thinking-card">
-      <div class="cap-name">РАЗЛИЧАТЬ</div>
-      <div class="cap-desc">Провести границу там, где другой видит континуум. Выделить единицу анализа из потока.</div>
-      <div class="cap-patterns">7 паттернов упражнений</div>
-      <div class="cap-examples">Сортировка-с-обоснованием · Differential diagnosis · Анти-примеры · Карта различений · Калибровка краёв · Распознавание в потоке · Перенос границы в чужой домен</div>
-    </div>
-    <div class="thinking-card">
-      <div class="cap-name">ИМЕТЬ СРЕДСТВО</div>
-      <div class="cap-desc">Обладать инструментом, который работает в твоих руках, а не только лежит в учебнике.</div>
-      <div class="cap-patterns">7 паттернов упражнений</div>
-      <div class="cap-examples">Применение к собственной компании (3 цикла) · Поэтапная сборка под надзором · Tool selection под задачу · Tool customization · Двухтуловое сравнение · Анализ failures · Обучение другого (Feynman)</div>
-    </div>
-    <div class="thinking-card">
-      <div class="cap-name">БЫТЬ УВЕРЕННЫМ</div>
-      <div class="cap-desc">Действовать на основе различения и средства, выдерживая давление и неопределённость.</div>
-      <div class="cap-patterns">8 паттернов упражнений</div>
-      <div class="cap-examples">Public commitment · Pre-mortem · Калибровка прогнозов (9 мес) · Steel-manning · Diff с экспертом · Адверсариальный peer-review · Решение под давлением · Защита под жёстким оппонированием</div>
-    </div>
-  </div>
-
-  <div class="module-coverage">
-    <span class="coverage-num">15/22</span>
-    <span>паттернов уже покрыты в Модуле 1: 19 упражнений + 3 сквозные практики (Worksheet «Моя компания», калибровка прогнозов, дневник различений)</span>
-  </div>
-</section>
-
-<!-- DIGITAL MVPS -->
-<section id="mvps">
-  <div class="section-label">Цифровые оболочки</div>
-  <h2>Три цифровых MVP для первого потока</h2>
-  <p class="section-intro">
-    14 из 22 упражнений Модуля 1 намеренно остаются «живыми» — peer-сессии, защиты, рефлексии.
-    Но три упражнения сильно усиливаются цифровой оболочкой и становятся самостоятельными продуктами.
-  </p>
-
-  <div class="mvp-grid">
-    <div class="mvp-card">
-      <span class="status ready">🟢 v0.1 прототип готов</span>
-      <h3>AI Maturity Self-Assessment</h3>
-      <p class="descr">Wizard 6 измерений · 18 вопросов · radar chart · автоматическая оценка L0-L5 · топ-3 разрыва · рекомендации. Работает offline, без backend, в любом браузере.</p>
-      <div class="meta">
-        <div class="budget">$30-50K production</div>
-        <div class="ex">Упражнение E1.3</div>
-      </div>
-    </div>
-    <div class="mvp-card">
-      <span class="status spec">🟡 спецификация готова</span>
-      <h3>KPT Calculator</h3>
-      <p class="descr">Расчёт baseline и целевого KPT с Sankey decomposition по этапам процесса. Sensitivity-сценарии. Слушатель уносит работающий калькулятор в свою компанию.</p>
-      <div class="meta">
-        <div class="budget">$20-30K production</div>
-        <div class="ex">Упражнение E3.3</div>
-      </div>
-    </div>
-    <div class="mvp-card">
-      <span class="status pilot">🟡 Metaculus для пилота</span>
-      <h3>Forecasting Calibrator</h3>
-      <p class="descr">Сквозная калибровка прогнозов на 9 месяцев программы. Brier score, визуализация калибровки, сравнение с когортой. Главная эпистемологическая дисциплина программы.</p>
-      <div class="meta">
-        <div class="budget">$15-25K production</div>
-        <div class="ex">Упражнение E1.5 / C2</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="dog-food-block" style="margin-top: 28px;">
-    <h3>🍲 Прототипы как витрины платформы программы</h3>
-    <p>
-      AI Maturity Assessment — приложение M1 Strategy Module Agent + Methodology Guardian.
-      KPT Calculator — приложение скила <code style="color: var(--accent); font-family: ui-monospace, Menlo, Consolas, monospace;">methodology/calculate-kpt</code>.
-      Forecasting Calibrator — приложение Eval Coach Agent.
-      Это не «отдельные IT-продукты», а user-friendly витрины существующих агентов платформы программы.
-    </p>
-  </div>
-</section>
-
-<!-- THROUGH LINES -->
-<section id="through">
-  <div class="section-label">Сквозные практики</div>
-  <h2>Семь практик, идущих через всю программу</h2>
-  <p class="section-intro">
-    Это постоянный ритм работы слушателя. Они структурируют 9 месяцев и обеспечивают накопление компетенций.
-  </p>
-
-  <div class="through-grid">
-    <div class="through-card">
-      <div class="num">01</div>
-      <h4>Сквозной пилот «Моя платформа»</h4>
-      <p>С Дня 1 до Дня 45 — работающий пилот платформы своей компании. К финалу: 3–5 агентов, эвалы, observability, план масштабирования.</p>
-    </div>
-    <div class="through-card">
-      <div class="num">02</div>
-      <h4>AgentOps по умолчанию</h4>
-      <p>Каждый агент с эвалами, observability, кост-трекингом, kill-switch, audit trail с самого начала. Никакого «прикрутим потом».</p>
-    </div>
-    <div class="through-card">
-      <div class="num">03</div>
-      <h4>Личный стек ИИ-лидера</h4>
-      <p>IDE с агентом · frontier-chat · reasoning-tool · research-tool · personal KB · agent-runner. Апдейтится после каждого модуля.</p>
-    </div>
-    <div class="through-card">
-      <div class="num">04</div>
-      <h4>Agent of the Week</h4>
-      <p>Еженедельные демонстрации агентов слушателей вживую: трейс, метрики, кост. Жёсткие вопросы. Допуск к следующему модулю.</p>
-    </div>
-    <div class="through-card">
-      <div class="num">05</div>
-      <h4>Технологический дневник</h4>
-      <p>Личный технологический радар: что появилось у Anthropic, OpenAI, Yandex, Sber — и что это меняет в архитектуре пилота.</p>
-    </div>
-    <div class="through-card">
-      <div class="num">06</div>
-      <h4>Peer-тройки</h4>
-      <p>Группы по 3 слушателя. Еженедельный 1-часовой синк по понедельникам. Обмен блокерами, адверсариальные peer-review.</p>
-    </div>
-    <div class="through-card">
-      <div class="num">07</div>
-      <h4>Гостевые сессии CAIO</h4>
-      <p>В каждом модуле — 2-часовая Q&A с действующим CAIO/CISO/Head of AI Platform. Живой опыт построения платформы.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CROSS-CUTTING TRACKS -->
-<section id="tracks">
-  <div class="section-label">Сквозные дисциплины</div>
-  <h2>Четыре «тяжёлых» сквозных трека</h2>
-  <p class="section-intro">
-    Параллельно модулям идут самостоятельные дисциплины с своими командами и агентами.
-    Имеют собственные артефакты и кульминации в конкретных модулях.
-  </p>
-
-  <div class="tracks-grid">
-    <div class="track-card">
-      <div class="head">
-        <div class="icon">🔒</div>
-        <div class="name">Безопасность платформы</div>
-      </div>
-      <div class="descr">
-        Кульминация в Модуле 7. Финальный артефакт — Security Architecture Document из 8 разделов (threat model, классификация данных, security controls, runbook, red-team отчёт, compliance, roadmap зрелости).
-      </div>
-    </div>
-    <div class="track-card">
-      <div class="head">
-        <div class="icon">⚙️</div>
-        <div class="name">AgentOps как дисциплина</div>
-      </div>
-      <div class="descr">
-        Кульминация в Модуле 8. Параллель с DevOps/MLOps: жизненный цикл агента, observability, FinOps, governance, incident management. Готовит выпускника к роли AgentOps-стратега компании.
-      </div>
-    </div>
-    <div class="track-card">
-      <div class="head">
-        <div class="icon">🧠</div>
-        <div class="name">Машина Знаний и СМД-ОДИ</div>
-      </div>
-      <div class="descr">
-        Методологический фундамент программы: концепт МЗ, метрика KPT, СМД-методология Шчедровицкого, ОДИ-формат, средства мышления. Owner — Methodology Director.
-      </div>
-    </div>
-    <div class="track-card">
-      <div class="head">
-        <div class="icon">📡</div>
-        <div class="name">Технологический радар</div>
-      </div>
-      <div class="descr">
-        Мониторинг изменений в индустрии — модели, MCP-экосистема, инструменты AgentOps, регуляторика. Обновление контента раз в 6 недель. Защита программы от устаревания.
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FORMAT -->
-<section>
-  <div class="section-label">Формат</div>
-  <h2>36 очных дней, разнесённых на 9 месяцев</h2>
-  <p class="section-intro">
-    Гибрид: 60% очно (4-дневные модули раз в месяц), 40% онлайн (межмодульная работа над пилотом, peer-тройки, Agent of the Week, гостевые сессии).
-  </p>
-
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="num">360ч</div>
-      <div class="label">очной работы<br>(36 дней × 8 часов)</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">540ч</div>
-      <div class="label">межмодульная работа<br>(15ч/нед × 36 недель)</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">~900ч</div>
-      <div class="label">общий объём<br>сопоставимо с full-time MBA</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">20</div>
-      <div class="label">слушателей<br>в первом пилотном потоке</div>
-    </div>
+  <div class="platform-note">
+    Программа сама работает на агентной платформе — той же, которой учит.
+    Слушатели видят промпты, эвалы и инциденты изнутри. Средства мышления одни:
+    различать / иметь средство / быть уверенным.
   </div>
 </section>
 
@@ -993,12 +676,12 @@
 <!-- CTA -->
 <section style="border-bottom: none;">
   <div class="cta-block">
-    <h2>AI MBA v3.1 · Полная сборка</h2>
-    <p>
-      Программа выращивает будущих директоров по ИИ через построение реальной агентной платформы.
-      31 агент в команде. 54 скила в библиотеке. 22 паттерна упражнений. 3 цифровых прототипа.
-      Программа работает на той платформе, которой учит.
-    </p>
+    <h2>Строить платформу, а не коллекцию пилотов</h2>
+    <p>Унесёте работающий пилот агентной платформы своей компании и готовность защитить его перед советом директоров.</p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="portal/">Портал слушателя →</a>
+      <a class="btn-ghost" href="tools/maturity/">Оценить зрелость компании</a>
+    </div>
   </div>
 </section>
 
