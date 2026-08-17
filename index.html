@@ -44,6 +44,10 @@
     --nav-bg: rgba(22, 21, 19, 0.92);
     --cta-bg: #c4a35a;
     --cta-fg: #161513;
+    --pilot-bg: #1c1d1f;
+    --pilot-text: #8a8d92;
+    --pilot-mute: #5a5d62;
+    --pilot-slip: #25262a;
     color-scheme: dark;
   }
   [data-theme="light"] {
@@ -60,6 +64,10 @@
     --nav-bg: rgba(231, 229, 223, 0.92);
     --cta-bg: #8a6a28;
     --cta-fg: #f4f2ec;
+    --pilot-bg: #d4d5d8;
+    --pilot-text: #3f4247;
+    --pilot-mute: #6a6e74;
+    --pilot-slip: #e4e5e8;
     color-scheme: light;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -112,27 +120,121 @@
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--text); }
 
-  .hero { padding: 88px 0 72px; border-bottom: 1px solid var(--border); }
-  .eyebrow {
+  .rupture { border-bottom: 1px solid var(--border); }
+  .rupture-stage {
+    position: relative;
+    height: min(78vh, 620px);
+    --split: 50%;
+    touch-action: none;
+    user-select: none;
+  }
+  .world {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    padding: 28px 36px 36px;
+  }
+  .world.pilots {
+    background: var(--pilot-bg);
+    color: var(--pilot-text);
+    clip-path: inset(0 calc(100% - var(--split)) 0 0);
+    z-index: 2;
+  }
+  .world.platform {
+    background: var(--bg);
+    clip-path: inset(0 0 0 var(--split));
+    z-index: 1;
+  }
+  .world .side {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .world.pilots .side { color: var(--pilot-mute); }
+  .world.platform .side { color: var(--accent); }
+  .world.pilots h2 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 28px; font-weight: 500; letter-spacing: -0.02em;
+    color: var(--pilot-text); max-width: 16ch; margin-bottom: 12px;
+  }
+  .world.platform h2 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-size: 34px; font-weight: 600; letter-spacing: -0.03em;
+    color: var(--text); max-width: 14ch; margin-bottom: 14px;
+  }
+  .slips { position: absolute; inset: 96px 12px 16px 12px; pointer-events: none; }
+  .slips span {
+    position: absolute;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; line-height: 1.35;
+    background: var(--pilot-slip);
+    border: 1px solid rgba(255,255,255,.06);
+    color: var(--pilot-text);
+    padding: 8px 10px;
+    max-width: 220px;
+  }
+  [data-theme="light"] .slips span { border-color: rgba(0,0,0,.08); }
+  .contour {
+    max-width: 340px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; line-height: 1.7; color: var(--text-dim);
+  }
+  .contour b { color: var(--text); font-weight: 600; }
+  .contour .spine {
+    display: block; width: 2px; height: 18px;
+    background: var(--accent); margin: 6px 0 6px 7px;
+  }
+
+  .rupture-handle {
+    position: absolute; top: 0; bottom: 0;
+    left: var(--split);
+    width: 48px; margin-left: -24px;
+    z-index: 4; border: 0; padding: 0;
+    background: transparent; cursor: ew-resize;
+    font-family: inherit;
+  }
+  .rupture-handle::before {
+    content: "";
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 2px; margin-left: -1px;
+    background: var(--accent);
+  }
+  .rupture-handle em {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    font-style: normal;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--bg);
+    padding: 6px 10px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .hero-band {
+    max-width: 1120px; margin: 0 auto; padding: 36px 24px 48px;
+  }
+  .hero-band .eyebrow {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
-    color: var(--accent); margin-bottom: 20px;
+    color: var(--accent); margin-bottom: 12px;
   }
-  h1 {
+  .hero-band h1 {
     font-family: "IBM Plex Serif", Georgia, serif;
-    font-size: 52px; line-height: 1.12; letter-spacing: -0.03em;
-    font-weight: 600; margin-bottom: 20px; max-width: 18ch;
+    font-size: 36px; line-height: 1.15; letter-spacing: -0.03em;
+    font-weight: 600; margin-bottom: 14px; max-width: 22ch;
   }
   .hero-sub {
-    font-size: 19px; color: var(--text-dim); max-width: 640px;
-    margin-bottom: 28px; line-height: 1.5;
+    font-size: 17px; color: var(--text-dim); max-width: 640px;
+    margin-bottom: 22px; line-height: 1.5;
   }
-  .who { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .who { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
   .who span {
     font-size: 13px; color: var(--text); padding: 5px 11px;
     border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card);
   }
-  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
   .btn-primary, .btn-ghost {
     display: inline-flex; align-items: center; text-decoration: none;
     padding: 11px 18px; border-radius: 4px; font-weight: 600; font-size: 14px;
@@ -141,40 +243,9 @@
   .btn-primary:hover { filter: brightness(1.06); }
   .btn-ghost { border: 1px solid var(--border); color: var(--text); }
   .btn-ghost:hover { border-color: var(--accent); }
-
-  .line {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    position: relative;
-  }
-  .line::before {
-    content: "";
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: var(--accent);
-  }
-  .station {
-    padding: 22px 18px 24px;
-    border-right: 1px solid var(--border);
-    min-height: 168px;
-  }
-  .station:last-child { border-right: none; }
-  .station .code {
+  .hint {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px; font-weight: 500; color: var(--accent);
-    letter-spacing: 0.06em; text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .station h3 {
-    font-family: "IBM Plex Serif", Georgia, serif;
-    font-size: 22px; font-weight: 600; line-height: 1.2;
-    margin-bottom: 10px;
-  }
-  .station p { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
-  .hero-meta {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px; color: var(--text-muted);
-    margin-top: 16px; letter-spacing: 0.02em;
+    font-size: 11px; color: var(--text-muted); margin-top: 14px;
   }
 
   .section-label {
@@ -287,15 +358,19 @@
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 900px) {
-    h1 { font-size: 34px; }
+    .hero-band h1 { font-size: 28px; }
     h2 { font-size: 26px; }
-    .hero { padding: 56px 0 48px; }
-    .line, .day-bar, .phase { grid-template-columns: 1fr; }
-    .station, .day-bar div, .phase {
+    .rupture-stage { height: min(88vh, 560px); }
+    .world { padding: 20px 16px 24px; }
+    .world.pilots h2 { font-size: 22px; }
+    .world.platform h2 { font-size: 24px; }
+    .slips span { font-size: 11px; max-width: 160px; padding: 6px 8px; }
+    .day-bar, .phase { grid-template-columns: 1fr; }
+    .day-bar div, .phase {
       border-right: none;
       border-bottom: 1px solid var(--border);
     }
-    .station:last-child, .day-bar div:last-child, .phase:last-of-type { border-bottom: none; }
+    .day-bar div:last-child, .phase:last-of-type { border-bottom: none; }
     .nav-links { display: none; }
     section { padding: 52px 0; }
     .partners td.name, .partners td.mod, .partners td.role { display: block; width: auto; }
@@ -400,9 +475,44 @@
   </div>
 </nav>
 
-<div class="container">
+<div class="rupture">
+  <div class="rupture-stage" id="ruptureStage" style="--split:50%;">
+    <div class="world platform" aria-hidden="false">
+      <div class="side">должно стать</div>
+      <h2>Одна агентная платформа</h2>
+      <div class="contour">
+        <b>Машина Знаний</b> — предмет<br>
+        <span class="spine"></span>
+        <b>агентная платформа</b> — сборка труда<br>
+        <span class="spine"></span>
+        <b>KPT</b> — мера цикла знания<br>
+        <span class="spine"></span>
+        <b>AgentOps</b> — жизнь в проде
+      </div>
+    </div>
+    <div class="world pilots">
+      <div class="side">было</div>
+      <h2>Коллекция пилотов</h2>
+      <div class="slips">
+        <span style="top:4%; left:4%; transform:rotate(-4deg)">ChatGPT у аналитика. Владельца нет.</span>
+        <span style="top:18%; left:38%; transform:rotate(3deg)">Copilot в IDE. Другой промпт.</span>
+        <span style="top:32%; left:8%; transform:rotate(-2deg)">Бот в Slack. FAQ отдела продаж.</span>
+        <span style="top:46%; left:42%; transform:rotate(5deg)">Пилот HR. Тот же FAQ, другая модель.</span>
+        <span style="top:58%; left:12%; transform:rotate(-6deg)">TCO неизвестен. Eval нет.</span>
+        <span style="top:72%; left:36%; transform:rotate(2deg)">12 инструментов. 0 контура.</span>
+        <span style="top:82%; left:6%; transform:rotate(-1deg)">KPT не считается. Blast radius — «потом».</span>
+      </div>
+    </div>
+    <button type="button" class="rupture-handle" id="ruptureHandle"
+      role="slider" aria-label="Различать коллекцию пилотов и платформу"
+      aria-valuemin="18" aria-valuemax="82" aria-valuenow="50"
+      aria-valuetext="половина экрана — было, половина — должно стать">
+      <em>различать</em>
+    </button>
+  </div>
+</div>
 
-<section class="hero">
+<div class="hero-band">
   <p class="eyebrow">9 модулей · 36 очных дней · 9 месяцев</p>
   <h1>Директор по ИИ: от бизнес-проекта к агентной платформе</h1>
   <p class="hero-sub">
@@ -418,31 +528,10 @@
     <a class="btn-primary" href="tools/maturity/">Оценить зрелость компании</a>
     <a class="btn-ghost" href="#how">Как устроено</a>
   </div>
+  <p class="hint">Потяните линию «различать». Слева — как есть. Справа — чем становится.</p>
+</div>
 
-  <div class="line" aria-label="Формула программы">
-    <article class="station">
-      <div class="code">01 · предмет</div>
-      <h3>Машина Знаний</h3>
-      <p>Что компания знает, где рвётся создание, обращение и употребление знаний.</p>
-    </article>
-    <article class="station">
-      <div class="code">02 · сборка</div>
-      <h3>Агентная платформа</h3>
-      <p>Как из отдельных кейсов собирается безопасный и экономичный цифровой труд.</p>
-    </article>
-    <article class="station">
-      <div class="code">03 · мера</div>
-      <h3>KPT</h3>
-      <p>Чем измеряется цикл знания — время, стоимость, узкие места процесса.</p>
-    </article>
-    <article class="station">
-      <div class="code">04 · жизнь</div>
-      <h3>AgentOps</h3>
-      <p>Как платформа живёт в проде: эвалы, инциденты, операционная модель.</p>
-    </article>
-  </div>
-  <p class="hero-meta">9 месяцев · свой пилот с первого дня · 20 слушателей в пилотном потоке</p>
-</section>
+<div class="container">
 
 <section id="modules">
   <div class="section-label">Архитектура программы</div>
@@ -937,6 +1026,59 @@
       }
     });
   });
+
+
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href === '#') return;
+      var target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  (function () {
+    var stage = document.getElementById('ruptureStage');
+    var handle = document.getElementById('ruptureHandle');
+    if (!stage || !handle) return;
+    function setSplit(pct) {
+      pct = Math.max(18, Math.min(82, pct));
+      stage.style.setProperty('--split', pct + '%');
+      handle.setAttribute('aria-valuenow', String(Math.round(pct)));
+      handle.setAttribute('aria-valuetext', Math.round(pct) + ' процентов — коллекция пилотов');
+    }
+    function pctFromEvent(e) {
+      var r = stage.getBoundingClientRect();
+      var x = (e.clientX !== undefined ? e.clientX : e.touches[0].clientX) - r.left;
+      return (x / r.width) * 100;
+    }
+    var dragging = false;
+    handle.addEventListener('pointerdown', function (e) {
+      dragging = true;
+      handle.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    handle.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      setSplit(pctFromEvent(e));
+    });
+    handle.addEventListener('pointerup', function () { dragging = false; });
+    handle.addEventListener('pointercancel', function () { dragging = false; });
+    stage.addEventListener('pointerdown', function (e) {
+      if (e.target === handle || handle.contains(e.target)) return;
+      setSplit(pctFromEvent(e));
+    });
+    handle.addEventListener('keydown', function (e) {
+      var cur = parseFloat(String(stage.style.getPropertyValue('--split')).replace('%', '')) || 50;
+      if (e.key === 'ArrowLeft') { setSplit(cur - 4); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { setSplit(cur + 4); e.preventDefault(); }
+      if (e.key === 'Home') { setSplit(18); e.preventDefault(); }
+      if (e.key === 'End') { setSplit(82); e.preventDefault(); }
+    });
+  })();
 </script>
 
 </body>
