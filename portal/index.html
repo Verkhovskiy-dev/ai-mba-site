@@ -1515,7 +1515,7 @@ const MODULES = [
     short: "Стратегия",
     icon: "🎯",
     days: "1-4",
-    partner: "Сколково",
+    partner: "МШУ Сколково",
     keyQuestion: "Зачем компании агентная платформа и как её позиционировать в бизнес-стратегии?",
     status: "current",
     dayThemes: [
@@ -1572,7 +1572,7 @@ const MODULES = [
     fullSchedule: true
   },
   { num: 5, name: "Токеномика, unit-экономика и закупочная стратегия", short: "Токеномика", icon: "💰",
-    days: "17-20", partner: "МШУ", status: "upcoming",
+    days: "17-20", partner: "МШУ Сколково", status: "upcoming",
     keyQuestion: "Как обосновать платформу как продукт и устроить её токеномику?",
     dayThemes: [
       "Фреймворк токеномики цифрового труда",
@@ -1584,7 +1584,7 @@ const MODULES = [
     fullSchedule: true
   },
   { num: 6, name: "Орг-дизайн и трансформация под платформу", short: "Орг-дизайн", icon: "👥",
-    days: "21-24", partner: "Сколково", status: "upcoming",
+    days: "21-24", partner: "МШУ Сколково", status: "upcoming",
     keyQuestion: "Как устроить команду платформы и перевести компанию на agent-augmented модель?",
     dayThemes: [
       "AI-augmented operating model",
@@ -1725,7 +1725,7 @@ const MODULE_1_SCHEDULE = [
       { time: "09:00-11:00", type: "handson", typeLabel: "Hands-on", title: "Запуск первого агента: задача, спецификация, базовый агент, eval-набор, Langfuse, kill-switch, полный прогон", exId: "E4.1" },
       { time: "11:15-13:00", type: "workshop", typeLabel: "Проектная", title: "Сборка Платформенной стратегии v0.1 + pre-mortem и адверсариальный peer-review в тройке", exId: "E5.2" },
       { time: "14:00-16:00", type: "defense", typeLabel: "Демо", title: "Agent of the Week #1: первые демонстрации агентов", exId: "E4.3" },
-      { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты платформенных стратегий + Threat model компании v0.1", exId: "E5.3", speaker: "Эксперты Сколково" },
+      { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты платформенных стратегий + Threat model компании v0.1", exId: "E5.3", speaker: "Эксперты МШУ Сколково" },
       { time: "18:30-20:00", type: "workshop", typeLabel: "Анализ", title: "Разбор защит и failures чужого агента. Промышленный агент: 10 признаков", exId: "E4.2" },
       { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Рефлексия Модуля 1 + контракт на межмодульную работу" }
     ]
@@ -1859,8 +1859,8 @@ const MODULE_5_SCHEDULE = [
     { time: "09:00-11:00", type: "lecture", typeLabel: "Лекция", title: "Переговоры с foundation-провайдерами: дисконты, latency SLA, caching credits. Due diligence ИИ-стартапов и оценка ИИ-IP" },
     { time: "11:15-13:00", type: "workshop", typeLabel: "Практикум", title: "Кейс-переговоры: ролевая игра CAIO vs провайдер" },
     { time: "14:00-16:00", type: "workshop", typeLabel: "Проектная", title: "Финальная сборка калькулятора и презентации для инвест-комитета. Pre-mortem экономики платформы" },
-    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты экономики: ТЭО + калькулятор + 3 сценария", speaker: "Эксперты МШУ" },
-    { time: "18:30-20:00", type: "lecture", typeLabel: "Дискуссия", title: "Обратная связь от экспертов МШУ + Security check: TCO безопасности" },
+    { time: "16:15-18:00", type: "defense", typeLabel: "Защита", title: "Защиты экономики: ТЭО + калькулятор + 3 сценария", speaker: "Эксперты МШУ Сколково" },
+    { time: "18:30-20:00", type: "lecture", typeLabel: "Дискуссия", title: "Обратная связь от экспертов МШУ Сколково + Security check: TCO безопасности" },
     { time: "20:00-20:30", type: "reflection", typeLabel: "Рефлексия", title: "Главные инсайты по токеномике. Что в мой переговорный playbook?" }
   ]}
 ];
@@ -2237,7 +2237,7 @@ const MODULE_1_EXERCISES = [
   {
     id: "E5.3", name: "Защита платформенной стратегии",
     pattern: "3.8 Защита под жёстким оппонированием (кульминация)", trains: ["УВЕР", "СРЕД", "РАЗЛ"], day: 4, time: "16:15-18:00", duration: "по 15-20 мин на участника",
-    goal: "Финальная проверка способности удержать стратегическую позицию под адверсариальным давлением экспертов Сколково.",
+    goal: "Финальная проверка способности удержать стратегическую позицию под адверсариальным давлением экспертов МШУ Сколково.",
     structure: [
       "5 мин: презентация Платформенной стратегии v0.1",
       "10 мин: вопросы панели (минимум 5, из них 2 жёстких)",
@@ -2747,7 +2747,7 @@ function renderCommunityBlock() {
       <p style="font-size:12px; color:var(--text-dim); margin-bottom:16px;">${COHORT.stream} · ${COHORT.size} слушателей · peer-тройки по 3 человека</p>
       <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">Ваша peer-тройка</div>
       <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">${peers}</div>
-      <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">Экосистема Сколково</div>
+      <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">Экосистема МШУ Сколково</div>
       <div class="community-grid">
         <div class="alumni-stat"><div class="n">${COHORT.alumni.total}</div><div class="l">выпускников программ</div></div>
         <div class="alumni-stat"><div class="n">${COHORT.alumni.digital}</div><div class="l">цифровых программ</div></div>
@@ -5602,7 +5602,7 @@ function tutorAnswer(text) {
   if (has('проектн', 'трек', 'пилот', 'раздел', 'программа платформ', 'worksheet'))
     return tutorProjectTrackExplain();
   if (has('сообществ', 'сокурсник', 'alumni', 'выпускник', 'сколково', 'mba', 'emba'))
-    return `В блоке <strong>«Сообщество»</strong> ниже — ваша peer-тройка (${COHORT.size} слушателей в потоке) и экосистема Сколково: <strong>${COHORT.alumni.total}</strong> выпускников (MBA ${COHORT.alumni.mba}, EMBA ${COHORT.alumni.emba}, цифровые программы ${COHORT.alumni.digital}). После выпуска — alumni-каталог и менторство.`;
+    return `В блоке <strong>«Сообщество»</strong> ниже — ваша peer-тройка (${COHORT.size} слушателей в потоке) и экосистема МШУ Сколково: <strong>${COHORT.alumni.total}</strong> выпускников (MBA ${COHORT.alumni.mba}, EMBA ${COHORT.alumni.emba}, цифровые программы ${COHORT.alumni.digital}). После выпуска — alumni-каталог и менторство.`;
   if (has('kpt', 'кпт'))
     return 'KPT — ключевая метрика программы: пропускная способность производства знания процессом (сколько решений/единиц знания процесс производит за единицу времени и стоимости). В программе вы считаете <strong>baseline и целевой KPT</strong> и декомпозируете его по этапам процесса. Это связывает Машину Знаний с экономикой платформы.';
   if (has('l0', 'l5', 'уровн', 'maturity', 'зрелост'))
