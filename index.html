@@ -44,9 +44,14 @@
     --nav-bg: rgba(22, 21, 19, 0.92);
     --cta-bg: #c4a35a;
     --cta-fg: #161513;
-    --pilot-bg: #191a1c;
-    --pilot-text: #8b8e94;
-    --pilot-mute: #5c6066;
+    --pilot-bg: #101318;
+    --pilot-text: #9aa3ad;
+    --pilot-mute: #6a7380;
+    --pilot-ghost: rgba(180, 190, 202, 0.12);
+    --pilot-bar: #d4d7dc;
+    --pilot-bar-text: #16181c;
+    --pilot-grain: rgba(210, 220, 230, 0.045);
+    --plate-line: #3a362f;
     --font: "Geologica", "Helvetica Neue", sans-serif;
     --mono: "JetBrains Mono", ui-monospace, monospace;
     color-scheme: dark;
@@ -65,9 +70,14 @@
     --nav-bg: rgba(231, 229, 223, 0.92);
     --cta-bg: #8a6a28;
     --cta-fg: #f4f2ec;
-    --pilot-bg: #d5d6d9;
-    --pilot-text: #3a3d42;
-    --pilot-mute: #6a6e74;
+    --pilot-bg: #c9ced6;
+    --pilot-text: #3a424c;
+    --pilot-mute: #5c6570;
+    --pilot-ghost: rgba(22, 28, 36, 0.08);
+    --pilot-bar: #1e2329;
+    --pilot-bar-text: #e6e8ec;
+    --pilot-grain: rgba(20, 28, 36, 0.06);
+    --plate-line: #c9c4b8;
     color-scheme: light;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -140,48 +150,110 @@
     z-index: 2;
   }
   .world.platform {
-    background: var(--bg);
+    background:
+      radial-gradient(120% 80% at 70% 40%, rgba(196, 163, 90, 0.06), transparent 55%),
+      var(--bg);
     clip-path: inset(0 0 0 var(--split));
     z-index: 1;
   }
-  .typewall { position: absolute; inset: 0; pointer-events: none; }
-  .typewall b {
-    position: absolute;
-    font-family: var(--mono);
-    font-weight: 500;
-    white-space: nowrap;
-    line-height: 0.92;
-    letter-spacing: -0.05em;
-    color: var(--pilot-text);
+  .pilot-grain {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 3px,
+        var(--pilot-grain) 3px 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 5px,
+        var(--pilot-grain) 5px 6px
+      );
+    mix-blend-mode: overlay;
   }
-  .typewall .w1 { top: 11%; left: 2%; font-size: clamp(52px, 10vw, 132px); opacity: 0.9; }
-  .typewall .w2 { top: 28%; left: 6%; font-size: clamp(14px, 1.5vw, 18px); opacity: 0.38; letter-spacing: 0.02em; font-weight: 400; }
-  .typewall .w3 { top: 34%; left: 14%; font-size: clamp(44px, 8vw, 104px); opacity: 0.72; }
-  .typewall .w4 { top: 51%; left: 8%; font-size: clamp(14px, 1.5vw, 18px); opacity: 0.4; letter-spacing: 0.02em; font-weight: 400; }
-  .typewall .w5 { top: 56%; left: 4%; font-size: clamp(40px, 7vw, 88px); opacity: 0.58; }
-  .typewall .w6 { top: 72%; left: 22%; font-size: clamp(18px, 2.2vw, 28px); opacity: 0.45; }
-  .typewall .w7 { top: 18%; left: 48%; font-size: clamp(16px, 1.8vw, 22px); opacity: 0.32; font-weight: 400; }
-  .typewall .w8 { top: 42%; left: 46%; font-size: clamp(20px, 2.6vw, 34px); opacity: 0.5; }
-  .typewall .w9 { top: 64%; left: 42%; font-size: clamp(28px, 4.4vw, 56px); opacity: 0.64; }
-  .typewall .w10 { top: 80%; left: 6%; font-size: clamp(16px, 2vw, 24px); opacity: 0.36; }
-  .typewall .w11 { top: 86%; left: 38%; font-size: clamp(14px, 1.6vw, 20px); opacity: 0.3; font-weight: 400; }
-  .typewall .w12 { top: 8%; left: 58%; font-size: clamp(13px, 1.4vw, 16px); opacity: 0.28; font-weight: 400; }
+  .ghost {
+    position: absolute;
+    left: -6%;
+    top: 4%;
+    margin: 0;
+    font-family: var(--mono);
+    font-size: clamp(92px, 24vw, 300px);
+    font-weight: 600;
+    letter-spacing: -0.08em;
+    line-height: 0.78;
+    color: var(--pilot-ghost);
+    text-transform: lowercase;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .stencils {
+    position: absolute;
+    left: 0; right: 0;
+    top: 16%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    pointer-events: none;
+  }
+  .stencils li {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    font-family: var(--mono);
+    font-size: clamp(12px, 1.35vw, 15px);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    background: var(--pilot-bar);
+    color: var(--pilot-bar-text);
+    padding: 11px 28px 11px 28px;
+    width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .stencils li b {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    min-width: 11ch;
+  }
+  .stencils .s1 { width: 78%; padding-top: 16px; padding-bottom: 16px; font-size: clamp(14px, 1.6vw, 18px); }
+  .stencils .s2 { width: 62%; margin-left: 10%; }
+  .stencils .s3 { width: 84%; padding-top: 14px; padding-bottom: 14px; }
+  .stencils .s4 { width: 58%; margin-left: 6%; }
+  .stencils .s5 { width: 90%; padding-top: 18px; padding-bottom: 18px; font-size: clamp(15px, 1.8vw, 20px); }
+  .stencils .s6 { width: 66%; margin-left: 14%; }
+  .stencils .s7 { width: 74%; }
   .pilots-name {
     position: absolute; left: 28px; bottom: 28px; z-index: 1;
     font-family: var(--mono); font-size: 11px; font-weight: 500;
     letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--pilot-mute);
   }
+  .plate {
+    position: absolute;
+    inset: 18px 20px 18px 20px;
+    border: 1px solid var(--plate-line);
+    pointer-events: none;
+  }
+  .plate::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  }
   .platform-sheet {
     position: absolute;
     left: 26%;
-    right: 6%;
+    right: 7%;
     top: 0; bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 48px 0 72px;
-    max-width: 40rem;
+    padding: 56px 0 80px;
+    max-width: 38rem;
+    pointer-events: auto;
   }
   .platform-sheet h1 {
     font-size: clamp(32px, 4.4vw, 54px);
@@ -197,21 +269,37 @@
     max-width: 36ch;
     margin-bottom: 28px;
   }
-  .spine {
+  .assembly {
     list-style: none;
-    border-left: 1px solid var(--accent);
-    padding-left: 16px;
-    margin-bottom: 32px;
+    position: relative;
+    margin: 0 0 32px;
     max-width: 28rem;
+    padding-left: 22px;
   }
-  .spine li { margin-bottom: 12px; }
-  .spine li:last-child { margin-bottom: 0; }
-  .spine b {
+  .assembly::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: var(--accent);
+  }
+  .assembly li {
+    position: relative;
+    padding: 10px 0 10px 8px;
+  }
+  .assembly li::before {
+    content: "";
+    position: absolute;
+    left: -22px; top: 1.15em;
+    width: 14px; height: 1px;
+    background: var(--accent);
+  }
+  .assembly b {
     display: block;
-    font-size: 15px; font-weight: 600;
+    font-size: 16px; font-weight: 600;
     letter-spacing: -0.02em;
   }
-  .spine span {
+  .assembly span {
     font-family: var(--mono);
     font-size: 12px;
     color: var(--text-dim);
@@ -385,14 +473,22 @@
       clip-path: none !important;
       inset: auto;
     }
-    .world.pilots { order: 1; min-height: 38vh; }
+    .world.pilots { order: 1; min-height: 42vh; }
     .world.platform { order: 2; }
-    .typewall .w7, .typewall .w8, .typewall .w9, .typewall .w11, .typewall .w12 { display: none; }
+    .ghost { font-size: 72px; top: 8%; }
+    .stencils { top: 22%; gap: 5px; }
+    .stencils .s4, .stencils .s6, .stencils .s7 { display: none; }
+    .stencils li { width: 92% !important; margin-left: 0 !important; padding: 10px 16px; }
+    .plate { display: none; }
+    .world.platform {
+      box-shadow: inset 0 0 0 1px var(--plate-line);
+      padding: 0;
+    }
     .platform-sheet {
       position: relative;
       left: auto; right: auto; top: auto; bottom: auto;
       max-width: none;
-      padding: 36px 20px 44px;
+      padding: 36px 24px 44px;
     }
     .platform-sheet h1 { font-size: 28px; }
     .rupture-handle { display: none; }
@@ -507,10 +603,11 @@
 <div class="rupture">
   <div class="rupture-stage" id="ruptureStage" style="--split:46%;">
     <div class="world platform">
+      <div class="plate" aria-hidden="true"></div>
       <div class="platform-sheet">
         <h1>Директор по ИИ<br>от пилотов к платформе</h1>
         <p class="lede">Для тех, кто переводит компанию с разрозненных ИИ-пилотов на производственную агентную платформу.</p>
-        <ul class="spine">
+        <ul class="assembly">
           <li><b>Машина Знаний</b><span>предмет</span></li>
           <li><b>агентная платформа</b><span>сборка труда</span></li>
           <li><b>KPT</b><span>мера цикла знания</span></li>
@@ -523,20 +620,17 @@
       </div>
     </div>
     <div class="world pilots">
-      <div class="typewall" aria-hidden="true">
-        <b class="w1">ChatGPT</b>
-        <b class="w2">у аналитика. владельца нет</b>
-        <b class="w3">Copilot</b>
-        <b class="w4">в IDE. другой промпт</b>
-        <b class="w5">Slack</b>
-        <b class="w6">FAQ продаж</b>
-        <b class="w7">пилот HR</b>
-        <b class="w8">TCO неизвестен</b>
-        <b class="w9">12 инструментов</b>
-        <b class="w10">0 контура</b>
-        <b class="w11">eval нет</b>
-        <b class="w12">blast radius потом</b>
-      </div>
+      <div class="pilot-grain" aria-hidden="true"></div>
+      <p class="ghost" aria-hidden="true">пилоты</p>
+      <ul class="stencils" aria-hidden="true">
+        <li class="s1"><b>ChatGPT</b> у аналитика. владельца нет</li>
+        <li class="s2"><b>Copilot</b> в IDE. другой промпт</li>
+        <li class="s3"><b>Slack</b> FAQ отдела продаж</li>
+        <li class="s4"><b>пилот HR</b> тот же FAQ, другая модель</li>
+        <li class="s5"><b>12 инструментов</b> 0 контура</li>
+        <li class="s6"><b>TCO</b> неизвестен. eval нет</li>
+        <li class="s7"><b>blast radius</b> потом</li>
+      </ul>
       <p class="pilots-name">коллекция пилотов</p>
     </div>
     <button type="button" class="rupture-handle" id="ruptureHandle"
