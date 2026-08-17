@@ -52,6 +52,12 @@
     --pilot-bar-text: #16181c;
     --pilot-grain: rgba(210, 220, 230, 0.045);
     --plate-line: #3a362f;
+    --deck-knowledge: #24211c;
+    --deck-platform: #2a261f;
+    --deck-kpt: #312b22;
+    --deck-ops: #393125;
+    --deck-depth: #0d0c0a;
+    --deck-grid: rgba(196, 163, 90, 0.13);
     --font: "Geologica", "Helvetica Neue", sans-serif;
     --mono: "JetBrains Mono", ui-monospace, monospace;
     color-scheme: dark;
@@ -78,6 +84,12 @@
     --pilot-bar-text: #e6e8ec;
     --pilot-grain: rgba(20, 28, 36, 0.06);
     --plate-line: #c9c4b8;
+    --deck-knowledge: #d8d3c7;
+    --deck-platform: #e1dccf;
+    --deck-kpt: #ebe5d8;
+    --deck-ops: #f4eee1;
+    --deck-depth: #aaa397;
+    --deck-grid: rgba(138, 106, 40, 0.15);
     color-scheme: light;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -245,64 +257,128 @@
   }
   .platform-sheet {
     position: absolute;
-    left: 26%;
-    right: 7%;
+    left: 49%;
+    right: 4%;
     top: 0; bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 56px 0 80px;
-    max-width: 38rem;
+    display: grid;
+    grid-template-rows: auto minmax(250px, 1fr) auto;
+    gap: clamp(10px, 1.8vh, 20px);
+    padding: clamp(32px, 5vh, 56px) 0 clamp(32px, 5vh, 56px);
+    max-width: 44rem;
     pointer-events: auto;
   }
   .platform-sheet h1 {
-    font-size: clamp(32px, 4.4vw, 54px);
-    line-height: 1.12;
+    font-size: clamp(30px, 3.9vw, 52px);
+    line-height: 1.08;
     letter-spacing: -0.04em;
     font-weight: 600;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .platform-sheet .lede {
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.45;
     color: var(--text-dim);
-    max-width: 36ch;
-    margin-bottom: 28px;
+    max-width: 39ch;
   }
-  .assembly {
-    list-style: none;
+  .platform-figure {
     position: relative;
-    margin: 0 0 32px;
-    max-width: 28rem;
-    padding-left: 22px;
+    min-height: 250px;
+    isolation: isolate;
   }
-  .assembly::before {
-    content: "";
+  .platform-stack {
+    list-style: none;
     position: absolute;
-    left: 0; top: 8px; bottom: 8px;
+    inset: 0;
+  }
+  .deck {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 46%;
+  }
+  .deck-knowledge { top: 51%; z-index: 1; --deck-face: var(--deck-knowledge); }
+  .deck-platform { top: 35%; z-index: 2; --deck-face: var(--deck-platform); }
+  .deck-kpt { top: 19%; z-index: 3; --deck-face: var(--deck-kpt); }
+  .deck-ops { top: 3%; z-index: 4; --deck-face: var(--deck-ops); }
+  .deck-depth,
+  .deck-face {
+    position: absolute;
+    left: 0; top: 0;
+    width: 74%;
+    height: 100%;
+    clip-path: polygon(50% 0, 100% 35%, 50% 70%, 0 35%);
+    pointer-events: none;
+  }
+  .deck-depth {
+    transform: translateY(9px);
+    background: var(--deck-depth);
+  }
+  .deck-face {
+    background:
+      repeating-linear-gradient(30deg, transparent 0 22px, var(--deck-grid) 22px 23px),
+      repeating-linear-gradient(150deg, transparent 0 22px, var(--deck-grid) 22px 23px),
+      var(--deck-face);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+  .deck-label {
+    position: absolute;
+    left: 69%;
+    top: 29%;
+    display: grid;
+    grid-template-columns: clamp(24px, 4vw, 52px) 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    min-width: 190px;
+  }
+  .deck-label::before {
+    content: "";
+    grid-row: 1 / span 2;
+    align-self: center;
+    height: 1px;
+    background: var(--accent);
+  }
+  .deck-label b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .deck-label small {
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.35;
+    color: var(--text-dim);
+  }
+  .stack-pin {
+    position: absolute;
+    left: 37%;
+    top: 5%;
+    bottom: 14%;
     width: 1px;
     background: var(--accent);
+    z-index: 6;
+    pointer-events: none;
   }
-  .assembly li {
-    position: relative;
-    padding: 10px 0 10px 8px;
-  }
-  .assembly li::before {
+  .stack-pin::before {
     content: "";
     position: absolute;
-    left: -22px; top: 1.15em;
-    width: 14px; height: 1px;
+    left: 50%; top: 0;
+    width: 20px; height: 20px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translate(-50%, -50%);
+  }
+  .stack-pin::after {
+    content: "";
+    position: absolute;
+    left: 50%; bottom: 0;
+    width: 7px; height: 7px;
+    border-radius: 50%;
     background: var(--accent);
-  }
-  .assembly b {
-    display: block;
-    font-size: 16px; font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-  .assembly span {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-dim);
+    transform: translate(-50%, 50%);
   }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
   .btn-primary, .btn-ghost {
@@ -487,10 +563,33 @@
     .platform-sheet {
       position: relative;
       left: auto; right: auto; top: auto; bottom: auto;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-width: 0;
       max-width: none;
       padding: 36px 24px 44px;
     }
+    .platform-copy { min-width: 0; }
+    .platform-sheet .lede { max-width: none; }
     .platform-sheet h1 { font-size: 28px; }
+    .platform-figure {
+      width: 100%;
+      min-height: 290px;
+      margin: 14px 0 18px;
+      overflow: hidden;
+    }
+    .deck-depth, .deck-face { width: 58%; }
+    .deck-label {
+      left: 54%;
+      right: 0;
+      grid-template-columns: 18px minmax(0, 1fr);
+      column-gap: 8px;
+      min-width: 0;
+    }
+    .deck-label b { font-size: 10px; }
+    .deck-label small { font-size: 9px; }
+    .stack-pin { left: 29%; }
     .rupture-handle { display: none; }
     .day-bar, .phase { grid-template-columns: 1fr; }
     .day-bar div, .phase {
@@ -605,14 +704,35 @@
     <div class="world platform">
       <div class="plate" aria-hidden="true"></div>
       <div class="platform-sheet">
-        <h1>Директор по ИИ<br>от пилотов к платформе</h1>
-        <p class="lede">Для тех, кто переводит компанию с разрозненных ИИ-пилотов на производственную агентную платформу.</p>
-        <ul class="assembly">
-          <li><b>Машина Знаний</b><span>предмет</span></li>
-          <li><b>агентная платформа</b><span>сборка труда</span></li>
-          <li><b>KPT</b><span>мера цикла знания</span></li>
-          <li><b>AgentOps</b><span>жизнь в проде</span></li>
-        </ul>
+        <div class="platform-copy">
+          <h1>Директор по ИИ<br>от пилотов к платформе</h1>
+          <p class="lede">Для тех, кто переводит компанию с разрозненных ИИ-пилотов на производственную агентную платформу.</p>
+        </div>
+        <div class="platform-figure">
+          <ol class="platform-stack" aria-label="Слои агентной платформы">
+            <li class="deck deck-knowledge">
+              <i class="deck-depth" aria-hidden="true"></i>
+              <i class="deck-face" aria-hidden="true"></i>
+              <span class="deck-label"><b>Машина Знаний</b><small>предмет</small></span>
+            </li>
+            <li class="deck deck-platform">
+              <i class="deck-depth" aria-hidden="true"></i>
+              <i class="deck-face" aria-hidden="true"></i>
+              <span class="deck-label"><b>агентная платформа</b><small>сборка труда</small></span>
+            </li>
+            <li class="deck deck-kpt">
+              <i class="deck-depth" aria-hidden="true"></i>
+              <i class="deck-face" aria-hidden="true"></i>
+              <span class="deck-label"><b>KPT</b><small>мера цикла знания</small></span>
+            </li>
+            <li class="deck deck-ops">
+              <i class="deck-depth" aria-hidden="true"></i>
+              <i class="deck-face" aria-hidden="true"></i>
+              <span class="deck-label"><b>AgentOps</b><small>жизнь в проде</small></span>
+            </li>
+          </ol>
+          <span class="stack-pin" aria-hidden="true"></span>
+        </div>
         <div class="hero-cta">
           <a class="btn-primary" href="tools/maturity/">Оценить зрелость компании</a>
           <a class="btn-ghost" href="#how">Как устроено</a>
