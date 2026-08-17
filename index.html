@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Директор по ИИ · AI MBA — программа агентной трансформации</title>
-<meta name="description" content="AI MBA — программа подготовки директоров по ИИ (CAIO), которые строят агентную производственную платформу компании. 9 модулей, 9 месяцев.">
+<title>Директор по ИИ · AI MBA - программа агентной трансформации</title>
+<meta name="description" content="AI MBA - программа подготовки директоров по ИИ (CAIO), которые строят агентную производственную платформу компании. 9 модулей, 9 месяцев.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agentmba.ai/">
@@ -27,7 +27,7 @@
 <meta name="twitter:description" content="От разрозненных ИИ-пилотов к агентной платформе. 9 модулей · 36 дней · свой пилот.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root,
   [data-theme="dark"] {
@@ -44,10 +44,11 @@
     --nav-bg: rgba(22, 21, 19, 0.92);
     --cta-bg: #c4a35a;
     --cta-fg: #161513;
-    --pilot-bg: #1c1d1f;
-    --pilot-text: #8a8d92;
-    --pilot-mute: #5a5d62;
-    --pilot-slip: #25262a;
+    --pilot-bg: #191a1c;
+    --pilot-text: #8b8e94;
+    --pilot-mute: #5c6066;
+    --font: "Geologica", "Helvetica Neue", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
     color-scheme: dark;
   }
   [data-theme="light"] {
@@ -64,16 +65,15 @@
     --nav-bg: rgba(231, 229, 223, 0.92);
     --cta-bg: #8a6a28;
     --cta-fg: #f4f2ec;
-    --pilot-bg: #d4d5d8;
-    --pilot-text: #3f4247;
+    --pilot-bg: #d5d6d9;
+    --pilot-text: #3a3d42;
     --pilot-mute: #6a6e74;
-    --pilot-slip: #e4e5e8;
     color-scheme: light;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: "IBM Plex Sans", "Helvetica Neue", sans-serif;
+    font-family: var(--font);
     background: var(--bg);
     color: var(--text);
     line-height: 1.55;
@@ -92,7 +92,7 @@
     background: var(--nav-bg);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    padding: 12px 0;
+    padding: 10px 0;
   }
   nav.topnav .inner {
     display: flex; align-items: center; justify-content: space-between;
@@ -113,25 +113,25 @@
   .nav-links a.portal { color: var(--accent); }
   .theme-toggle {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px; border-radius: 4px; flex-shrink: 0;
+    min-width: 52px; height: 34px; padding: 0 10px; border-radius: 4px; flex-shrink: 0;
     border: 1px solid var(--border); background: var(--bg-card);
-    color: var(--text-dim); cursor: pointer; font-size: 15px; line-height: 1;
-    font-family: inherit;
+    color: var(--text-dim); cursor: pointer; line-height: 1;
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.04em;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--text); }
 
   .rupture { border-bottom: 1px solid var(--border); }
   .rupture-stage {
     position: relative;
-    height: min(78vh, 620px);
-    --split: 50%;
-    touch-action: none;
-    user-select: none;
+    min-height: calc(100dvh - 55px);
+    height: calc(100dvh - 55px);
+    --split: 46%;
+    overflow: hidden;
   }
   .world {
     position: absolute; inset: 0;
     overflow: hidden;
-    padding: 28px 36px 36px;
   }
   .world.pilots {
     background: var(--pilot-bg);
@@ -144,95 +144,77 @@
     clip-path: inset(0 0 0 var(--split));
     z-index: 1;
   }
-  .world .side {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
-    text-transform: uppercase; margin-bottom: 16px;
-  }
-  .world.pilots .side { color: var(--pilot-mute); }
-  .world.platform .side { color: var(--accent); }
-  .world.pilots h2 {
-    font-family: "IBM Plex Sans", sans-serif;
-    font-size: 28px; font-weight: 500; letter-spacing: -0.02em;
-    color: var(--pilot-text); max-width: 16ch; margin-bottom: 12px;
-  }
-  .world.platform h2 {
-    font-family: "IBM Plex Serif", Georgia, serif;
-    font-size: 34px; font-weight: 600; letter-spacing: -0.03em;
-    color: var(--text); max-width: 14ch; margin-bottom: 14px;
-  }
-  .slips { position: absolute; inset: 96px 12px 16px 12px; pointer-events: none; }
-  .slips span {
+  .typewall { position: absolute; inset: 0; pointer-events: none; }
+  .typewall b {
     position: absolute;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px; line-height: 1.35;
-    background: var(--pilot-slip);
-    border: 1px solid rgba(255,255,255,.06);
-    color: var(--pilot-text);
-    padding: 8px 10px;
-    max-width: 220px;
-  }
-  [data-theme="light"] .slips span { border-color: rgba(0,0,0,.08); }
-  .contour {
-    max-width: 340px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 13px; line-height: 1.7; color: var(--text-dim);
-  }
-  .contour b { color: var(--text); font-weight: 600; }
-  .contour .spine {
-    display: block; width: 2px; height: 18px;
-    background: var(--accent); margin: 6px 0 6px 7px;
-  }
-
-  .rupture-handle {
-    position: absolute; top: 0; bottom: 0;
-    left: var(--split);
-    width: 48px; margin-left: -24px;
-    z-index: 4; border: 0; padding: 0;
-    background: transparent; cursor: ew-resize;
-    font-family: inherit;
-  }
-  .rupture-handle::before {
-    content: "";
-    position: absolute; top: 0; bottom: 0; left: 50%;
-    width: 2px; margin-left: -1px;
-    background: var(--accent);
-  }
-  .rupture-handle em {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%) rotate(-90deg);
-    font-style: normal;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--bg);
-    padding: 6px 10px;
+    font-family: var(--mono);
+    font-weight: 500;
     white-space: nowrap;
-    pointer-events: none;
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    color: var(--pilot-text);
   }
-
-  .hero-band {
-    max-width: 1120px; margin: 0 auto; padding: 36px 24px 48px;
+  .typewall .w1 { top: 11%; left: 2%; font-size: clamp(52px, 10vw, 132px); opacity: 0.9; }
+  .typewall .w2 { top: 28%; left: 6%; font-size: clamp(14px, 1.5vw, 18px); opacity: 0.38; letter-spacing: 0.02em; font-weight: 400; }
+  .typewall .w3 { top: 34%; left: 14%; font-size: clamp(44px, 8vw, 104px); opacity: 0.72; }
+  .typewall .w4 { top: 51%; left: 8%; font-size: clamp(14px, 1.5vw, 18px); opacity: 0.4; letter-spacing: 0.02em; font-weight: 400; }
+  .typewall .w5 { top: 56%; left: 4%; font-size: clamp(40px, 7vw, 88px); opacity: 0.58; }
+  .typewall .w6 { top: 72%; left: 22%; font-size: clamp(18px, 2.2vw, 28px); opacity: 0.45; }
+  .typewall .w7 { top: 18%; left: 48%; font-size: clamp(16px, 1.8vw, 22px); opacity: 0.32; font-weight: 400; }
+  .typewall .w8 { top: 42%; left: 46%; font-size: clamp(20px, 2.6vw, 34px); opacity: 0.5; }
+  .typewall .w9 { top: 64%; left: 42%; font-size: clamp(28px, 4.4vw, 56px); opacity: 0.64; }
+  .typewall .w10 { top: 80%; left: 6%; font-size: clamp(16px, 2vw, 24px); opacity: 0.36; }
+  .typewall .w11 { top: 86%; left: 38%; font-size: clamp(14px, 1.6vw, 20px); opacity: 0.3; font-weight: 400; }
+  .typewall .w12 { top: 8%; left: 58%; font-size: clamp(13px, 1.4vw, 16px); opacity: 0.28; font-weight: 400; }
+  .pilots-name {
+    position: absolute; left: 28px; bottom: 28px; z-index: 1;
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--pilot-mute);
   }
-  .hero-band .eyebrow {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
-    color: var(--accent); margin-bottom: 12px;
+  .platform-sheet {
+    position: absolute;
+    left: 26%;
+    right: 6%;
+    top: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 0 72px;
+    max-width: 40rem;
   }
-  .hero-band h1 {
-    font-family: "IBM Plex Serif", Georgia, serif;
-    font-size: 36px; line-height: 1.15; letter-spacing: -0.03em;
-    font-weight: 600; margin-bottom: 14px; max-width: 22ch;
+  .platform-sheet h1 {
+    font-size: clamp(32px, 4.4vw, 54px);
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+    margin-bottom: 14px;
   }
-  .hero-sub {
-    font-size: 17px; color: var(--text-dim); max-width: 640px;
-    margin-bottom: 22px; line-height: 1.5;
+  .platform-sheet .lede {
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--text-dim);
+    max-width: 36ch;
+    margin-bottom: 28px;
   }
-  .who { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
-  .who span {
-    font-size: 13px; color: var(--text); padding: 5px 11px;
-    border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card);
+  .spine {
+    list-style: none;
+    border-left: 1px solid var(--accent);
+    padding-left: 16px;
+    margin-bottom: 32px;
+    max-width: 28rem;
+  }
+  .spine li { margin-bottom: 12px; }
+  .spine li:last-child { margin-bottom: 0; }
+  .spine b {
+    display: block;
+    font-size: 15px; font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .spine span {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
   }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
   .btn-primary, .btn-ghost {
@@ -243,19 +225,53 @@
   .btn-primary:hover { filter: brightness(1.06); }
   .btn-ghost { border: 1px solid var(--border); color: var(--text); }
   .btn-ghost:hover { border-color: var(--accent); }
-  .hint {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px; color: var(--text-muted); margin-top: 14px;
+
+  .rupture-handle {
+    position: absolute; top: 0; bottom: 0;
+    left: var(--split);
+    width: 56px; margin-left: -28px;
+    z-index: 4; border: 0; padding: 0;
+    background: transparent; cursor: ew-resize;
+    font-family: inherit;
+  }
+  .rupture-handle .blade {
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 1px; margin-left: -0.5px;
+    background: var(--accent);
+    pointer-events: none;
+  }
+  .rupture-handle .blade i,
+  .rupture-handle .blade i:last-child {
+    position: absolute; left: 50%;
+    width: 11px; height: 1px;
+    background: var(--accent);
+    transform: translateX(-50%);
+    font-style: normal;
+  }
+  .rupture-handle .blade i:first-child { top: 18px; }
+  .rupture-handle .blade i:last-child { bottom: 70px; }
+  .rupture-handle .vernier {
+    position: absolute; bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    padding: 6px 10px;
+    white-space: nowrap;
+    pointer-events: none;
   }
 
   .section-label {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     color: var(--accent); font-size: 12px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;
   }
   h2 {
-    font-family: "IBM Plex Serif", Georgia, serif;
-    font-size: 34px; line-height: 1.2; letter-spacing: -0.02em;
+    font-size: 34px; line-height: 1.2; letter-spacing: -0.03em;
     font-weight: 600; margin-bottom: 16px;
   }
   .section-intro { font-size: 17px; color: var(--text-dim); max-width: 680px; margin-bottom: 36px; }
@@ -272,18 +288,17 @@
   }
   .module-rail article:last-child { border-right: none; }
   .module-rail .num {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 12px; font-weight: 600; color: var(--accent);
     margin-bottom: 10px;
   }
   .module-rail .title { font-weight: 600; font-size: 15px; line-height: 1.3; margin-bottom: 8px; }
   .module-rail .days {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 11px; color: var(--text-muted); margin-bottom: 12px;
   }
   .module-rail .question {
-    font-family: "IBM Plex Serif", Georgia, serif;
-    font-size: 13px; font-style: italic; color: var(--text-dim); line-height: 1.45;
+    font-size: 13px; color: var(--text-dim); line-height: 1.45;
   }
 
   .phases { display: grid; gap: 0; border: 1px solid var(--border); }
@@ -295,7 +310,7 @@
   }
   .phase:last-of-type { border-bottom: none; }
   .phase .k {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 12px; font-weight: 500; color: var(--accent);
     letter-spacing: 0.04em; text-transform: uppercase;
   }
@@ -313,7 +328,7 @@
   }
   .day-bar div:last-child { border-right: none; }
   .day-bar .n {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 11px; font-weight: 600; color: var(--accent); margin-bottom: 6px;
   }
   .day-bar .t { font-size: 14px; font-weight: 600; }
@@ -331,13 +346,13 @@
     vertical-align: top;
   }
   .partners th {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 11px; font-weight: 500; color: var(--text-muted);
     letter-spacing: 0.06em; text-transform: uppercase;
   }
   .partners td.name { font-weight: 600; width: 28%; }
   .partners td.mod {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 12px; color: var(--accent); width: 18%;
   }
   .partners td.role { font-size: 14px; color: var(--text-dim); }
@@ -358,13 +373,29 @@
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 900px) {
-    .hero-band h1 { font-size: 28px; }
     h2 { font-size: 26px; }
-    .rupture-stage { height: min(88vh, 560px); }
-    .world { padding: 20px 16px 24px; }
-    .world.pilots h2 { font-size: 22px; }
-    .world.platform h2 { font-size: 24px; }
-    .slips span { font-size: 11px; max-width: 160px; padding: 6px 8px; }
+    .rupture-stage {
+      height: auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .world {
+      position: relative;
+      clip-path: none !important;
+      inset: auto;
+    }
+    .world.pilots { order: 1; min-height: 38vh; }
+    .world.platform { order: 2; }
+    .typewall .w7, .typewall .w8, .typewall .w9, .typewall .w11, .typewall .w12 { display: none; }
+    .platform-sheet {
+      position: relative;
+      left: auto; right: auto; top: auto; bottom: auto;
+      max-width: none;
+      padding: 36px 20px 44px;
+    }
+    .platform-sheet h1 { font-size: 28px; }
+    .rupture-handle { display: none; }
     .day-bar, .phase { grid-template-columns: 1fr; }
     .day-bar div, .phase {
       border-right: none;
@@ -382,7 +413,7 @@
   .module-rail article:hover { background: var(--bg-hover); }
   .module-rail .more {
     display: block; margin-top: 12px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 11px; font-weight: 500; color: var(--accent);
   }
   .mod-overlay {
@@ -404,23 +435,21 @@
   }
   .mod-card .mclose:hover { color: var(--text); border-color: var(--accent); }
   .mod-num {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .08em;
   }
   .mod-title {
-    font-family: "IBM Plex Serif", Georgia, serif;
     font-size: 26px; font-weight: 600; margin: 6px 0 4px; letter-spacing: -.02em;
   }
   .mod-days { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
   .mod-metaphor {
-    font-family: "IBM Plex Serif", Georgia, serif;
-    font-size: 15px; font-style: italic; color: var(--text);
+    font-size: 15px; color: var(--text);
     border-left: 2px solid var(--accent);
     padding: 12px 16px; margin-bottom: 18px;
   }
   .mod-card p { color: var(--text-dim); font-size: 15px; margin-bottom: 14px; }
   .mod-h {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-family: var(--mono);
     font-size: 11px; font-weight: 500; text-transform: uppercase;
     letter-spacing: .08em; color: var(--text-dim); margin: 22px 0 12px;
   }
@@ -434,7 +463,7 @@
   .mod-shift .lbl { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; color: var(--text-muted); }
   .mod-art { list-style: none; display: flex; flex-direction: column; gap: 9px; }
   .mod-art li { position: relative; padding-left: 24px; font-size: 14px; color: var(--text); }
-  .mod-art li::before { content: "—"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  .mod-art li::before { content: "-"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
   .mod-art.alt li::before { content: "→"; color: var(--accent); }
   .mod-roi {
     font-size: 13.5px; line-height: 1.55; color: var(--text-dim);
@@ -471,64 +500,53 @@
       <a href="#partners">Партнёры</a>
       <a class="portal" href="portal/">Портал слушателя</a>
     </div>
-    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему">☀️</button>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему">свет</button>
   </div>
 </nav>
 
 <div class="rupture">
-  <div class="rupture-stage" id="ruptureStage" style="--split:50%;">
-    <div class="world platform" aria-hidden="false">
-      <div class="side">должно стать</div>
-      <h2>Одна агентная платформа</h2>
-      <div class="contour">
-        <b>Машина Знаний</b> — предмет<br>
-        <span class="spine"></span>
-        <b>агентная платформа</b> — сборка труда<br>
-        <span class="spine"></span>
-        <b>KPT</b> — мера цикла знания<br>
-        <span class="spine"></span>
-        <b>AgentOps</b> — жизнь в проде
+  <div class="rupture-stage" id="ruptureStage" style="--split:46%;">
+    <div class="world platform">
+      <div class="platform-sheet">
+        <h1>Директор по ИИ<br>от пилотов к платформе</h1>
+        <p class="lede">Для тех, кто переводит компанию с разрозненных ИИ-пилотов на производственную агентную платформу.</p>
+        <ul class="spine">
+          <li><b>Машина Знаний</b><span>предмет</span></li>
+          <li><b>агентная платформа</b><span>сборка труда</span></li>
+          <li><b>KPT</b><span>мера цикла знания</span></li>
+          <li><b>AgentOps</b><span>жизнь в проде</span></li>
+        </ul>
+        <div class="hero-cta">
+          <a class="btn-primary" href="tools/maturity/">Оценить зрелость компании</a>
+          <a class="btn-ghost" href="#how">Как устроено</a>
+        </div>
       </div>
     </div>
     <div class="world pilots">
-      <div class="side">было</div>
-      <h2>Коллекция пилотов</h2>
-      <div class="slips">
-        <span style="top:4%; left:4%; transform:rotate(-4deg)">ChatGPT у аналитика. Владельца нет.</span>
-        <span style="top:18%; left:38%; transform:rotate(3deg)">Copilot в IDE. Другой промпт.</span>
-        <span style="top:32%; left:8%; transform:rotate(-2deg)">Бот в Slack. FAQ отдела продаж.</span>
-        <span style="top:46%; left:42%; transform:rotate(5deg)">Пилот HR. Тот же FAQ, другая модель.</span>
-        <span style="top:58%; left:12%; transform:rotate(-6deg)">TCO неизвестен. Eval нет.</span>
-        <span style="top:72%; left:36%; transform:rotate(2deg)">12 инструментов. 0 контура.</span>
-        <span style="top:82%; left:6%; transform:rotate(-1deg)">KPT не считается. Blast radius — «потом».</span>
+      <div class="typewall" aria-hidden="true">
+        <b class="w1">ChatGPT</b>
+        <b class="w2">у аналитика. владельца нет</b>
+        <b class="w3">Copilot</b>
+        <b class="w4">в IDE. другой промпт</b>
+        <b class="w5">Slack</b>
+        <b class="w6">FAQ продаж</b>
+        <b class="w7">пилот HR</b>
+        <b class="w8">TCO неизвестен</b>
+        <b class="w9">12 инструментов</b>
+        <b class="w10">0 контура</b>
+        <b class="w11">eval нет</b>
+        <b class="w12">blast radius потом</b>
       </div>
+      <p class="pilots-name">коллекция пилотов</p>
     </div>
     <button type="button" class="rupture-handle" id="ruptureHandle"
       role="slider" aria-label="Различать коллекцию пилотов и платформу"
-      aria-valuemin="18" aria-valuemax="82" aria-valuenow="50"
-      aria-valuetext="половина экрана — было, половина — должно стать">
-      <em>различать</em>
+      aria-valuemin="16" aria-valuemax="84" aria-valuenow="46"
+      aria-valuetext="46 процентов коллекция пилотов, 54 платформа">
+      <span class="blade" aria-hidden="true"><i></i><i></i></span>
+      <span class="vernier">различать</span>
     </button>
   </div>
-</div>
-
-<div class="hero-band">
-  <p class="eyebrow">9 модулей · 36 очных дней · 9 месяцев</p>
-  <h1>Директор по ИИ: от бизнес-проекта к агентной платформе</h1>
-  <p class="hero-sub">
-    Для тех, кто переводит компанию с разрозненных ИИ-пилотов на производственную агентную платформу
-    и готов возглавить эту трансформацию.
-  </p>
-  <div class="who">
-    <span>Executive / CEO</span>
-    <span>Директор по ИИ</span>
-    <span>Техлид платформы</span>
-  </div>
-  <div class="hero-cta">
-    <a class="btn-primary" href="tools/maturity/">Оценить зрелость компании</a>
-    <a class="btn-ghost" href="#how">Как устроено</a>
-  </div>
-  <p class="hint">Потяните линию «различать». Слева — как есть. Справа — чем становится.</p>
 </div>
 
 <div class="container">
@@ -537,62 +555,62 @@
   <div class="section-label">Архитектура программы</div>
   <h2>9 модулей по 4 дня, разнесены на 9 месяцев</h2>
   <p class="section-intro">
-    Каждый модуль строит компонент агентной платформы. За 4–6 недель до проведения практики и кейсы адаптируются по диагностике группы, отрасли, технологическому радару и изменениям регулирования.
+    Каждый модуль строит компонент агентной платформы. За 4-6 недель до проведения практики и кейсы адаптируются по диагностике группы, отрасли, технологическому радару и изменениям регулирования.
   </p>
 
   <div class="module-rail">
     <article>
       <div class="num">М1</div>
       <div class="title">Стратегия трансформации в агентную компанию</div>
-      <div class="days">Дни 1–4 · МШУ Сколково</div>
+      <div class="days">Дни 1-4 · МШУ Сколково</div>
       <div class="question">Зачем компании агентная платформа и как её позиционировать?</div>
     </article>
     <article>
       <div class="num">М2</div>
       <div class="title">Машина Знаний + KPT</div>
-      <div class="days">Дни 5–8 · Авторский модуль</div>
+      <div class="days">Дни 5-8 · Авторский модуль</div>
       <div class="question">Что становится предметом трансформации и как измерять работу со знанием?</div>
     </article>
     <article>
       <div class="num">М3</div>
       <div class="title">Инженерия агентов и мультиагентные системы</div>
-      <div class="days">Дни 9–12 · ИТМО</div>
+      <div class="days">Дни 9-12 · ИТМО</div>
       <div class="question">Как спроектировать и испытать агента промышленного уровня?</div>
     </article>
     <article>
       <div class="num">М4</div>
       <div class="title">Архитектура агентной платформы</div>
-      <div class="days">Дни 13–16 · ИТМО + Яндекс</div>
+      <div class="days">Дни 13-16 · ИТМО + Яндекс</div>
       <div class="question">Как перейти от отдельных кейсов к безопасной и экономичной платформе цифрового труда?</div>
     </article>
     <article>
       <div class="num">М5</div>
       <div class="title">Токеномика и закупочная стратегия платформы</div>
-      <div class="days">Дни 17–20 · МШУ Сколково</div>
+      <div class="days">Дни 17-20 · МШУ Сколково</div>
       <div class="question">Как обосновать платформу и устроить её токеномику?</div>
     </article>
     <article>
       <div class="num">М6</div>
       <div class="title">Орг-дизайн и трансформация под платформу</div>
-      <div class="days">Дни 21–24 · МШУ Сколково</div>
+      <div class="days">Дни 21-24 · МШУ Сколково</div>
       <div class="question">Как устроить команду и перевести компанию на agent-augmented модель?</div>
     </article>
     <article>
       <div class="num">М7</div>
       <div class="title">Регуляторика, AI Security, foresight</div>
-      <div class="days">Дни 25–28 · Внешние эксперты</div>
-      <div class="question">Как держать платформу в правовом поле и видеть горизонт 5–10 лет?</div>
+      <div class="days">Дни 25-28 · Внешние эксперты</div>
+      <div class="question">Как держать платформу в правовом поле и видеть горизонт 5-10 лет?</div>
     </article>
     <article>
       <div class="num">М8</div>
       <div class="title">AgentOps и операционная модель платформы</div>
-      <div class="days">Дни 29–32 · Яндекс</div>
+      <div class="days">Дни 29-32 · Яндекс</div>
       <div class="question">Как эксплуатировать платформу как промышленный продукт?</div>
     </article>
     <article>
       <div class="num">М9</div>
       <div class="title">Защита программы платформы</div>
-      <div class="days">Дни 33–36 · Все партнёры + панель CAIO</div>
+      <div class="days">Дни 33-36 · Все партнёры + панель CAIO</div>
       <div class="question">Готов ли выпускник возглавить трансформацию компании?</div>
     </article>
   </div>
@@ -638,7 +656,7 @@
   </div>
 
   <div class="platform-note">
-    Программа сама работает на агентной платформе — той же, которой учит.
+    Программа сама работает на агентной платформе: той же, которой учит.
     Слушатели видят промпты, эвалы и инциденты изнутри. Средства мышления одни:
     различать / иметь средство / быть уверенным.
   </div>
@@ -648,7 +666,7 @@
   <div class="section-label">Партнёрская сеть</div>
   <h2>МШУ Сколково · ИТМО · Яндекс + панель CAIO</h2>
   <p class="section-intro">
-    Уникальная комбинация бизнес-школы, технического вуза, индустрии. Для финальной защиты — внешняя панель действующих CAIO других компаний.
+    Уникальная комбинация бизнес-школы, технического вуза, индустрии. Для финальной защиты: внешняя панель действующих CAIO других компаний.
   </p>
 
   <table class="partners">
@@ -683,7 +701,7 @@
       <tr>
         <td class="name">Внешняя панель CAIO</td>
         <td class="mod">М9</td>
-        <td class="role">Действующие директора по ИИ внешних компаний. Не методологи — практики.</td>
+        <td class="role">Действующие директора по ИИ внешних компаний. Не методологи, практики.</td>
       </tr>
     </tbody>
   </table>
@@ -709,7 +727,6 @@
   Сборка v3.1
 </footer>
 
-
 <div class="mod-overlay" id="modOverlay">
   <div class="mod-card" id="modCard"></div>
 </div>
@@ -719,7 +736,7 @@
     theme = theme === 'light' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', theme);
     var btn = document.getElementById('themeToggle');
-    if (btn) btn.textContent = theme === 'light' ? '🌙' : '☀️';
+    if (btn) btn.textContent = theme === 'light' ? 'тьма' : 'свет';
     try { localStorage.setItem('aimba_theme', theme); } catch (e) {}
     try {
       var raw = localStorage.getItem('aimba_portal_v1');
@@ -1027,56 +1044,72 @@
     });
   });
 
-
-  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var href = link.getAttribute('href');
-      if (!href || href === '#') return;
-      var target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
   (function () {
     var stage = document.getElementById('ruptureStage');
     var handle = document.getElementById('ruptureHandle');
     if (!stage || !handle) return;
+    if (window.matchMedia('(max-width: 900px)').matches) return;
+
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine = window.matchMedia('(pointer: fine)').matches;
+    var min = 16, max = 84;
+    var current = 46, target = 46, dragging = false, raf = 0;
+
     function setSplit(pct) {
-      pct = Math.max(18, Math.min(82, pct));
+      pct = Math.max(min, Math.min(max, pct));
+      current = pct;
       stage.style.setProperty('--split', pct + '%');
       handle.setAttribute('aria-valuenow', String(Math.round(pct)));
-      handle.setAttribute('aria-valuetext', Math.round(pct) + ' процентов — коллекция пилотов');
+      var left = Math.round(pct);
+      handle.setAttribute('aria-valuetext', left + ' процентов коллекция пилотов, ' + (100 - left) + ' платформа');
     }
+
     function pctFromEvent(e) {
       var r = stage.getBoundingClientRect();
-      var x = (e.clientX !== undefined ? e.clientX : e.touches[0].clientX) - r.left;
-      return (x / r.width) * 100;
+      return ((e.clientX - r.left) / r.width) * 100;
     }
-    var dragging = false;
+
+    function tick() {
+      raf = 0;
+      var next = current + (target - current) * 0.16;
+      if (Math.abs(next - target) < 0.06) next = target;
+      else raf = requestAnimationFrame(tick);
+      setSplit(next);
+    }
+
+    function aim(pct) {
+      target = Math.max(min, Math.min(max, pct));
+      if (reduced) { setSplit(target); return; }
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+
+    if (fine && !reduced) {
+      stage.addEventListener('pointermove', function (e) {
+        if (dragging) return;
+        if (e.pointerType && e.pointerType !== 'mouse') return;
+        aim(pctFromEvent(e));
+      });
+    }
+
     handle.addEventListener('pointerdown', function (e) {
       dragging = true;
       handle.setPointerCapture(e.pointerId);
+      aim(pctFromEvent(e));
       e.preventDefault();
     });
     handle.addEventListener('pointermove', function (e) {
       if (!dragging) return;
-      setSplit(pctFromEvent(e));
+      aim(pctFromEvent(e));
     });
-    handle.addEventListener('pointerup', function () { dragging = false; });
-    handle.addEventListener('pointercancel', function () { dragging = false; });
-    stage.addEventListener('pointerdown', function (e) {
-      if (e.target === handle || handle.contains(e.target)) return;
-      setSplit(pctFromEvent(e));
-    });
+    function endDrag() { dragging = false; }
+    handle.addEventListener('pointerup', endDrag);
+    handle.addEventListener('pointercancel', endDrag);
+
     handle.addEventListener('keydown', function (e) {
-      var cur = parseFloat(String(stage.style.getPropertyValue('--split')).replace('%', '')) || 50;
-      if (e.key === 'ArrowLeft') { setSplit(cur - 4); e.preventDefault(); }
-      if (e.key === 'ArrowRight') { setSplit(cur + 4); e.preventDefault(); }
-      if (e.key === 'Home') { setSplit(18); e.preventDefault(); }
-      if (e.key === 'End') { setSplit(82); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { aim(current - 4); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { aim(current + 4); e.preventDefault(); }
+      if (e.key === 'Home') { aim(min); e.preventDefault(); }
+      if (e.key === 'End') { aim(max); e.preventDefault(); }
     });
   })();
 </script>
