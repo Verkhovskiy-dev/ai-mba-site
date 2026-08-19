@@ -142,7 +142,7 @@
     position: relative;
     min-height: calc(100dvh - 55px);
     height: calc(100dvh - 55px);
-    --split: 46%;
+    --split: 42%;
     overflow: hidden;
   }
   .world {
@@ -150,14 +150,18 @@
     overflow: hidden;
   }
   .world.pilots {
-    background: var(--pilot-bg);
+    background:
+      radial-gradient(90% 70% at 0% 18%, rgba(158, 186, 214, 0.10), transparent 52%),
+      radial-gradient(70% 50% at 30% 100%, rgba(20, 28, 38, 0.55), transparent 60%),
+      var(--pilot-bg);
     color: var(--pilot-text);
     clip-path: inset(0 calc(100% - var(--split)) 0 0);
     z-index: 2;
   }
   .world.platform {
     background:
-      radial-gradient(120% 80% at 70% 40%, rgba(196, 163, 90, 0.06), transparent 55%),
+      radial-gradient(80% 70% at 78% 38%, rgba(196, 163, 90, 0.13), transparent 58%),
+      radial-gradient(50% 40% at 55% 100%, rgba(0, 0, 0, 0.28), transparent 70%),
       var(--bg);
     clip-path: inset(0 0 0 var(--split));
     z-index: 1;
@@ -178,285 +182,209 @@
       );
     mix-blend-mode: overlay;
   }
+  .pilot-scan {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      180deg,
+      transparent 0 9px,
+      rgba(190, 210, 230, 0.035) 9px 10px
+    );
+  }
   .ghost {
     position: absolute;
-    left: -6%;
-    top: 4%;
+    left: -8%;
+    top: -2%;
     margin: 0;
     font-family: var(--mono);
-    font-size: clamp(92px, 24vw, 300px);
+    font-size: clamp(110px, 28vw, 340px);
     font-weight: 600;
-    letter-spacing: -0.08em;
-    line-height: 0.78;
+    letter-spacing: -0.1em;
+    line-height: 0.74;
     color: var(--pilot-ghost);
     text-transform: lowercase;
     white-space: nowrap;
     pointer-events: none;
   }
+  .ghost.g2 {
+    top: 34%;
+    left: -22%;
+    font-size: clamp(72px, 18vw, 220px);
+    letter-spacing: -0.14em;
+    opacity: 0.7;
+  }
+  .ghost.g3 {
+    top: 68%;
+    left: 6%;
+    font-size: clamp(56px, 12vw, 150px);
+    letter-spacing: -0.12em;
+    opacity: 0.45;
+  }
+  .debris {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+    pointer-events: none;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pilot-mute);
+  }
+  .debris li { position: absolute; white-space: nowrap; }
+  .debris .d1 { top: 11%; left: 6%; }
+  .debris .d2 { top: 19%; left: 48%; opacity: 0.7; }
+  .debris .d3 { top: 47%; left: 8%; }
+  .debris .d4 { top: 71%; left: 42%; opacity: 0.75; }
+  .debris .d5 { top: 86%; left: 10%; }
   .stencils {
     position: absolute;
-    left: 0; right: 0;
-    top: 16%;
+    left: -4%; right: 0;
+    top: 14%;
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 0;
     pointer-events: none;
   }
   .stencils li {
     display: flex;
-    align-items: baseline;
-    gap: 1.25rem;
+    align-items: center;
+    gap: 14px;
     font-family: var(--mono);
     font-size: clamp(12px, 1.35vw, 15px);
     font-weight: 400;
     letter-spacing: 0.01em;
     background: var(--pilot-bar);
     color: var(--pilot-bar-text);
-    padding: 11px 28px 11px 28px;
-    width: 70%;
+    padding: 12px 36px 12px 18px;
+    width: 86%;
     white-space: nowrap;
-    overflow: hidden;
+    margin-bottom: 6px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  }
+  .stencils li::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--pilot-bg);
+    flex: 0 0 auto;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
   }
   .stencils li b {
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     min-width: 11ch;
   }
-  .stencils .s1 { width: 78%; padding-top: 16px; padding-bottom: 16px; font-size: clamp(14px, 1.6vw, 18px); }
-  .stencils .s2 { width: 62%; margin-left: 10%; }
-  .stencils .s3 { width: 84%; padding-top: 14px; padding-bottom: 14px; }
-  .stencils .s4 { width: 58%; margin-left: 6%; }
-  .stencils .s5 { width: 90%; padding-top: 18px; padding-bottom: 18px; font-size: clamp(15px, 1.8vw, 20px); }
-  .stencils .s6 { width: 66%; margin-left: 14%; }
-  .stencils .s7 { width: 74%; }
+  .stencils .s1 { width: 92%; padding-top: 18px; padding-bottom: 18px; font-size: clamp(14px, 1.7vw, 19px); }
+  .stencils .s2 { width: 70%; margin-left: 9%; margin-top: -2px; }
+  .stencils .s3 { width: 104%; padding-top: 15px; padding-bottom: 15px; margin-left: -6%; }
+  .stencils .s4 { width: 61%; margin-left: 14%; margin-top: -4px; }
+  .stencils .s5 { width: 118%; padding-top: 20px; padding-bottom: 20px; font-size: clamp(15px, 1.9vw, 22px); margin-left: -10%; }
+  .stencils .s6 { width: 73%; margin-left: 18%; }
+  .stencils .s7 { width: 88%; margin-top: -3px; }
+  .stencils .s8 { width: 54%; margin-left: 7%; opacity: 0.88; }
   .pilots-name {
-    position: absolute; left: 28px; bottom: 28px; z-index: 1;
+    position: absolute; left: 28px; bottom: 88px; z-index: 1;
     font-family: var(--mono); font-size: 11px; font-weight: 500;
-    letter-spacing: 0.14em; text-transform: uppercase;
+    letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--pilot-mute);
   }
   .plate {
     position: absolute;
-    inset: 18px 20px 18px 20px;
+    inset: 16px 18px 88px 18px;
     border: 1px solid var(--plate-line);
     pointer-events: none;
   }
   .plate::after {
     content: "";
     position: absolute;
-    inset: 5px;
-    border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+    inset: 6px;
+    border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  }
+  .dossier {
+    position: absolute;
+    right: 3%;
+    top: 16%;
+    width: min(40vw, 460px);
+    height: 58%;
+    pointer-events: none;
+  }
+  .dossier .sheet {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--plate-line);
+    background: color-mix(in srgb, var(--bg-card) 92%, var(--accent));
+  }
+  .dossier .s-a {
+    transform: translate(22px, -16px) rotate(2.4deg);
+    opacity: 0.42;
+  }
+  .dossier .s-b {
+    transform: translate(10px, -5px) rotate(-1.1deg);
+    opacity: 0.72;
+    border-color: color-mix(in srgb, var(--accent) 42%, var(--plate-line));
+  }
+  .dossier .s-c {
+    background:
+      repeating-linear-gradient(
+        180deg,
+        transparent 0 27px,
+        color-mix(in srgb, var(--accent) 9%, transparent) 27px 28px
+      ),
+      var(--bg-card);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent),
+      0 18px 40px rgba(0, 0, 0, 0.22);
+  }
+  .dossier .s-c::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 7px;
+    background: var(--accent);
   }
   .platform-sheet {
     position: absolute;
-    left: 49%;
-    right: 4%;
-    top: 0; bottom: 0;
-    display: grid;
-    grid-template-rows: auto minmax(270px, 1fr) auto;
-    gap: clamp(10px, 1.8vh, 20px);
-    padding: clamp(32px, 5vh, 56px) 0 clamp(32px, 5vh, 56px);
-    max-width: 44rem;
+    left: 45%;
+    right: 6%;
+    top: 0; bottom: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: clamp(28px, 5vh, 48px) 0;
+    max-width: 38rem;
     pointer-events: auto;
+    z-index: 2;
   }
   .platform-sheet h1 {
-    font-size: clamp(31px, 4vw, 52px);
-    line-height: 1.08;
-    letter-spacing: -0.04em;
-    font-weight: 600;
-    margin-bottom: 12px;
+    font-size: clamp(32px, 4.6vw, 62px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 700;
+    margin: 0;
   }
   .platform-sheet .lede {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.45;
     color: var(--text-dim);
-    max-width: 39ch;
+    max-width: 34ch;
   }
-  .platform-figure {
-    position: relative;
-    min-height: 270px;
-    isolation: isolate;
-  }
-  .flywheel {
-    position: absolute;
-    left: 50%; top: 50%;
-    height: min(90%, 420px);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-  }
-  .flywheel-teeth {
-    position: absolute;
-    inset: 1%;
-    border-radius: 50%;
-    background: repeating-conic-gradient(
-      from -2deg,
-      var(--accent) 0deg 1.2deg,
-      transparent 1.2deg 15deg
-    );
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 9px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 9px));
-    opacity: 0.56;
-    animation: wheelTurn 32s linear infinite;
-  }
-  .flywheel-rim {
-    position: absolute;
-    inset: 8%;
-    border: clamp(10px, 1vw, 14px) solid var(--wheel-rim);
-    border-radius: 50%;
-  }
-  .flywheel-rim::before {
-    content: "";
-    position: absolute;
-    inset: -5px;
-    border: 1px solid var(--wheel-inner);
-    border-radius: 50%;
-  }
-  .flywheel-rim::after {
-    content: "";
-    position: absolute;
-    inset: 7px;
-    border: 1px solid color-mix(in srgb, var(--accent) 64%, transparent);
-    border-radius: 50%;
-  }
-  .wheel-spoke {
-    position: absolute;
-    left: 16%; right: 16%; top: 50%;
-    height: 1px;
-    background: color-mix(in srgb, var(--accent) 54%, transparent);
-    transform-origin: center;
-  }
-  .spoke-b { transform: rotate(45deg); }
-  .spoke-c { transform: rotate(90deg); }
-  .spoke-d { transform: rotate(135deg); }
-  .wheel-hub {
-    position: absolute;
-    left: 50%; top: 50%;
-    width: 34%;
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    background: var(--wheel-core);
-    display: grid;
-    place-content: center;
-    text-align: center;
-    z-index: 4;
-  }
-  .wheel-hub b {
-    font-family: var(--mono);
-    color: var(--accent);
-    font-size: clamp(31px, 3.6vw, 48px);
-    line-height: 1;
-    letter-spacing: -0.06em;
-  }
-  .wheel-hub span {
-    font-family: var(--mono);
-    color: var(--text-dim);
-    font-size: 9px;
-    line-height: 1.35;
-    max-width: 15ch;
-    margin: 8px auto 0;
-  }
-  .wheel-stages {
-    list-style: none;
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-  }
-  .wheel-stage {
-    position: absolute;
-    font-family: var(--mono);
-    color: var(--text);
-    min-width: 104px;
-  }
-  .wheel-stage::before {
-    content: "";
-    position: absolute;
-    width: 9px; height: 9px;
-    border: 1px solid var(--accent);
-    background: var(--bg);
-    transform: rotate(45deg);
-  }
-  .wheel-stage small,
-  .wheel-stage b {
-    display: block;
-  }
-  .wheel-stage small {
-    color: var(--accent);
-    font-size: 9px;
-    letter-spacing: 0.08em;
-  }
-  .wheel-stage b {
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1.35;
-  }
-  .stage-case {
-    top: -1%; left: 50%;
-    text-align: center;
-    transform: translateX(-50%);
-  }
-  .stage-case::before {
-    left: 50%; bottom: -18px;
-    margin-left: -5px;
-  }
-  .stage-agent {
-    right: -7%; top: 50%;
-    text-align: left;
-    transform: translateY(-50%);
-  }
-  .stage-agent::before {
-    left: -19px; top: 50%;
-    margin-top: -5px;
-  }
-  .stage-eval {
-    bottom: -1%; left: 50%;
-    text-align: center;
-    transform: translateX(-50%);
-  }
-  .stage-eval::before {
-    left: 50%; top: -18px;
-    margin-left: -5px;
-  }
-  .stage-knowledge {
-    left: -7%; top: 50%;
-    text-align: right;
-    transform: translateY(-50%);
-  }
-  .stage-knowledge::before {
-    right: -19px; top: 50%;
-    margin-top: -5px;
-  }
-  .wheel-ops {
-    position: absolute;
-    left: 74%; bottom: 10%;
-    font-family: var(--mono);
-    text-align: left;
-    z-index: 5;
-  }
-  .wheel-ops small,
-  .wheel-ops b { display: block; }
-  .wheel-ops small {
-    color: var(--accent);
-    font-size: 9px;
-    letter-spacing: 0.08em;
-  }
-  .wheel-ops b {
-    color: var(--text-dim);
-    font-size: 9px;
-    font-weight: 400;
-  }
-  .wheel-ops::before {
-    content: "";
-    position: absolute;
-    right: calc(100% + 9px); top: 50%;
-    width: 24px; height: 1px;
+  .platform-rule {
+    width: 72px;
+    height: 2px;
     background: var(--accent);
   }
-  @keyframes wheelTurn {
-    to { transform: rotate(360deg); }
+  .platform-mark {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
   }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
   .btn-primary, .btn-ghost {
@@ -468,41 +396,83 @@
   .btn-ghost { border: 1px solid var(--border); color: var(--text); }
   .btn-ghost:hover { border-color: var(--accent); }
 
-  .rupture-handle {
-    position: absolute; top: 0; bottom: 0;
+  .rupture-blade {
+    position: absolute;
+    top: 0; bottom: 72px;
     left: var(--split);
-    width: 56px; margin-left: -28px;
-    z-index: 4; border: 0; padding: 0;
-    background: transparent; cursor: ew-resize;
-    font-family: inherit;
-  }
-  .rupture-handle .blade {
-    position: absolute; top: 0; bottom: 0; left: 50%;
     width: 1px; margin-left: -0.5px;
+    background: var(--accent);
+    z-index: 3;
+    pointer-events: none;
+    box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .rupture-rail {
+    position: absolute;
+    left: 20px; right: 20px;
+    bottom: 0;
+    height: 72px;
+    z-index: 4;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+  }
+  .rupture-rail .rail-bed {
+    position: absolute;
+    left: 0; right: 0;
+    top: 18px;
+    height: 14px;
+    background: repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--accent) 70%, transparent) 0 1px,
+      transparent 1px 11px
+    );
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    pointer-events: none;
+  }
+  .rupture-rail .rail-groove {
+    position: absolute;
+    left: 0; right: 0;
+    top: 24px;
+    height: 2px;
     background: var(--accent);
     pointer-events: none;
   }
-  .rupture-handle .blade i,
-  .rupture-handle .blade i:last-child {
-    position: absolute; left: 50%;
-    width: 11px; height: 1px;
-    background: var(--accent);
-    transform: translateX(-50%);
-    font-style: normal;
+  .rupture-handle {
+    position: absolute;
+    top: auto; bottom: 14px;
+    left: var(--split);
+    width: 148px; height: 48px;
+    margin-left: -74px;
+    z-index: 5; border: 0; padding: 0;
+    background: transparent; cursor: grab;
+    font-family: inherit;
+    touch-action: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
   }
-  .rupture-handle .blade i:first-child { top: 18px; }
-  .rupture-handle .blade i:last-child { bottom: 70px; }
+  .rupture-handle:active { cursor: grabbing; }
+  .rupture-handle .knob {
+    width: 16px; height: 16px;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent);
+    transform: rotate(45deg);
+    pointer-events: none;
+  }
   .rupture-handle .vernier {
-    position: absolute; bottom: 24px; left: 50%;
-    transform: translateX(-50%);
     font-style: normal;
     font-family: var(--mono);
-    font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--accent);
-    background: var(--bg);
+    color: var(--accent-ink);
+    background: var(--accent);
     border: 1px solid var(--accent);
-    padding: 6px 10px;
+    padding: 6px 12px;
     white-space: nowrap;
     pointer-events: none;
   }
@@ -630,10 +600,11 @@
     .world.pilots { order: 1; min-height: 42vh; }
     .world.platform { order: 2; }
     .ghost { font-size: 72px; top: 8%; }
+    .ghost.g2, .ghost.g3, .debris { display: none; }
     .stencils { top: 22%; gap: 5px; }
-    .stencils .s4, .stencils .s6, .stencils .s7 { display: none; }
+    .stencils .s4, .stencils .s6, .stencils .s7, .stencils .s8 { display: none; }
     .stencils li { width: 92% !important; margin-left: 0 !important; padding: 10px 16px; }
-    .plate { display: none; }
+    .plate, .dossier, .rupture-blade, .rupture-rail, .rupture-handle { display: none; }
     .world.platform {
       box-shadow: inset 0 0 0 1px var(--plate-line);
       padding: 0;
@@ -647,23 +618,12 @@
       min-width: 0;
       max-width: none;
       padding: 36px 24px 44px;
+      justify-content: flex-start;
     }
     .platform-copy { min-width: 0; }
     .platform-sheet .lede { max-width: none; }
     .platform-sheet h1 { font-size: 28px; }
-    .platform-figure {
-      width: 100%;
-      min-height: 310px;
-      margin: 14px 0 18px;
-      overflow: hidden;
-    }
-    .flywheel { height: 78%; }
-    .wheel-stage { min-width: 80px; }
-    .wheel-stage b { font-size: 9px; }
-    .stage-agent { right: -4%; }
-    .stage-knowledge { left: -4%; }
-    .wheel-ops { left: 72%; bottom: 5%; }
-    .rupture-handle { display: none; }
+    .pilots-name { bottom: 20px; }
     .day-bar, .phase { grid-template-columns: 1fr; }
     .day-bar div, .phase {
       border-right: none;
@@ -754,7 +714,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { transition: none !important; }
-    .flywheel-teeth { animation: none; }
+    .rupture-handle { transition: none; }
   }
 </style>
 </head>
@@ -774,44 +734,40 @@
 </nav>
 
 <div class="rupture">
-  <div class="rupture-stage" id="ruptureStage" style="--split:46%;">
+  <div class="rupture-stage" id="ruptureStage" style="--split:42%;">
     <div class="world platform">
       <div class="plate" aria-hidden="true"></div>
+      <div class="dossier" aria-hidden="true">
+        <span class="sheet s-a"></span>
+        <span class="sheet s-b"></span>
+        <span class="sheet s-c"></span>
+      </div>
       <div class="platform-sheet">
         <div class="platform-copy">
           <h1>Следующий кейс<br>не начинается с нуля.</h1>
-          <p class="lede">На платформе опыт агентов возвращается в Машину Знаний. Общие evals и AgentOps делают каждый запуск быстрее, дешевле и безопаснее.</p>
         </div>
-        <div class="platform-figure">
-          <div class="flywheel">
-            <span class="flywheel-teeth" aria-hidden="true"></span>
-            <span class="flywheel-rim" aria-hidden="true"></span>
-            <span class="wheel-spoke spoke-a" aria-hidden="true"></span>
-            <span class="wheel-spoke spoke-b" aria-hidden="true"></span>
-            <span class="wheel-spoke spoke-c" aria-hidden="true"></span>
-            <span class="wheel-spoke spoke-d" aria-hidden="true"></span>
-            <div class="wheel-hub">
-              <b>KPT</b>
-              <span>скорость цикла знания</span>
-            </div>
-            <ol class="wheel-stages" aria-label="Цикл накопления агентной платформы">
-              <li class="wheel-stage stage-case"><small>КЕЙС</small><b>новая задача</b></li>
-              <li class="wheel-stage stage-agent"><small>AGENT</small><b>работа</b></li>
-              <li class="wheel-stage stage-eval"><small>EVAL</small><b>проверка</b></li>
-              <li class="wheel-stage stage-knowledge"><small>МЗ</small><b>накопленный опыт</b></li>
-            </ol>
-          </div>
-          <span class="wheel-ops"><small>AgentOps</small><b>держит цикл в проде</b></span>
-        </div>
+        <span class="platform-rule" aria-hidden="true"></span>
+        <p class="lede">Опыт агентов возвращается в Машину Знаний. Следующий запуск быстрее, дешевле и безопаснее.</p>
         <div class="hero-cta">
           <a class="btn-primary" href="tools/maturity/">Оценить зрелость компании</a>
           <a class="btn-ghost" href="#how">Как устроено</a>
         </div>
+        <p class="platform-mark">МШУ Сколково · ИТМО · Яндекс</p>
       </div>
     </div>
     <div class="world pilots">
       <div class="pilot-grain" aria-hidden="true"></div>
-      <p class="ghost" aria-hidden="true">пилоты</p>
+      <div class="pilot-scan" aria-hidden="true"></div>
+      <p class="ghost g1" aria-hidden="true">пилоты</p>
+      <p class="ghost g2" aria-hidden="true">пилоты</p>
+      <p class="ghost g3" aria-hidden="true">пилоты</p>
+      <ul class="debris" aria-hidden="true">
+        <li class="d1">eval нет</li>
+        <li class="d2">owner: none</li>
+        <li class="d3">faq × 3</li>
+        <li class="d4">tokens 1.2m</li>
+        <li class="d5">tco ?</li>
+      </ul>
       <ul class="stencils" aria-hidden="true">
         <li class="s1"><b>ChatGPT</b> у аналитика. владельца нет</li>
         <li class="s2"><b>Copilot</b> в IDE. другой промпт</li>
@@ -820,14 +776,20 @@
         <li class="s5"><b>12 инструментов</b> 0 контура</li>
         <li class="s6"><b>TCO</b> неизвестен. eval нет</li>
         <li class="s7"><b>blast radius</b> потом</li>
+        <li class="s8"><b>пилот №9</b> снова с нуля</li>
       </ul>
       <p class="pilots-name">коллекция пилотов</p>
     </div>
+    <span class="rupture-blade" aria-hidden="true"></span>
+    <div class="rupture-rail" id="ruptureRail" aria-hidden="true">
+      <span class="rail-bed"></span>
+      <span class="rail-groove"></span>
+    </div>
     <button type="button" class="rupture-handle" id="ruptureHandle"
       role="slider" aria-label="Различать коллекцию пилотов и платформу"
-      aria-valuemin="16" aria-valuemax="84" aria-valuenow="46"
-      aria-valuetext="46 процентов коллекция пилотов, 54 платформа">
-      <span class="blade" aria-hidden="true"><i></i><i></i></span>
+      aria-valuemin="18" aria-valuemax="82" aria-valuenow="42"
+      aria-valuetext="42 процента коллекция пилотов, 58 платформа">
+      <span class="knob" aria-hidden="true"></span>
       <span class="vernier">различать</span>
     </button>
   </div>
@@ -1331,13 +1293,12 @@
   (function () {
     var stage = document.getElementById('ruptureStage');
     var handle = document.getElementById('ruptureHandle');
+    var rail = document.getElementById('ruptureRail');
     if (!stage || !handle) return;
     if (window.matchMedia('(max-width: 900px)').matches) return;
 
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var fine = window.matchMedia('(pointer: fine)').matches;
-    var min = 16, max = 84;
-    var current = 46, target = 46, dragging = false, raf = 0;
+    var min = 18, max = 82;
+    var current = 42, dragging = false;
 
     function setSplit(pct) {
       pct = Math.max(min, Math.min(max, pct));
@@ -1353,48 +1314,36 @@
       return ((e.clientX - r.left) / r.width) * 100;
     }
 
-    function tick() {
-      raf = 0;
-      var next = current + (target - current) * 0.16;
-      if (Math.abs(next - target) < 0.06) next = target;
-      else raf = requestAnimationFrame(tick);
-      setSplit(next);
-    }
-
-    function aim(pct) {
-      target = Math.max(min, Math.min(max, pct));
-      if (reduced) { setSplit(target); return; }
-      if (!raf) raf = requestAnimationFrame(tick);
-    }
-
-    if (fine && !reduced) {
-      stage.addEventListener('pointermove', function (e) {
-        if (dragging) return;
-        if (e.pointerType && e.pointerType !== 'mouse') return;
-        aim(pctFromEvent(e));
-      });
-    }
-
-    handle.addEventListener('pointerdown', function (e) {
-      dragging = true;
-      handle.setPointerCapture(e.pointerId);
-      aim(pctFromEvent(e));
-      e.preventDefault();
-    });
-    handle.addEventListener('pointermove', function (e) {
+    function onMove(e) {
       if (!dragging) return;
-      aim(pctFromEvent(e));
-    });
-    function endDrag() { dragging = false; }
-    handle.addEventListener('pointerup', endDrag);
-    handle.addEventListener('pointercancel', endDrag);
+      setSplit(pctFromEvent(e));
+    }
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    }
+    function onDown(e) {
+      dragging = true;
+      setSplit(pctFromEvent(e));
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+      window.addEventListener('pointercancel', onUp);
+      e.preventDefault();
+    }
+
+    handle.addEventListener('pointerdown', onDown);
+    if (rail) rail.addEventListener('pointerdown', onDown);
 
     handle.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { aim(current - 4); e.preventDefault(); }
-      if (e.key === 'ArrowRight') { aim(current + 4); e.preventDefault(); }
-      if (e.key === 'Home') { aim(min); e.preventDefault(); }
-      if (e.key === 'End') { aim(max); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { setSplit(current - 3); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { setSplit(current + 3); e.preventDefault(); }
+      if (e.key === 'Home') { setSplit(min); e.preventDefault(); }
+      if (e.key === 'End') { setSplit(max); e.preventDefault(); }
     });
+  })();
   })();
 </script>
 
