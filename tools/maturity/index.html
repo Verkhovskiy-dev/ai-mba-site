@@ -7,24 +7,28 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
-    --bg: #0a0e1a;
-    --bg-card: #131829;
-    --bg-card-hover: #1a2038;
-    --border: #1f2740;
-    --text: #e4e8f1;
-    --text-dim: #8590a8;
-    --text-muted: #5a6478;
-    --accent: #6b8aff;
-    --accent-2: #a78bfa;
+    --bg: #10120f;
+    --bg-card: #151713;
+    --bg-card-hover: #1c1e19;
+    --border: #38372f;
+    --text: #eee9df;
+    --text-dim: #aaa69c;
+    --text-muted: #77746b;
+    --accent: #d0aa58;
+    --accent-2: #e1c47f;
     --accent-warm: #f59e0b;
     --accent-green: #34d399;
     --accent-red: #f87171;
-    --gradient: linear-gradient(135deg, #6b8aff 0%, #a78bfa 100%);
+    --gradient: linear-gradient(135deg, #bd9347 0%, #e2c57f 100%);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
-    background: var(--bg);
+    background:
+      linear-gradient(rgba(208,170,88,.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(208,170,88,.025) 1px, transparent 1px),
+      var(--bg);
+    background-size: 48px 48px;
     color: var(--text);
     line-height: 1.55;
     font-size: 16px;
@@ -37,7 +41,7 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 16px 24px;
     border-bottom: 1px solid var(--border);
-    background: rgba(10, 14, 26, 0.85);
+    background: rgba(16, 18, 15, 0.92);
     backdrop-filter: blur(12px);
   }
   .logo {
@@ -55,7 +59,7 @@
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: 2px;
     font-weight: 600; font-size: 15px;
     cursor: pointer;
     border: none; font-family: inherit;
@@ -64,9 +68,9 @@
   }
   .btn-primary {
     background: var(--gradient); color: white;
-    box-shadow: 0 4px 12px rgba(107, 138, 255, 0.3);
+    box-shadow: none;
   }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(107, 138, 255, 0.4); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(208,170,88,.16); }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
   .btn-secondary {
     background: var(--bg-card); color: var(--text); border: 1px solid var(--border);
@@ -261,6 +265,37 @@
     margin-top: 40px;
   }
 
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .eyebrow { color:var(--accent); font:600 12px/1.4 var(--mono); letter-spacing:.12em; text-transform:uppercase; margin-bottom:12px; }
+  .meta-line, .status-line { color:var(--text-dim); font-size:14px; margin:12px 0 28px; }
+  progress { width:100%; height:8px; accent-color:var(--accent); }
+  .question-card fieldset, fieldset.question-card { border:0; min-width:0; }
+  .question-card legend { width:100%; }
+  .option { position:relative; min-height:52px; }
+  .option input:focus-visible + label { outline:2px solid var(--accent); outline-offset:3px; }
+  .option label { display:flex; align-items:flex-start; gap:14px; width:100%; cursor:pointer; }
+  .option.unknown { margin-top:10px; border-style:dashed; }
+  .question-error { color:#f0a69a; font-size:13px; margin-top:10px; }
+  .checkpoint { max-width:760px; margin:70px auto; }
+  .checkpoint-grid, .module-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:24px 0; }
+  .value-card, .module-card, .cta-band, .recovery-card { padding:24px; background:var(--bg-card); border:1px solid var(--border); }
+  .value-card strong, .module-card strong { display:block; margin-bottom:8px; }
+  .confidence { display:inline-flex; padding:8px 12px; border:1px solid var(--border); color:var(--text-dim); font-size:13px; margin-top:16px; }
+  .score-table { width:100%; border-collapse:collapse; margin-top:16px; font-size:14px; }
+  .score-table th,.score-table td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+  .tie-options { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px; }
+  .tie-option { display:flex; gap:10px; padding:14px; border:1px solid var(--border); min-height:44px; }
+  .tie-controls { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:16px; }
+  .tie-count { color:var(--text-dim); font-size:13px; margin-right:auto; }
+  .tie-message { color:#f0a69a; font-size:13px; width:100%; min-height:18px; }
+  .module-card .artifact { color:var(--text-dim); font-size:14px; line-height:1.5; margin:12px 0; }
+  .cta-band { margin:32px 0; display:flex; justify-content:space-between; align-items:center; gap:24px; border-color:var(--accent); }
+  .cta-actions { display:flex; flex-wrap:wrap; gap:10px; }
+  details.rec-card summary { cursor:pointer; font-weight:600; }
+  details.rec-card .rec-body { margin-top:12px; }
+  .topbar { gap:18px; }
+  .topbar a { color:var(--text-dim); text-decoration:none; }
+
   .level-reference {
     margin-top: 60px; padding: 28px;
     background: var(--bg-card); border: 1px solid var(--border);
@@ -287,20 +322,32 @@
   footer .meta { margin-bottom: 4px; }
 
   @media (max-width: 768px) {
+    .container { padding-left:16px; padding-right:16px; }
+    .topbar { flex-wrap:wrap; padding:14px 16px; }
     .welcome h1 { font-size: 32px; }
     .info-grid { grid-template-columns: 1fr; }
     .results-grid { grid-template-columns: 1fr; }
     .level-list { grid-template-columns: 1fr; }
     .dimension-name { font-size: 22px; }
+    .checkpoint-grid,.module-grid,.tie-options { grid-template-columns:1fr; }
+    .nav-buttons,.results-actions,.cta-band,.cta-actions { flex-direction:column; align-items:stretch; }
+    .nav-buttons .btn,.results-actions .btn,.cta-actions .btn { width:100%; }
+    .option { min-height:44px; }
+  }
+  @media print {
+    :root { --bg:#fff; --bg-card:#fff; --text:#111; --text-dim:#333; --border:#bbb; }
+    body { background:#fff!important; color:#111!important; }
+    .topbar,footer,.results-actions,.cta-band,.btn { display:none!important; }
+    .container { max-width:none; padding:0; }
+    .panel,.gap-item,.module-card,.rec-card,.level-reference { break-inside:avoid; box-shadow:none!important; }
+    .results-grid { grid-template-columns:1fr 1fr; }
+    .radar-svg text { fill:#111; }
   }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="logo"><a href="../../portal/" style="color:inherit;text-decoration:none;">← Портал</a> &nbsp;·&nbsp; AI MBA · Maturity Assessment</div>
-  <div class="badge-version">v0.1 prototype · май 2026</div>
-</div>
+<div class="topbar" id="topbar"></div>
 
 <div id="app"></div>
 
@@ -622,11 +669,70 @@ const RECOMMENDATIONS = {
    STATE
    ============================================================ */
 
-const state = {
-  screen: 'welcome',  // welcome | wizard | results
-  answers: {},        // { questionId: level }
-  currentDim: 0
+const DRAFT_KEY = 'aimba_maturity_draft_v2';
+const RESULT_KEY = 'aimba_maturity_v1';
+const ASSESSMENT_VERSION = '2026';
+const MODULE_MAP = {
+  strategy: ['М1 · Стратегия трансформации','Стратегия ИИ, паспорт проектного контура и критерии эффекта'],
+  data: ['М2 · Машина Знаний + KPT','Контур корпоративной памяти и целевая KPT'],
+  tech: ['М3 · Инженерия агентов + М4 · Архитектура платформы','Архитектура агента, пилота и платформенного контура'],
+  people: ['М6 · Орг-дизайн и трансформация','Команда, роли, RACI и модель управления изменениями'],
+  process: ['М7 · AI Security + М8 · AgentOps','Безопасный жизненный цикл, SLA и наблюдаемость'],
+  culture: ['М6 · Орг-дизайн + М9 · Защита программы','Программа внедрения, коммуникации и план масштабирования']
 };
+const CHECKPOINT_MATRIX = {
+  strategy: [
+    { currentState:'ИИ-инициативы не связаны с бизнес-целями, владелец не определён.', nextStep:'Назначить executive-owner и выбрать одну бизнес-задачу с измеримым эффектом.' },
+    { currentState:'Есть разрозненные пилоты, но нет общего приоритета и ответственности.', nextStep:'Собрать реестр инициатив и отобрать 1–2 пилота по эффекту, риску и готовности данных.' },
+    { currentState:'Стратегия сформулирована для одной функции и не управляет портфелем компании.', nextStep:'Согласовать корпоративные принципы, KPI и roadmap на 18–36 месяцев.' },
+    { currentState:'ИИ-стратегия связана с бизнесом, но исполнение ещё зависит от центральной команды.', nextStep:'Ввести портфельный review: эффект, стоимость, риск и решение о масштабировании.' },
+    { currentState:'ИИ влияет на бизнес-модель и решения правления.', nextStep:'Закрепить единую модель ценности, governance и пересмотра стратегии на уровне правления.' },
+    { currentState:'Агенты встроены в операционную модель и создают измеримое преимущество.', nextStep:'Управлять портфелем как динамической системой: перераспределять капитал по эффекту и риску.' }
+  ],
+  data: [
+    { currentState:'Данные разрознены, их качество и владельцы не определены.', nextStep:'Для первого пилота назначить data owner и зафиксировать источники, качество и права доступа.' },
+    { currentState:'Есть отдельные витрины и политики, но каждый кейс требует ручной сборки.', nextStep:'Описать один приоритетный data domain: владелец, SLA качества, lineage и способ доступа.' },
+    { currentState:'Единая платформа есть, но качество и governance неравномерны.', nextStep:'Ввести измеримые data-quality SLO и каталог для доменов, критичных для пилота.' },
+    { currentState:'Ключевые домены управляются, доступ в основном стандартизирован.', nextStep:'Собрать data products для агентов: structured data, knowledge и embeddings с едиными правами.' },
+    { currentState:'Данные предоставляются как продукты, lineage и SLA прозрачны.', nextStep:'Автоматизировать provenance, policy enforcement и мониторинг дрейфа знаний в агентных цепочках.' },
+    { currentState:'Агенты получают контекст по правам, а качество и provenance контролируются автоматически.', nextStep:'Управлять портфелем data products по бизнес-эффекту, стоимости и надёжности.' }
+  ],
+  tech: [
+    { currentState:'Корпоративного ИИ-контура нет; используются личные инструменты без контроля.', nextStep:'Выделить управляемый model gateway для одного пилота с логированием, эвалами и лимитами.' },
+    { currentState:'Есть доступ к моделям и первые CI/CD-цепочки, но нет единых гарантий.', nextStep:'Стандартизировать runtime пилота: versioning, regression evals, tracing, fallback и cost limits.' },
+    { currentState:'Платформа и MLOps работают в одном направлении.', nextStep:'Добавить AgentOps-контур: трассы, eval-наборы, tool permissions, rollback и blast radius.' },
+    { currentState:'Есть корпоративная платформа, gateway и governance моделей.', nextStep:'Собрать reference architecture агента и self-service golden path для продуктовых команд.' },
+    { currentState:'Агентная платформа наблюдаема, модели и инструменты федерированы.', nextStep:'Автоматизировать policy-as-code, sensitivity/cost routing и регрессионные гейты.' },
+    { currentState:'Команды самостоятельно создают агентов в рамках автоматических гарантий.', nextStep:'Оптимизировать платформу по lead time, unit economics, reliability и повторному использованию.' }
+  ],
+  people: [
+    { currentState:'Нет выделенных ИИ-ролей и ответственного за результат.', nextStep:'Назначить владельца пилота и собрать ядро: бизнес, data/AI, IT и risk.' },
+    { currentState:'Пилоты держатся на энтузиастах; роли и развитие не формализованы.', nextStep:'Закрепить RACI пилота, дефициты компетенций и план обучения команды.' },
+    { currentState:'Команда есть в одной функции; AI-fluency остальных руководителей неравномерна.', nextStep:'Запустить ролевую модель и программу AI-fluency для executive, product и engineering треков.' },
+    { currentState:'Несколько команд работают по единым принципам, но центр остаётся узким местом.', nextStep:'Перейти к федерированной модели: platform team, domain teams и единые communities of practice.' },
+    { currentState:'ИИ-роли встроены в продуктовые команды, развитие связано с реальными проектами.', nextStep:'Связать skills taxonomy, staffing и performance review с эффектом агентных продуктов.' },
+    { currentState:'Совместная работа людей и агентов закреплена в ролях, найме и развитии.', nextStep:'Постоянно перепроектировать роли по данным о производительности, рисках и качестве работы.' }
+  ],
+  process: [
+    { currentState:'Единого жизненного цикла нет; пилоты запускаются как исключения.', nextStep:'Описать minimum lifecycle от гипотезы до production с владельцем, эвалами и критерием остановки.' },
+    { currentState:'Этапы понятны команде, но проверки и решения не стандартизированы.', nextStep:'Ввести stage gates для value, data, security, evals и economics с именными владельцами.' },
+    { currentState:'Жизненный цикл работает в одной функции, но многие проверки ручные.', nextStep:'Расширить lifecycle на все ИИ-инициативы и автоматизировать базовые eval/security checks.' },
+    { currentState:'Для всех иницатив есть единый lifecycle и gateway-решения.', nextStep:'Встроить policy-as-code, continuous evals и incident feedback в CI/CD и AgentOps.' },
+    { currentState:'Проверки автоматизированы, а риски и SLA управляются в эксплуатации.', nextStep:'Дать командам self-service deployment с автоматическими гарантиями и контролем blast radius.' },
+    { currentState:'Агентные процессы масштабируются через self-service с контролируемым риском.', nextStep:'Сокращать time-to-production и change-failure rate без снижения качества и compliance.' }
+  ],
+  culture: [
+    { currentState:'Доминируют страх и скепсис; руководство не объяснило цель и границы ИИ.', nextStep:'Публично объяснить зачем нужен пилот, что меняется в работе и какие есть гарантии.' },
+    { currentState:'ИИ используют энтузиасты; остальные не видят личной пользы.', nextStep:'Выбрать один заметный workflow, замерить эффект и показать результат команде.' },
+    { currentState:'Сотрудники принимают ИИ как инструмент, но не доверяют ему значимые задачи.', nextStep:'Ввести прозрачные human-in-the-loop правила, канал обратной связи и регулярные демо.' },
+    { currentState:'ИИ-ассистированная работа принята в нескольких функциях, но опыт не масштабируется.', nextStep:'Включить AI demos, разборы ошибок и обмен паттернами в регулярный operating rhythm.' },
+    { currentState:'Эксперименты и reskilling встроены в работу; доверие опирается на риск-уровень.', nextStep:'Связать изменение ролей и моделей работы с измеримыми эффектами и карьерными траекториями.' },
+    { currentState:'Совместная работа с агентами является нормой, а оргструктура регулярно адаптируется.', nextStep:'Поддерживать доверие через прозрачные метрики качества труда, безопасности и развития людей.' }
+  ]
+};
+const explicitSource = new URLSearchParams(location.search).get('from');
+const entrySource = ['landing','portal'].includes(explicitSource) ? explicitSource : 'direct';
+const state = { screen:'welcome', answers:{}, currentDim:0, source:entrySource, errorQuestion:null, priorityGaps:[], pendingPriorityGaps:[], priorityChoiceDeferred:false };
 
 /* ============================================================
    HELPERS
@@ -646,27 +752,65 @@ function getAnsweredCount() {
 
 function getDimensionScores() {
   return DIMENSIONS.map(dim => {
-    const scores = dim.questions.map(q => state.answers[q.id] !== undefined ? state.answers[q.id] : 0);
-    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    const values = dim.questions.map(q => state.answers[q.id]).filter(Number.isFinite);
+    const avg = values.length >= 2 ? values.reduce((a,b) => a+b,0) / values.length : null;
     return {
       id: dim.id,
       name: dim.name,
       icon: dim.icon,
-      score: Math.round(avg * 10) / 10,
-      roundedScore: Math.round(avg)
+      score: avg === null ? null : Math.round(avg * 10) / 10,
+      roundedScore: avg === null ? null : Math.round(avg),
+      answeredCount: values.length
     };
   });
 }
 
 function getOverallLevel() {
   const scores = getDimensionScores();
-  const avg = scores.reduce((s, d) => s + d.score, 0) / scores.length;
-  return Math.round(avg);
+  const usable = scores.filter(d => d.score !== null);
+  if (!usable.length) return null;
+  return Math.round(usable.reduce((s,d) => s+d.score,0) / usable.length);
 }
 
 function isDimensionComplete(dimIdx) {
   const dim = DIMENSIONS[dimIdx];
-  return dim.questions.every(q => state.answers[q.id] !== undefined);
+  return dim.questions.every(q => Object.prototype.hasOwnProperty.call(state.answers,q.id));
+}
+
+function getConfidence() {
+  const count = Object.values(state.answers).filter(Number.isFinite).length;
+  return { count, label: count >= 16 ? 'высокая' : count >= 12 ? 'средняя' : 'низкая' };
+}
+
+function track(name, props={}) {
+  try { window.umami?.track(name,props); window.dataLayer?.push({event:name,...props}); window.dispatchEvent(new CustomEvent('aimba:analytics',{detail:{name,...props}})); } catch (_) {}
+}
+
+function safeStorageSet(key,value) { try { localStorage.setItem(key,value); return true; } catch (_) { state.storageWarning='Не удалось сохранить данные в браузере. Не закрывайте эту вкладку.'; return false; } }
+function safeStorageRemove(key) { try { localStorage.removeItem(key); return true; } catch (_) { return false; } }
+
+function saveDraft() {
+  return safeStorageSet(DRAFT_KEY, JSON.stringify({schemaVersion:2,assessmentVersion:ASSESSMENT_VERSION,updatedAt:new Date().toISOString(),source:state.source,currentDim:state.currentDim,screen:state.screen,answers:state.answers,priorityGaps:state.priorityGaps}));
+}
+
+function loadDraft() {
+  try {
+    const draft = JSON.parse(localStorage.getItem(DRAFT_KEY));
+    if (!draft || draft.schemaVersion !== 2 || Date.now()-Date.parse(draft.updatedAt) > 30*864e5 || !draft.answers || typeof draft.answers !== 'object') return null;
+    const questionIds=new Set(DIMENSIONS.flatMap(d=>d.questions.map(q=>q.id))), dimensionIds=new Set(DIMENSIONS.map(d=>d.id));
+    if(!Number.isInteger(draft.currentDim)||draft.currentDim<0||draft.currentDim>=DIMENSIONS.length) return null;
+    if(!['welcome','wizard','checkpoint','results'].includes(draft.screen)) return null;
+    if(!['landing','portal','direct'].includes(draft.source)) draft.source='direct';
+    if(Object.entries(draft.answers).some(([id,value])=>!questionIds.has(id)||(value!==null&&(!Number.isInteger(value)||value<0||value>5)))) return null;
+    if(!Array.isArray(draft.priorityGaps)||draft.priorityGaps.some(id=>!dimensionIds.has(id))) draft.priorityGaps=[];
+    return draft;
+  } catch (_) { safeStorageRemove(DRAFT_KEY); return null; }
+}
+function loadCompleted() { try { const r=JSON.parse(localStorage.getItem(RESULT_KEY)); return r&&r.completedAt&&r.answers?r:null; } catch(_){ return null; } }
+
+function renderTopbar() {
+  const portal = state.source === 'portal';
+  document.getElementById('topbar').innerHTML = `<strong>${portal?'AI MBA · Портал слушателя':'Директор по ИИ · AI MBA'}</strong><a href="${portal?'../../portal/':'../../index.html#program'}">${portal?'← В портал':'← К программе'}</a>`;
 }
 
 /* ============================================================
@@ -702,20 +846,20 @@ function renderRadarChart(scores) {
 
   // Data polygon
   const dataPoints = scores.map((s, i) => {
-    const r = (s.score / 5) * R;
+    const r = ((s.score ?? 0) / 5) * R;
     const x = cx + r * Math.cos(angles[i]);
     const y = cy + r * Math.sin(angles[i]);
     return `${x},${y}`;
   }).join(' ');
-  const dataPolygon = `<polygon points="${dataPoints}" fill="#6b8aff" fill-opacity="0.3" stroke="#6b8aff" stroke-width="2"/>`;
+  const dataPolygon = `<polygon points="${dataPoints}" fill="#d6ad55" fill-opacity="0.24" stroke="#d6ad55" stroke-width="2"/>`;
 
   // Data points
   let dotsSvg = '';
   scores.forEach((s, i) => {
-    const r = (s.score / 5) * R;
+    const r = ((s.score ?? 0) / 5) * R;
     const x = cx + r * Math.cos(angles[i]);
     const y = cy + r * Math.sin(angles[i]);
-    dotsSvg += `<circle cx="${x}" cy="${y}" r="4" fill="#6b8aff"/>`;
+    dotsSvg += `<circle cx="${x}" cy="${y}" r="4" fill="#d6ad55"/>`;
   });
 
   // Labels
@@ -728,7 +872,7 @@ function renderRadarChart(scores) {
     if (Math.cos(angles[i]) > 0.3) anchor = 'start';
     else if (Math.cos(angles[i]) < -0.3) anchor = 'end';
     labelsSvg += `<text x="${x}" y="${y}" text-anchor="${anchor}" dominant-baseline="middle" fill="#e4e8f1" font-size="13" font-weight="600">${esc(s.icon)} ${esc(s.name)}</text>`;
-    labelsSvg += `<text x="${x}" y="${y + 14}" text-anchor="${anchor}" dominant-baseline="middle" fill="#8590a8" font-size="11">${s.score.toFixed(1)}</text>`;
+    labelsSvg += `<text x="${x}" y="${y + 14}" text-anchor="${anchor}" dominant-baseline="middle" fill="#a7a394" font-size="11">${s.score === null ? 'н/д' : s.score.toFixed(1)}</text>`;
   });
 
   // Scale labels (only on top axis, for L1-L5)
@@ -739,7 +883,9 @@ function renderRadarChart(scores) {
   }
 
   return `
-    <svg class="radar-svg" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+    <svg class="radar-svg" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="radar-title radar-desc">
+      <title id="radar-title">Профиль зрелости по шести измерениям</title>
+      <desc id="radar-desc">Диаграмма дополняется текстовой таблицей с точными значениями.</desc>
       ${gridSvg}
       ${axesSvg}
       ${dataPolygon}
@@ -755,14 +901,18 @@ function renderRadarChart(scores) {
    ============================================================ */
 
 function renderWelcome() {
+  const draft = loadDraft();
+  if (draft && Object.keys(draft.answers).length) return `<main class="container welcome"><div class="recovery-card"><div class="eyebrow">AI MATURITY ASSESSMENT · 2026</div><h1>${draft.screen==='results'?'Открыть сохранённый результат?':'Продолжить оценку?'}</h1><p class="sub">Сохранено ${new Date(draft.updatedAt).toLocaleString('ru-RU')} · отвечено ${Object.keys(draft.answers).length} из 18.</p><button class="btn btn-primary" onclick="resumeAssessment()">${draft.screen==='results'?'Открыть результат':'Продолжить'} →</button> <button class="btn btn-secondary" onclick="startAssessment(true)">Начать заново</button></div></main>`;
+  const completed=loadCompleted();
+  if(completed) return `<main class="container welcome"><div class="recovery-card"><div class="eyebrow">РЕЗУЛЬТАТ СОХРАНЁН</div><h1>Открыть результат?</h1><p class="sub">Завершено ${new Date(completed.completedAt).toLocaleString('ru-RU')} · уровень ${completed.overallLevel===null?'предварительный':'L'+completed.overallLevel}.</p><button class="btn btn-primary" onclick="resumeResult()">Открыть результат →</button> <button class="btn btn-secondary" onclick="startAssessment(true)">Пройти заново</button></div></main>`;
   return `
-    <div class="container welcome">
-      <span class="badge">🟢 MVP-прототип учебного стенда</span>
-      <h1>AI Maturity <span class="accent">Self-Assessment</span> v2026</h1>
+    <main class="container welcome">
+      <div class="eyebrow">AI MATURITY ASSESSMENT · 2026</div>
+      <h1>Оцените зрелость ИИ <span class="accent">в вашей компании</span></h1>
       <p class="sub">
-        Оцените зрелость своей компании по 6 измерениям программы AI MBA.
-        Получите radar chart, уровень L0-L5, топ-3 разрывов и рекомендации.
+        18 вопросов по шести измерениям. Сразу после оценки вы получите уровень L0–L5, профиль зрелости, приоритетные разрывы и модули программы, которые помогут их закрыть.
       </p>
+      <div class="meta-line">≈ 7–10 минут · без регистрации · результат сразу</div>
       <div class="info-grid">
         <div class="info-card">
           <div class="num">6</div>
@@ -770,16 +920,17 @@ function renderWelcome() {
         </div>
         <div class="info-card">
           <div class="num">18</div>
-          <div class="label">вопросов · ~10-15 минут на прохождение</div>
+          <div class="label">вопросов · можно сохранить и продолжить позже</div>
         </div>
         <div class="info-card">
           <div class="num">L0–L5</div>
           <div class="label">6 уровней от «Individual GenAI» до «Agent-augmented enterprise»</div>
         </div>
       </div>
-      <button class="btn btn-primary" onclick="startAssessment()">
+      <button class="btn btn-primary" onclick="startAssessment(false)">
         Начать оценку →
       </button>
+      <details class="rec-card" style="margin-top:16px"><summary>Как считается результат</summary><div class="rec-body">В каждом измерении три вопроса. Ответ «Не знаю» не считается нулём и исключается из среднего. Для оценки измерения нужны минимум два содержательных ответа, а для итогового уровня — минимум четыре оценённых измерения. Уверенность показывает полноту ответов, а не качество компании.</div></details>
       <div class="level-reference">
         <h4>📚 6 уровней AI Maturity Index v2026</h4>
         <div class="level-list">
@@ -791,7 +942,7 @@ function renderWelcome() {
           `).join('')}
         </div>
       </div>
-    </div>
+    </main>
   `;
 }
 
@@ -799,42 +950,43 @@ function renderWizard() {
   const dim = DIMENSIONS[state.currentDim];
   const totalQ = getTotalQuestions();
   const answered = getAnsweredCount();
-  const progressPercent = Math.round((answered / totalQ) * 100);
   const isLast = state.currentDim === DIMENSIONS.length - 1;
   const isFirst = state.currentDim === 0;
   const dimComplete = isDimensionComplete(state.currentDim);
 
   return `
-    <div class="container">
+    <main class="container">
       <div class="progress-wrapper">
         <div class="progress-info">
-          <span>Измерение ${state.currentDim + 1} из ${DIMENSIONS.length}</span>
-          <span>${answered} из ${totalQ} вопросов · ${progressPercent}%</span>
+          <span>${esc(dim.name)} · шаг ${state.currentDim + 1} из ${DIMENSIONS.length}</span>
+          <span>${answered} из ${totalQ} вопросов · осталось около ${Math.max(1,Math.ceil((totalQ-answered)*30/60))} мин</span>
         </div>
-        <div class="progress-track">
-          <div class="progress-fill" style="width: ${progressPercent}%"></div>
-        </div>
+        <progress max="${totalQ}" value="${answered}">${answered} из ${totalQ}</progress>
       </div>
 
       <div class="dimension-header">
         <div class="dimension-icon">${esc(dim.icon)}</div>
-        <div class="dimension-name">${esc(dim.name)}</div>
+        <h1 class="dimension-name" id="screen-title" tabindex="-1">${esc(dim.name)}</h1>
       </div>
       <div class="dimension-counter">${esc(dim.description)}</div>
 
       ${dim.questions.map((q, qIdx) => `
-        <div class="question-card">
-          <div class="question-text">${qIdx + 1}. ${esc(q.text)}</div>
+        <fieldset class="question-card">
+          <legend class="question-text" id="legend-${q.id}" tabindex="-1">${qIdx + 1}. ${esc(q.text)}</legend>
           <div class="options">
             ${q.options.map(opt => `
-              <div class="option ${state.answers[q.id] === opt.level ? 'selected' : ''}"
-                   onclick="selectOption('${q.id}', ${opt.level})">
-                <div class="option-marker">L${opt.level}</div>
-                <div class="option-text">${esc(opt.text)}</div>
+              <div class="option ${state.answers[q.id] === opt.level ? 'selected' : ''}">
+                <input class="sr-only" type="radio" id="${q.id}-l${opt.level}" name="${q.id}" value="${opt.level}" ${state.answers[q.id] === opt.level?'checked':''} onchange="selectOption('${q.id}',${opt.level},this.id)">
+                <label for="${q.id}-l${opt.level}"><span class="option-marker">L${opt.level}</span><span class="option-text">${esc(opt.text)}</span></label>
               </div>
             `).join('')}
+            <div class="option unknown ${state.answers[q.id] === null ? 'selected' : ''}">
+              <input class="sr-only" type="radio" id="${q.id}-unknown" name="${q.id}" value="unknown" ${state.answers[q.id] === null?'checked':''} onchange="selectOption('${q.id}',null,this.id)">
+              <label for="${q.id}-unknown"><span class="option-marker">—</span><span class="option-text">Не знаю <small>Не войдёт в средний балл</small></span></label>
+            </div>
           </div>
-        </div>
+          ${state.errorQuestion===q.id?`<div class="question-error" id="error-${q.id}" role="alert">Выберите вариант или «Не знаю».</div>`:''}
+        </fieldset>
       `).join('')}
 
       <div class="nav-buttons">
@@ -845,15 +997,37 @@ function renderWizard() {
           ${isLast ? 'Получить результаты' : 'Дальше'} →
         </button>
       </div>
-    </div>
+    </main>
   `;
+}
+
+function renderCheckpoint() {
+  const dim=DIMENSIONS[state.currentDim], score=getDimensionScores()[state.currentDim];
+  const level=score.roundedScore;
+  if (level === null) {
+    return `<main class="container checkpoint"><div class="eyebrow">Измерение ${state.currentDim+1} из 6</div><h1 tabindex="-1" id="screen-title">Нужно уточнить: ${esc(dim.name)}</h1><div class="value-card"><strong>Почему нет оценки</strong>Для вывода нужны хотя бы два содержательных ответа. Сейчас таких: ${score.answeredCount}. Это измерение не войдёт в общий уровень.</div><button class="btn btn-primary" onclick="editCheckpoint()">← Уточнить ответы</button> <button class="btn btn-secondary" onclick="continueAfterCheckpoint()">Оставить без оценки и продолжить →</button></main>`;
+  }
+  const insight=CHECKPOINT_MATRIX[dim.id][level];
+  return `<main class="container checkpoint"><div class="eyebrow">Измерение ${state.currentDim+1} из 6 завершено</div><h1 tabindex="-1" id="screen-title">${esc(dim.name)} — L${level}</h1><div class="checkpoint-grid"><div class="value-card"><strong>Текущее состояние</strong>${esc(insight.currentState)}</div><div class="value-card"><strong>Главный следующий шаг</strong>${esc(insight.nextStep)}</div></div><button class="btn btn-primary" onclick="continueAfterCheckpoint()">Продолжить: ${esc(DIMENSIONS[state.currentDim+1].name)} →</button> <button class="btn btn-secondary" onclick="editCheckpoint()">Изменить ответы</button></main>`;
 }
 
 function renderResults() {
   const scores = getDimensionScores();
   const overallLevel = getOverallLevel();
-  const overallDesc = LEVEL_DESCRIPTIONS[overallLevel];
-  const topGaps = [...scores].sort((a, b) => a.score - b.score).slice(0, 3);
+  const overallDesc = LEVEL_DESCRIPTIONS[overallLevel ?? 0];
+  const valid = scores.filter(s=>s.score!==null).sort((a,b)=>a.score-b.score);
+  let candidates=[];
+  for (const score of [...new Set(valid.map(s=>s.score))]) { candidates.push(...valid.filter(s=>s.score===score)); if(candidates.length>=3) break; }
+  const needsChoice=candidates.length>3;
+  const topGaps=needsChoice?candidates.filter(g=>state.priorityGaps.includes(g.id)):candidates;
+  const choiceResolved=!needsChoice||topGaps.length>0;
+  const confidence=getConfidence();
+  const provisional=scores.filter(s=>s.score!==null).length<4;
+  const maxScore=valid.length?Math.max(...valid.map(s=>s.score)):null;
+  const strongest=maxScore===null?[]:valid.filter(s=>s.score===maxScore);
+  const flatProfile=valid.length>1&&new Set(valid.map(s=>s.score)).size===1;
+  const strongestShown=strongest.slice(0,3);
+  const strongestRest=Math.max(0,strongest.length-strongestShown.length);
 
   function getRecLevel(score) {
     if (score <= 1) return 'low';
@@ -864,12 +1038,11 @@ function renderResults() {
   return `
     <div class="container">
       <div class="results-header">
-        <div class="overall-level">
-          <span class="label">Общий уровень зрелости:</span>
-          <span class="level">${esc(overallDesc.name)}</span>
-        </div>
-        <h2>Ваша компания на уровне L${overallLevel}</h2>
-        <p>${esc(overallDesc.desc)}. Ниже — детализация по измерениям, разрывы и рекомендации.</p>
+        <div class="eyebrow">РЕЗУЛЬТАТ · AI MATURITY ASSESSMENT</div>
+        <h1 tabindex="-1" id="screen-title">Ваш уровень — ${overallLevel===null?'недостаточно данных':`${esc(overallDesc.name)}`}</h1>
+        <p>${overallLevel===null?'Ответьте содержательно минимум по четырём измерениям, чтобы получить общий уровень.':esc(overallDesc.desc)} ${provisional?'Результат предварительный.':''}</p>
+        <div class="confidence">Уверенность: ${confidence.label} · содержательных ответов ${confidence.count} из 18</div>
+        <p class="status-line">Уверенность отражает полноту ответов, а не качество вашей компании.</p>
       </div>
 
       <div class="results-grid">
@@ -889,34 +1062,40 @@ function renderResults() {
               <div class="dim-score-row">
                 <div class="dim-score-name">${esc(d.icon)} ${esc(d.name)}</div>
                 <div class="dim-score-bar-wrapper">
-                  <div class="dim-score-bar" style="width: ${(d.score / 5) * 100}%"></div>
+                  <div class="dim-score-bar" style="width: ${((d.score ?? 0) / 5) * 100}%"></div>
                 </div>
-                <div class="dim-score-value">${d.score.toFixed(1)}</div>
+                <div class="dim-score-value">${d.score===null?'н/д':d.score.toFixed(1)}</div>
               </div>
             `).join('')}
           </div>
+          <table class="score-table"><caption class="sr-only">Точные оценки по измерениям</caption><thead><tr><th>Измерение</th><th>Оценка</th></tr></thead><tbody>${scores.map(d=>`<tr><td>${esc(d.name)}</td><td>${d.score===null?'Недостаточно данных':d.score.toFixed(1)}</td></tr>`).join('')}</tbody></table>
         </div>
       </div>
 
+      <section class="panel" style="margin-bottom:32px"><h3>${flatProfile?'Профиль без выраженных сильных сторон':maxScore!==null&&maxScore<2?'Относительно наиболее развитые области':'Сильные стороны'}</h3><p class="panel-sub">${!valid.length?'Недостаточно данных для вывода.':flatProfile?`Все ${valid.length} областей оценены одинаково · L${strongest[0].roundedScore}. Данные не позволяют честно выделить сильные стороны.`:`${strongestShown.map(s=>`${esc(s.icon)} ${esc(s.name)} · L${s.roundedScore}`).join(' · ')}${strongestRest?` · ещё ${strongestRest}`:''}`}</p></section>
+
       <div class="panel" style="margin-bottom: 32px;">
-        <h3>🎯 Топ-3 разрыва</h3>
-        <p class="panel-sub">Измерения с наименьшим уровнем — приоритеты для первой волны изменений</p>
-        <div class="gaps-list">
-          ${topGaps.map((gap, idx) => {
+        <h3>${needsChoice?'Области одинакового приоритета':'Приоритетные разрывы'}</h3>
+        <p class="panel-sub">${needsChoice?'Оценка не позволяет честно ранжировать эти области. Выберите до трёх наиболее важных для бизнеса сейчас.':'Измерения с наименьшим уровнем — приоритеты первой волны изменений.'}</p>
+        ${needsChoice&&!state.priorityChoiceDeferred?`<div class="tie-options">${candidates.map(g=>`<label class="tie-option"><input type="checkbox" ${state.pendingPriorityGaps.includes(g.id)||state.priorityGaps.includes(g.id)?'checked':''} onchange="updatePriorityDraft('${g.id}',this.checked,this)"> ${esc(g.name)} · L${g.roundedScore}</label>`).join('')}</div><div class="tie-controls"><span class="tie-count" id="tie-count">Выбрано ${state.pendingPriorityGaps.length||state.priorityGaps.length} из 3</span><button class="btn btn-primary" id="apply-priorities" onclick="applyPriorities()" ${state.pendingPriorityGaps.length||state.priorityGaps.length?'':'disabled'}>Применить выбор</button><button class="btn btn-secondary" onclick="deferPriorityChoice()">Пока не выбирать</button><div class="tie-message" id="tie-message" aria-live="polite"></div></div>`:needsChoice?`<div class="status-line">Приоритеты пока не выбраны. Рекомендации по разрывам и модулям не показаны.</div><button class="btn btn-secondary" onclick="beginPriorityChoice()">Выбрать приоритеты</button>`:''}
+        ${choiceResolved?`<div class="gaps-list">
+          ${topGaps.map((gap) => {
             const rec = RECOMMENDATIONS[gap.id];
             const r = rec[getRecLevel(gap.roundedScore)];
             return `
               <div class="gap-item">
                 <div class="gap-name">
-                  <span>${idx + 1}. ${esc(gap.icon)} ${esc(gap.name)}</span>
+                  <span>${esc(gap.icon)} ${esc(gap.name)}</span>
                   <span class="gap-current">Уровень L${gap.roundedScore}</span>
                 </div>
                 <div class="gap-rec">${esc(r.body)}</div>
               </div>
             `;
           }).join('')}
-        </div>
+        </div>`:''}
       </div>
+
+      ${choiceResolved?`<section class="panel" id="module-matches" style="margin-bottom:32px"><h3>Модули программы под ваши разрывы</h3><p class="panel-sub">Связь результата с конкретным учебным артефактом</p><div class="module-grid">${topGaps.map(g=>`<article class="module-card"><div class="eyebrow">РАЗРЫВ · ${esc(g.name)}</div><strong>${esc(MODULE_MAP[g.id][0])}</strong><div class="artifact">Что вы создадите: ${esc(MODULE_MAP[g.id][1])}</div><a class="btn btn-secondary" href="../../index.html#program">Посмотреть модуль</a></article>`).join('')}</div></section>`:''}
 
       <div class="recommendations">
         <h3>📋 Рекомендации по всем измерениям</h3>
@@ -925,28 +1104,24 @@ function renderResults() {
           const rec = RECOMMENDATIONS[d.id];
           const r = rec[getRecLevel(d.roundedScore)];
           return `
-            <div class="rec-card">
-              <div class="rec-title">${esc(d.icon)} ${esc(d.name)} · L${d.roundedScore} → ${esc(r.title)}</div>
-              <div class="rec-body">${esc(r.body)}</div>
-            </div>
+            <details class="rec-card">
+              <summary>${esc(d.icon)} ${esc(d.name)} · ${d.roundedScore===null?'Недостаточно данных':`L${d.roundedScore} → ${esc(r.title)}`}</summary>
+              <div class="rec-body">${d.roundedScore===null?'Уточните хотя бы два ответа в этом измерении.':esc(r.body)}</div>
+            </details>
           `;
         }).join('')}
       </div>
+
+      ${renderResultCta(overallLevel,topGaps)}
 
       <div class="results-actions">
         <button class="btn btn-secondary" onclick="restart()">
           Пройти ещё раз
         </button>
-        <button class="btn btn-secondary" onclick="window.print()">
+        <button class="btn btn-primary" onclick="window.print()">
           📄 Сохранить как PDF
         </button>
-        <a class="btn btn-primary" href="../../portal/?diag=maturity" style="text-decoration:none;">
-          ✓ Вернуться в портал с результатом
-        </a>
       </div>
-      <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:14px;">
-        Результат сохранён в этом браузере и автоматически появится в вашем портале слушателя.
-      </p>
 
       <div class="level-reference">
         <h4>📚 Справка: 6 уровней AI Maturity Index v2026</h4>
@@ -966,10 +1141,26 @@ function renderResults() {
 function renderFooter() {
   return `
     <footer>
-      <div class="meta">AI Maturity Self-Assessment v0.1 prototype · ${new Date().getFullYear()}</div>
-      <div>Прототип учебного стенда AI MBA · Реальная production-версия будет в Q4 2026</div>
+      <div class="meta">AI Maturity Assessment · 2026 · Директор по ИИ · AI MBA</div>
+      <div>Ответы хранятся только в вашем браузере.</div>
     </footer>
   `;
+}
+
+function renderResultCta(level,gaps) {
+  if(level===null||getDimensionScores().filter(s=>s.score!==null).length<4) return `<section class="cta-band"><div><div class="eyebrow">ПРЕДВАРИТЕЛЬНЫЙ РЕЗУЛЬТАТ</div><h3>Уточните ответы перед сохранением</h3><p>Нужно оценить минимум четыре измерения, чтобы передать корректный уровень в портал.</p></div><div class="cta-actions"><button class="btn btn-primary" onclick="returnToFirstInsufficient()">Уточнить ответы</button></div></section>`;
+  if(state.source==='portal') return `<section class="cta-band"><div><div class="eyebrow">СОХРАНЕНО В ПОРТАЛЕ</div><h3>Продолжите маршрут с учётом результата</h3></div><div class="cta-actions"><a class="btn btn-primary" href="../../portal/?diag=maturity" onclick="track('maturity_portal_return')">Вернуться в портал с результатом</a><button class="btn btn-secondary" onclick="window.print()">Сохранить PDF</button></div></section>`;
+  const ids=gaps.map(g=>g.id).join(',');
+  return `<section class="cta-band"><div><div class="eyebrow">СЛЕДУЮЩИЙ ШАГ</div><h3>Получить разбор результатов</h3><p>За 30 минут определим первый проект, необходимые данные и модули программы под ваши разрывы.</p></div><div class="cta-actions"><a class="btn btn-primary" href="../../index.html?intent=maturity-review&level=L${level??'x'}&gaps=${encodeURIComponent(ids)}#apply" onclick="track('maturity_review_click')">Обсудить результат</a>${gaps.length?`<button class="btn btn-secondary" onclick="document.getElementById('module-matches').scrollIntoView({behavior:'smooth'})">Посмотреть модули</button>`:''}</div></section>`;
+}
+
+function saveCompletedResult() {
+  const scores=getDimensionScores(), level=getOverallLevel(), confidence=getConfidence();
+  if (level === null || scores.filter(s=>s.score!==null).length < 4) return false;
+  const valid=scores.filter(s=>s.score!==null).sort((a,b)=>a.score-b.score); let candidates=[];
+  for(const n of [...new Set(valid.map(s=>s.score))]){candidates.push(...valid.filter(s=>s.score===n));if(candidates.length>=3)break;}
+  const selected=candidates.length>3?candidates.filter(g=>state.priorityGaps.includes(g.id)):candidates;
+  return safeStorageSet(RESULT_KEY,JSON.stringify({v:2,assessmentVersion:ASSESSMENT_VERSION,completedAt:new Date().toISOString(),overallLevel:level,levelName:LEVEL_DESCRIPTIONS[level].name,scores,topGaps:selected.map(({id,name,roundedScore})=>({id,name,roundedScore})),equalPriorityCandidates:candidates.length>3?candidates.map(({id,name,roundedScore})=>({id,name,roundedScore})):[],confidence,source:state.source,answers:state.answers,priorityGaps:state.priorityGaps}));
 }
 
 /* ============================================================
@@ -980,69 +1171,76 @@ function render() {
   let content;
   if (state.screen === 'welcome') content = renderWelcome();
   else if (state.screen === 'wizard') content = renderWizard();
+  else if (state.screen === 'checkpoint') content = renderCheckpoint();
   else content = renderResults();
 
   document.getElementById('app').innerHTML = content + renderFooter();
+  renderTopbar();
+  if(state.storageWarning) document.getElementById('app').insertAdjacentHTML('afterbegin',`<div class="container"><p class="question-error" role="alert">${esc(state.storageWarning)}</p></div>`);
 }
+function renderAndFocus(){ render(); requestAnimationFrame(()=>document.getElementById('screen-title')?.focus({preventScroll:true})); window.scrollTo(0,0); }
 
-function startAssessment() {
+function startAssessment(confirmReset) {
+  if(confirmReset && !confirm('Ответы и текущий прогресс будут удалены. Начать заново?')) return;
+  safeStorageRemove(DRAFT_KEY);
   state.screen = 'wizard';
   state.answers = {};
   state.currentDim = 0;
-  render();
+  state.priorityGaps=[]; state.pendingPriorityGaps=[]; state.priorityChoiceDeferred=false; render(); saveDraft(); track('maturity_started',{source:state.source});
   window.scrollTo(0, 0);
 }
 
-function selectOption(questionId, level) {
+function selectOption(questionId, level, focusId) {
   state.answers[questionId] = level;
-  render();
+  state.errorQuestion=null; saveDraft(); render(); requestAnimationFrame(()=>document.getElementById(focusId)?.focus());
 }
 
 function goNext() {
+  if(!isDimensionComplete(state.currentDim)) { const q=DIMENSIONS[state.currentDim].questions.find(q=>!Object.prototype.hasOwnProperty.call(state.answers,q.id)); state.errorQuestion=q.id; render(); requestAnimationFrame(()=>document.getElementById('legend-'+q.id)?.focus()); return; }
   if (state.currentDim === DIMENSIONS.length - 1) {
     state.screen = 'results';
-    saveMaturityResult();
+    if (saveCompletedResult()) { safeStorageRemove(DRAFT_KEY); track('maturity_completed',{source:state.source,level:getOverallLevel()}); }
+    else saveDraft();
   } else {
-    state.currentDim++;
+    state.screen='checkpoint';
   }
-  render();
-  window.scrollTo(0, 0);
-}
-
-const MATURITY_KEY = 'aimba_maturity_v1';
-function saveMaturityResult() {
-  try {
-    const scores = getDimensionScores();
-    const overallLevel = getOverallLevel();
-    const data = {
-      completedAt: new Date().toISOString(),
-      overallLevel: overallLevel,
-      levelName: (LEVEL_DESCRIPTIONS[overallLevel] || {}).name || ('L' + overallLevel),
-      scores: scores.map(s => ({ id: s.id, name: s.name, score: s.score, roundedScore: s.roundedScore })),
-      topGaps: [...scores].sort((a, b) => a.score - b.score).slice(0, 3).map(g => ({ id: g.id, name: g.name, roundedScore: g.roundedScore }))
-    };
-    localStorage.setItem(MATURITY_KEY, JSON.stringify(data));
-  } catch (e) {}
-}
-
-function fromPortal() {
-  return new URLSearchParams(location.search).get('from') === 'portal';
+  renderAndFocus(); if(state.screen!=='results') saveDraft();
 }
 
 function goBack() {
   if (state.currentDim > 0) {
     state.currentDim--;
-    render();
-    window.scrollTo(0, 0);
+    renderAndFocus();
   }
 }
 
+function continueAfterCheckpoint(){ state.currentDim++; state.screen='wizard'; renderAndFocus(); saveDraft(); }
+function editCheckpoint(){ state.screen='wizard'; renderAndFocus(); }
+function resumeAssessment(){ const d=loadDraft(); if(!d)return startAssessment(false); Object.assign(state,d,{source:explicitSource&&['landing','portal'].includes(explicitSource)?explicitSource:d.source}); renderAndFocus(); }
+function resumeResult(){ const r=loadCompleted(); if(!r)return; state.answers=r.answers||{}; state.priorityGaps=r.priorityGaps||[]; state.pendingPriorityGaps=[...state.priorityGaps]; state.priorityChoiceDeferred=false; state.screen='results'; renderAndFocus(); }
+function updatePriorityDraft(id,checked,input){
+  const current=[...state.pendingPriorityGaps];
+  if(checked&&current.length>=3){ input.checked=false; document.getElementById('tie-message').textContent='Можно выбрать не более трёх областей.'; return; }
+  state.pendingPriorityGaps=checked?[...current,id]:current.filter(x=>x!==id);
+  document.getElementById('tie-count').textContent=`Выбрано ${state.pendingPriorityGaps.length} из 3`;
+  document.getElementById('apply-priorities').disabled=state.pendingPriorityGaps.length===0;
+  document.getElementById('tie-message').textContent='';
+}
+function applyPriorities(){ if(state.pendingPriorityGaps.length<1||state.pendingPriorityGaps.length>3)return; state.priorityGaps=[...state.pendingPriorityGaps]; state.priorityChoiceDeferred=false; saveCompletedResult(); render(); requestAnimationFrame(()=>document.getElementById('module-matches')?.scrollIntoView({block:'nearest'})); }
+function deferPriorityChoice(){ state.priorityGaps=[]; state.pendingPriorityGaps=[]; state.priorityChoiceDeferred=true; saveCompletedResult(); render(); }
+function beginPriorityChoice(){ state.priorityChoiceDeferred=false; state.pendingPriorityGaps=[]; render(); }
+function returnToFirstInsufficient(){ const idx=getDimensionScores().findIndex(s=>s.score===null); state.currentDim=idx<0?0:idx; state.screen='wizard'; renderAndFocus(); }
+
 function restart() {
-  state.screen = 'welcome';
+  if(!confirm('Ответы и текущий прогресс будут удалены. Начать заново?')) return;
+  safeStorageRemove(DRAFT_KEY);
+  state.screen = 'wizard';
   state.answers = {};
   state.currentDim = 0;
-  render();
-  window.scrollTo(0, 0);
+  state.priorityGaps = [];
+  state.pendingPriorityGaps = [];
+  state.priorityChoiceDeferred = false;
+  renderAndFocus(); saveDraft();
 }
 
 /* ============================================================
@@ -1050,6 +1248,8 @@ function restart() {
    ============================================================ */
 
 render();
+window.addEventListener('beforeprint',()=>document.querySelectorAll('details.rec-card').forEach(d=>{d.dataset.wasOpen=d.open?'1':'0';d.open=true;}));
+window.addEventListener('afterprint',()=>document.querySelectorAll('details.rec-card').forEach(d=>{if(d.dataset.wasOpen!=='1')d.open=false;}));
 </script>
 
 </body>
