@@ -680,6 +680,7 @@ const MODULE_MAP = {
   process: ['М7 · AI Security + М8 · AgentOps','Безопасный жизненный цикл, SLA и наблюдаемость'],
   culture: ['М6 · Орг-дизайн + М9 · Защита программы','Программа внедрения, коммуникации и план масштабирования']
 };
+const MODULE_LINKS = {strategy:'m1',data:'m2',tech:'m3',people:'m6',process:'m7',culture:'m6'};
 const CHECKPOINT_MATRIX = {
   strategy: [
     { currentState:'ИИ-инициативы не связаны с бизнес-целями, владелец не определён.', nextStep:'Назначить executive-owner и выбрать одну бизнес-задачу с измеримым эффектом.' },
@@ -1095,7 +1096,7 @@ function renderResults() {
         </div>`:''}
       </div>
 
-      ${choiceResolved?`<section class="panel" id="module-matches" style="margin-bottom:32px"><h3>Модули программы под ваши разрывы</h3><p class="panel-sub">Связь результата с конкретным учебным артефактом</p><div class="module-grid">${topGaps.map(g=>`<article class="module-card"><div class="eyebrow">РАЗРЫВ · ${esc(g.name)}</div><strong>${esc(MODULE_MAP[g.id][0])}</strong><div class="artifact">Что вы создадите: ${esc(MODULE_MAP[g.id][1])}</div><a class="btn btn-secondary" href="../../index.html#program">Посмотреть модуль</a></article>`).join('')}</div></section>`:''}
+      ${choiceResolved?`<section class="panel" id="module-matches" style="margin-bottom:32px"><h3>Модули программы под ваши разрывы</h3><p class="panel-sub">Связь результата с конкретным учебным артефактом</p><div class="module-grid">${topGaps.map(g=>`<article class="module-card"><div class="eyebrow">РАЗРЫВ · ${esc(g.name)}</div><strong>${esc(MODULE_MAP[g.id][0])}</strong><div class="artifact">Что вы создадите: ${esc(MODULE_MAP[g.id][1])}</div><a class="btn btn-secondary" href="../../index.html?module=${MODULE_LINKS[g.id]}#program">Посмотреть модуль</a></article>`).join('')}</div></section>`:''}
 
       <div class="recommendations">
         <h3>📋 Рекомендации по всем измерениям</h3>
