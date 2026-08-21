@@ -1339,16 +1339,17 @@ const FACULTY_OF = { ep: "dist", co: "real", con: "conf", soc: "conf" };
 // kind: realize (различаю→реализую), assure (реализовал→уверен), distinguish (уверен→различаю тоньше, новый виток)
 const MEANS_LINKS = [
   { from: "ep.1.M1", to: "c.sec1",      kind: "realize",     cap: "различаю стратегию → собираю Раздел 1" },
-  { from: "ep.4.M2", to: "c.sec3",      kind: "realize",     cap: "различаю архитектуру → реализую слой-схему" },
-  { from: "ep.4.M3", to: "c.sec4",      kind: "realize",     cap: "различаю МЗ/KPT → строю МЗ-компонент" },
-  { from: "ep.4.M4", to: "c.sec7",      kind: "realize",     cap: "различаю blast radius → проектирую безопасность" },
+  { from: "ep.4.M2", to: "c.sec4",      kind: "realize",     cap: "различаю МЗ/KPT → строю МЗ-компонент" },
+  { from: "ep.4.M3", to: "c.sec3",      kind: "realize",     cap: "собираю агента → включаю его в платформенный контур" },
+  { from: "ep.4.M4", to: "c.sec3",      kind: "realize",     cap: "различаю архитектуру → реализую слой-схему" },
   { from: "ep.4.M5", to: "c.sec6",      kind: "realize",     cap: "различаю токеномику → собираю unit-экономику" },
   { from: "c.sec1",  to: "con.M1.done", kind: "assure",      cap: "собрал Раздел 1 → защита → уверен в стратегии" },
-  { from: "c.sec3",  to: "con.M2.done", kind: "assure",      cap: "собрал архитектуру → защита → уверен" },
-  { from: "c.sec4",  to: "con.M3.done", kind: "assure",      cap: "собрал МЗ-компонент → защита → уверен" },
-  { from: "con.M1.done", to: "ep.1.M2", kind: "distinguish", cap: "уверен в стратегии → различаю архитектуру тоньше" },
-  { from: "con.M2.done", to: "ep.1.M3", kind: "distinguish", cap: "уверен в архитектуре → различаю Машину Знаний" },
-  { from: "s.2.trust",   to: "ep.4.M4", kind: "distinguish", cap: "доверие в тройке → различаю multi-agent глубже" }
+  { from: "c.sec4",  to: "con.M2.done", kind: "assure",      cap: "собрал МЗ-компонент → защита → уверен" },
+  { from: "c.sec3",  to: "con.M4.done", kind: "assure",      cap: "собрал архитектуру → защита → уверен" },
+  { from: "con.M1.done", to: "ep.1.M2", kind: "distinguish", cap: "уверен в стратегии → различаю Машину Знаний" },
+  { from: "con.M2.done", to: "ep.1.M3", kind: "distinguish", cap: "уверен в МЗ/KPT → различаю инженерный контур агента" },
+  { from: "con.M3.done", to: "ep.1.M4", kind: "distinguish", cap: "уверен в агенте → различаю архитектуру платформы" },
+  { from: "s.2.trust",   to: "ep.4.M3", kind: "distinguish", cap: "доверие в тройке → различаю multi-agent глубже" }
 ];
 const MEANS_KIND = {
   realize:     { color: "#f59e0b", label: "теперь могу РЕАЛИЗОВАТЬ" },
@@ -1360,9 +1361,9 @@ const MEANS_KIND = {
 // только когда сошлись ВСЕ ТРИ грани — различать (diag.out), реализовывать (ep.4), быть уверенным (con.done).
 const MEANS_ITEMS = [
   { m: 1, name: "Стратегирование агентной трансформации", short: "Стратегия" },
-  { m: 2, name: "Архитектура агентной платформы",          short: "Архитектура" },
-  { m: 3, name: "Машина знаний и KPT",                     short: "Машина знаний" },
-  { m: 4, name: "Безопасная multi-agent инженерия",        short: "Multi-agent" },
+  { m: 2, name: "Машина знаний и KPT",                     short: "Машина знаний" },
+  { m: 3, name: "Инженерия агентов и мультиагентных систем", short: "Инженерия агентов" },
+  { m: 4, name: "Архитектура агентной платформы",          short: "Архитектура" },
   { m: 5, name: "Unit-экономика и токеномика",             short: "Экономика" },
   { m: 6, name: "Орг-дизайн агентной компании",            short: "Орг-дизайн" },
   { m: 7, name: "Регуляторика и AI-Security",              short: "Security" },
