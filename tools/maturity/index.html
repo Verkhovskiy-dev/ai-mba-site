@@ -291,6 +291,10 @@
   .module-card .artifact { color:var(--text-dim); font-size:14px; line-height:1.5; margin:12px 0; }
   .cta-band { margin:32px 0; display:flex; justify-content:space-between; align-items:center; gap:24px; border-color:var(--accent); }
   .cta-actions { display:flex; flex-wrap:wrap; gap:10px; }
+  .handoff-summary { margin:20px 0 0; padding:18px; background:var(--bg); border:1px solid var(--border); border-radius:10px; }
+  .handoff-summary pre { margin:0; color:var(--text); font:13px/1.65 var(--mono); white-space:pre-wrap; overflow-wrap:anywhere; }
+  .handoff-note { max-width:680px; margin:12px 0 0; color:var(--text-dim); font-size:13px; line-height:1.55; }
+  .copy-status { width:100%; min-height:20px; color:var(--accent); font-size:13px; }
   details.rec-card summary { cursor:pointer; font-weight:600; }
   details.rec-card .rec-body { margin-top:12px; }
   .topbar { gap:18px; }
@@ -1151,8 +1155,59 @@ function renderFooter() {
 function renderResultCta(level,gaps) {
   if(level===null||getDimensionScores().filter(s=>s.score!==null).length<4) return `<section class="cta-band"><div><div class="eyebrow">ПРЕДВАРИТЕЛЬНЫЙ РЕЗУЛЬТАТ</div><h3>Уточните ответы перед сохранением</h3><p>Нужно оценить минимум четыре измерения, чтобы передать корректный уровень в портал.</p></div><div class="cta-actions"><button class="btn btn-primary" onclick="returnToFirstInsufficient()">Уточнить ответы</button></div></section>`;
   if(state.source==='portal') return `<section class="cta-band"><div><div class="eyebrow">СОХРАНЕНО В ПОРТАЛЕ</div><h3>Продолжите маршрут с учётом результата</h3></div><div class="cta-actions"><a class="btn btn-primary" href="../../portal/?diag=maturity" onclick="track('maturity_portal_return')">Вернуться в портал с результатом</a><button class="btn btn-secondary" onclick="window.print()">Сохранить PDF</button></div></section>`;
+  const summary=buildResultSummary(level,gaps);
   const ids=gaps.map(g=>g.id).join(',');
-  return `<section class="cta-band"><div><div class="eyebrow">СЛЕДУЮЩИЙ ШАГ</div><h3>Получить разбор результатов</h3><p>За 30 минут определим первый проект, необходимые данные и модули программы под ваши разрывы.</p></div><div class="cta-actions"><a class="btn btn-primary" href="../../index.html?intent=maturity-review&level=L${level??'x'}&gaps=${encodeURIComponent(ids)}#apply" onclick="track('maturity_review_click')">Обсудить результат</a>${gaps.length?`<button class="btn btn-secondary" onclick="document.getElementById('module-matches').scrollIntoView({behavior:'smooth'})">Посмотреть модули</button>`:''}</div></section>`;
+  return `<section class="cta-band"><div><div class="eyebrow">СЛЕДУЮЩИЙ ШАГ</div><h3>Передайте результат консультанту</h3><p>За 30 минут определим первый проект, необходимые данные и модули программы под ваши разрывы.</p><div class="handoff-summary"><pre id="result-handoff-summary">${esc(summary)}</pre></div><p class="handoff-note"><strong>Важно:</strong> официальный сайт СКОЛКОВО не получает результат диагностики автоматически. Скопируйте резюме и вставьте его в сообщение или передайте консультанту во время разговора.</p></div><div class="cta-actions"><button class="btn btn-secondary" type="button" onclick="copyResultSummary(this)">Скопировать резюме</button><a class="btn btn-primary" href="../../index.html?intent=maturity-review&level=L${level}&gaps=${encodeURIComponent(ids)}#apply" onclick="track('maturity_review_click')">Обсудить результат</a>${gaps.length?`<button class="btn btn-secondary" type="button" onclick="document.getElementById('module-matches').scrollIntoView({behavior:'smooth'})">Посмотреть модули</button>`:''}<div class="copy-status" id="copy-status" role="status" aria-live="polite"></div></div></section>`;
+}
+
+function buildResultSummary(level,gaps) {
+  const completed=loadCompleted();
+  const completedAt=completed?.completedAt ? new Date(completed.completedAt) : new Date();
+  const validDate=Number.isNaN(completedAt.getTime()) ? new Date() : completedAt;
+  const confidence=getConfidence();
+  const gapNames=gaps.length ? gaps.map(g=>g.name).join(', ') : 'не выбраны';
+  const modules=[...new Set(gaps.map(g=>MODULE_MAP[g.id]?.[0]).filter(Boolean))];
+  const levelName=LEVEL_DESCRIPTIONS[level]?.name || 'уровень не определён';
+  return [
+    'Результат AI Maturity Assessment',
+    `Дата: ${validDate.toLocaleDateString('ru-RU')}`,
+    `Уровень: L${level} — ${levelName}`,
+    `Уверенность: ${confidence.label} (${confidence.count} из 18 содержательных ответов)`,
+    `Приоритетные разрывы: ${gapNames}`,
+    `Рекомендованные модули: ${modules.length ? modules.join('; ') : 'будут определены после выбора приоритетов'}`
+  ].join('\n');
+}
+
+async function copyResultSummary(button) {
+  const summary=document.getElementById('result-handoff-summary')?.textContent || '';
+  const status=document.getElementById('copy-status');
+  if(!summary) return;
+  let copied=false;
+  try {
+    if(navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(summary);
+      copied=true;
+    } else {
+      const textarea=document.createElement('textarea');
+      textarea.value=summary;
+      textarea.setAttribute('readonly','');
+      textarea.style.position='fixed';
+      textarea.style.opacity='0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      copied=document.execCommand('copy');
+      textarea.remove();
+    }
+  } catch (_) {
+    copied=false;
+  }
+  if(status) status.textContent=copied?'Резюме скопировано. Вставьте его в сообщение консультанту.':'Не удалось скопировать автоматически. Выделите текст резюме и скопируйте его вручную.';
+  if(copied) {
+    const original=button.textContent;
+    button.textContent='Скопировано ✓';
+    setTimeout(()=>{ if(button.isConnected) button.textContent=original; },2500);
+    track('maturity_summary_copied');
+  }
 }
 
 function saveCompletedResult() {
